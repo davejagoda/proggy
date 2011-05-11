@@ -1,6 +1,6 @@
 import java.lang.Math;
 
-// dj@a16z.com
+// dj@`perl -e 'sub n{ $_ = shift; /^(.)(.*)(.)$/; print $1.length($2).$3,"\n";} n("andreessenhorowitz");'`.com
 // idea partially taken from Archimedes
 
 // Imagine a unit circle inscribed with a hexagon
@@ -15,6 +15,10 @@ import java.lang.Math;
 // the equal sides have length 1 (unit circle)
 // call the length of the other side 's'
 
+// now consider the 2 new triangles which overlap the old triangle
+// b will be 1/2 of the old triangles side length
+// a is the length from the non-overlapping vertex to the outer edge
+// of the old triangle (a picture would be great here).  Then:
 // a^2 + b^2 = s^2
 // (1-a)^2 + b^2 = 1^2
 
