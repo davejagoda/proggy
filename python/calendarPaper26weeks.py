@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# if you want to print this out, redirect stdout to a file
+# then print it without header and footer, it's an 8.5x11 page
+
 import sys, datetime
 
 def printHeader():
@@ -20,7 +23,7 @@ def printHeader():
   }
   td{
     border: 1px solid black;
-    height: .36in;
+    height: .34in;
     vertical-align: top;
     text-align:right;
   }
