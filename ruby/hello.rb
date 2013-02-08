@@ -1,3 +1,3 @@
 #!/usr/bin/ruby
 
-p "Hello"
+puts "Hello"
