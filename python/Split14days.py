@@ -7,8 +7,8 @@ offset = 1 # Monday
 
 import sys
 
-listOfDays = ['s','m','t','w','r','f','s']
 listOfDays = ['日','月','火','水','木','金','土']
+listOfDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 listOfPeople = ['D','S']
 
 def usage():
@@ -29,6 +29,10 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         usage()
     values = checkSumIs14(sys.argv[1:])
+    s = ''
+    for j in range(7):
+        s = s + listOfDays[(j + offset) % 7] + ' '
+    print(s)
     j = 0
     s = ''
     v = 0 # toggle
@@ -37,7 +41,7 @@ if __name__ == '__main__':
             v += 1
             for i in xrange(val):
 #                s = s + '{:3d}'.format(j)
-                s = s + listOfDays[(j + offset) % 7]
+#                s = s + listOfDays[(j + offset) % 7] + ' '
                 s = s + listOfPeople[v % 2] + '   '
                 j += 1
                 if j % 7 == 0:
