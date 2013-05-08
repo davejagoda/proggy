@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage:", sys.argv[0], "<filename>")
+    print("Usage: " + sys.argv[0] + " <filename>")
     sys.exit(1)
 
 f = open(sys.argv[1])
