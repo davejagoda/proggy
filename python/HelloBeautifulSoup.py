@@ -1,11 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# this reads a download HTML file of the USNews and World Report top schools
+# and prints out the relevant text
+
 from bs4 import BeautifulSoup
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage:", sys.argv[0], "<filename>")
+    print("Usage: " + sys.argv[0] + " <filename>")
     sys.exit(1)
 
 f = open(sys.argv[1])
