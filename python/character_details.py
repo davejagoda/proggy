@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, unicodedata
+import sys
 
 for arg in sys.argv[1:]:
     print('argument: ' + arg + ' argument length ' + str(len(arg)))
