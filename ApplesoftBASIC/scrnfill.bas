@@ -1,0 +1,9 @@
+10 HGR
+20 FOR C = 1 to 6
+30   HCOLOR = C
+40   FOR X = 0 to 279
+50     FOR Y = 0 to 191
+60       HPLOT X, Y
+70     NEXT
+80   NEXT
+90 NEXT
