@@ -4,8 +4,8 @@ import datetime
 t = datetime.datetime.utcnow().replace(microsecond=0).isoformat()+'Z'
 #print(t)
 
-modes = ['w', 'a']
-directories = ['/tmp', '/home/dj']
+modes = ['a', 'w']
+directories = ['/tmp', '/home/dj', '/home/dj/log']
 
 for m in modes:
     for d in directories:
