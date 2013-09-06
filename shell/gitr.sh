@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 for d in `ls`
 do
