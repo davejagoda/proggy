@@ -6,4 +6,5 @@ do
     pwd
     git status
     cd ..
+    echo
 done
