@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, getopt, getpass, mechanize
+import sys, getopt, getpass, mechanize, re, time
 
 def netgear_login(url, user, password):
     br = mechanize.Browser()
@@ -10,34 +10,35 @@ def netgear_login(url, user, password):
     return br
 
 def get_uptime(br):
-#   url = 'http://' + ip + '/RST_statistics.htm'
-    return -1
+    url = "http://" + ip + "/RST_stattbl.htm"
+    br.open(url)
+    r = br.response().read(), "\n"
+    p = re.search(r"System Up Time\D+<!>(.*)<!>", r[0])
+    return p.group(1)
 
 def get_radio_state(br):
-    forms = mechanize.ParseResponse(br.response())
-    form = forms[0]
-#    print form
+# returns '0' for off and '1' for on
+    url = "http://" + ip + "/WLG_adv.htm"
+    br.open(url)
+    form = mechanize.ParseResponse(br.response())[0]
     radio_control = form.find_control("enable_ap")
-#    print radio_control.value
-    if len(radio_control.value):
-        return True
-    else:
-        return False
+    return len(radio_control.value)
 
-def set_radio_state(br, state):
-    # state must be True or False
-    if get_radio_state(br) == state:
+def set_radio_state(br, new_state):
+# new_state must be '0' for off and '1' for on
+    assert ( new_state == 0 or new_state == 1)
+    if get_radio_state(br) == new_state:
+        print "current state == new state, not changing anything"
         return
-    forms = mechanize.ParseResponse(br.response())
-    form = forms[0]
-#    print form
-    radio_control = form.find_control("enable_ap")
-    radio_control.items[0].selected = state
-    print form.find_control("enable_ap")
-# unauth?
-#    request = form.click()
-#    mechanize.urlopen(request)
-    radio_control.click()
+
+    br.select_form(nr=0)
+    radio_control = br.form.find_control("enable_ap")
+    radio_control.items[0].selected = new_state
+#    print "control is now", br.form.find_control("enable_ap")
+#    print radio_control, ':', radio_control.type, ':', radio_control.value
+    response = br.submit()
+    print response.code
+    time.sleep(1)
     return
 
 def usage(program, ip, user, exit_status):
@@ -48,10 +49,10 @@ def usage(program, ip, user, exit_status):
     print "-p: password"
     sys.exit(exit_status)
 
-if __name__=='__main__':
-    ip = '192.168.1.1'
-    user = 'admin'
-    password = ''
+if __name__=="__main__":
+    ip = "192.168.1.1"
+    user = "admin"
+    password = ""
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hd:u:p:", [])
     except getopt.GetoptError:
@@ -65,22 +66,15 @@ if __name__=='__main__':
             user = arg
         if opt == "-p":
             password = arg
-    if password == '':
+    if password == "":
         password = getpass.getpass()
 #    print "IP:" + ip + " User:" + user + " Password:" + password
-    url = 'http://' + ip + '/WLG_adv.htm'
+    url = "http://" + ip + "/"
     br = netgear_login(url, user, password)
-#    print br.response().read()
-    if get_radio_state(br):
-        print "radio is on"
-    else:
-        print "radio is off"
-
-    set_radio_state(br, False)
-
-    if get_radio_state(br):
-        print "radio is on"
-    else:
-        print "radio is off"
-
-#    print get_uptime(br)
+    print get_uptime(br)
+# toggle radio state
+    print "\nradio is", "on" if get_radio_state(br) else "off"
+    print get_uptime(br)
+    set_radio_state(br, not get_radio_state(br))
+    print "\nradio is", "on" if get_radio_state(br) else "off"
+    print get_uptime(br)
