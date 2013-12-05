@@ -5,6 +5,7 @@ do
     cd $d
     pwd
     git status
+    git branch -a
     cd ..
     echo
 done
