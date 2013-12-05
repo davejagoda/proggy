@@ -6,7 +6,6 @@ do
     pwd
     git branch -a
     git status
-    git branch -a
     cd ..
     echo
 done
