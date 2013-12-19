@@ -1,0 +1,15 @@
+For a branch where everything is OK, you'll see something like this:
+
+/Users/dj/Source/Github/Proggy
+* master
+  remotes/origin/master
+# On branch master
+nothing to commit, working directory clean
+
+If you see this (which is typically he result of a git clone):
+
+  remotes/origin/HEAD -> origin/master
+
+You can clean up by doing this:
+
+git remote set-head origin -d
