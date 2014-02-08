@@ -1,3 +1,4 @@
+// g++ hello.cc -o hello
 #include <iostream>
 
 using namespace std;
