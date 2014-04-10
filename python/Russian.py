@@ -15,3 +15,6 @@ for i in alpha:
 # ./Russian.py | wc -l
 # returns 64 as expected
 
+# ./Russian.py --yo | wc -l
+# returns 66 as expected
+
