@@ -20,4 +20,5 @@ for path in sys.argv[1:]:
                 else:
                     break
             print('MD5 (' + entry + ') = ' +  m.hexdigest())
-            f.close
+            f.close()
+

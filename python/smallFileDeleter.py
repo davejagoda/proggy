@@ -14,7 +14,7 @@ def processDirectory(path, size):
                 f = open(os.path.join(root, entry), 'rb')
                 print 'reading', entry
                 print f.read()
-                f.close
+                f.close()
                 print 'closing'
                 input_prompt = 'Press Y to delete file: ' + fullpath + ', anything else to keep it: '
                 response = raw_input(input_prompt)
