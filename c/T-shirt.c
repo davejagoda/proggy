@@ -4,7 +4,10 @@ int main()
 {
   char s[] =  "andreessenhorowitz";
   char *p = s;
+  int n;
   while (*p != '\0') p++;
-  printf("%c%ld%c\n", s[0], p - s - 2, s[p - s - 1]);
+  n = p - s - 2;
+  printf("%c%d%c\n",
+	 s[0], n, s[n + 1]);
   return 0;
 }
