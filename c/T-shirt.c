@@ -2,7 +2,7 @@
 
 int main()
 {
-  char s[] =  "andreessenhorowitz";
+  char s[] = "andreessenhorowitz";
   char *p = s;
   int n;
   while (*p != '\0') p++;
