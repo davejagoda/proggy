@@ -11,7 +11,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 login = 'https://sccl.bibliocommons.com/user/login'
-checkedout = 'http://sccl.bibliocommons.com/checkedout'
+checkedout = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
 fines = 'https://sccl.bibliocommons.com/fines'
 logout = 'https://sccl.bibliocommons.com/user/logout'
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
