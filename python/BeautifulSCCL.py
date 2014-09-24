@@ -26,7 +26,11 @@ for username in sys.argv[1:]:
     soup = BeautifulSoup(r.read())
 #    print(soup.prettify().encode('utf8'))
     logged_in_user = soup.find(text=re.compile('Logged in as '))
-    print('User: ' + logged_in_user)
+    try:
+        print('User: ' + logged_in_user)
+    except:
+        print('Bad password')
+        sys.exit(1)
 #   <a class="jacketCoverLink" href="/item/show/973973016_office_space" target="_parent" title="Office Space">
     for c in soup.find_all('a', 'jacketCoverLink'):
         d = c.parent
