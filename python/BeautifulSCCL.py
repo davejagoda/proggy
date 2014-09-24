@@ -12,6 +12,7 @@ if len(sys.argv) < 2:
 
 login = 'https://sccl.bibliocommons.com/user/login'
 checkedout = 'http://sccl.bibliocommons.com/checkedout'
+fines = 'https://sccl.bibliocommons.com/fines'
 logout = 'https://sccl.bibliocommons.com/user/logout'
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
 password = getpass.getpass()
@@ -36,4 +37,8 @@ for username in sys.argv[1:]:
             out = d.find_next('span', 'value coming_due')
 #        print('UNIT:' + out.get_text().encode('utf8') + c['title'])
         print('UNIT: ' + out.get_text() + ' ' +  c['title'])
+    r = opener.open(fines)
+    soup = BeautifulSoup(r.read())
+    fine = soup.find(text=re.compile('\$'))
+    print('Fine: ' + fine)
     r = opener.open(logout)
