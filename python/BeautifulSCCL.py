@@ -35,8 +35,7 @@ for username in sys.argv[1:]:
         out = d.find_next('span', 'value overdue')
         if out == None:
             out = d.find_next('span', 'value coming_due')
-#        print('UNIT:' + out.get_text().encode('utf8') + c['title'])
-        print('UNIT: ' + out.get_text() + ' ' +  c['title'])
+        print('UNIT: ' + out.get_text().strip() + ' ' +  c['title'])
     r = opener.open(fines)
     soup = BeautifulSoup(r.read())
     fine = soup.find(text=re.compile('\$'))
