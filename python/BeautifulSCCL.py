@@ -4,7 +4,7 @@
 # this prints out checked out books from SCCL
 
 from bs4 import BeautifulSoup
-import sys, getpass, urllib, urllib2, re
+import sys, os, getpass, urllib, urllib2, re
 
 if len(sys.argv) < 2:
     print('Usage: ' + sys.argv[0] + ' username [username ...]')
@@ -15,7 +15,10 @@ checkedout = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
 fines = 'https://sccl.bibliocommons.com/fines'
 logout = 'https://sccl.bibliocommons.com/user/logout'
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
-password = getpass.getpass()
+if os.getenv('SCCLPIN'):
+    password = os.getenv('SCCLPIN')
+else:
+    password = getpass.getpass()
 for username in sys.argv[1:]:
     print('USER: ' + username)
     values = { 'name' : username,
