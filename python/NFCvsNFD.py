@@ -9,6 +9,10 @@
 # give back NFD whatever you receive
 # when creating, make NFC files
 
+# references:
+# http://en.wikipedia.org/wiki/Unicode_equivalence
+# http://www.win.tue.nl/~aeb/linux/uc/nfc_vs_nfd.html
+
 import os
 
 def isAscii(s):
