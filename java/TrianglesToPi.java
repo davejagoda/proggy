@@ -1,4 +1,4 @@
-import java.lang.Math;
+import java.math.BigDecimal;
 
 // dj@`perl -e 'sub n{ $_ = shift; /^(.)(.*)(.)$/; print $1.length($2).$3,"\n";} n("andreessenhorowitz");'`.com
 // idea partially taken from Archimedes
@@ -26,20 +26,48 @@ import java.lang.Math;
 // S(n) = sqrt ( 2 - 2 * sqrt (1 - S(n-1)^2 ) )
 
 public class TrianglesToPi {
-    public static final double DEGREES_IN_CIRCLE = 360;
+    public static final int DEGREES_IN_CIRCLE = 360;
     public static final int SIDES_PER_ITERATION = 6;
     public static final int R = 1; // unit circle
+    public static final BigDecimal ONE = new BigDecimal(1);
+    public static final BigDecimal TWO = new BigDecimal(2);
+    public static final BigDecimal FOUR = new BigDecimal(4);
+
+    public static BigDecimal NewtonsMethodSquareRoot(BigDecimal argument) {
+	int scale = 8192;
+	int roundingMode = BigDecimal.ROUND_FLOOR;
+	BigDecimal CLOSE_ENOUGH = new BigDecimal("1.0E-1000");
+	BigDecimal guess = ONE;
+	BigDecimal numerator, denominator, quotient;
+	while (true) {
+	    denominator = guess.multiply(TWO);
+	    numerator = guess.multiply(guess).subtract(argument);
+	    quotient = numerator.divide(denominator, scale, roundingMode);
+	    guess = guess.subtract(quotient);
+	    if (guess.multiply(guess).subtract(argument).abs().compareTo(CLOSE_ENOUGH) <= 0) break;
+	}
+	return(guess);
+    }
+
     public static void main(String[] args) {
 	System.out.println("Triangles to π");
-	int numSides = SIDES_PER_ITERATION;
-	double theta = DEGREES_IN_CIRCLE/numSides;
-	double side = R;
-	for (int i = 0; i <= 15; i++) {
-	    System.out.printf("i:%2d number of sides:%8d theta:%13.10f length of side:%13.10f half perimeter:%13.10f%n",
-			      i,numSides,theta,side,side*numSides/2);
-	    numSides = numSides * 2;
-	    theta = DEGREES_IN_CIRCLE/numSides;
-	    side = Math.sqrt(2 - 2 * Math.sqrt(1 - (side * side / 4) ) );
+	BigDecimal numSides = new BigDecimal(SIDES_PER_ITERATION);
+	BigDecimal theta = new BigDecimal(DEGREES_IN_CIRCLE).divide(numSides);
+	BigDecimal side = ONE;
+	BigDecimal tmpBD;
+	for (int i = 0; i < 100; i++) {
+	    System.out.printf("i:%2d number of sides:%35.0f theta:%33.30f length of side:%33.30f half perimeter:%63.60f%n",
+			      i,numSides,theta,side,side.divide(TWO).multiply(numSides));
+	    numSides = numSides.multiply(TWO);
+	    theta = new BigDecimal(DEGREES_IN_CIRCLE).divide(numSides);
+	    //	    side = Math.sqrt(2 - 2 * Math.sqrt(1 - (side * side / 4) ) );
+	    tmpBD = side.multiply(side);
+	    tmpBD = tmpBD.divide(FOUR);
+	    tmpBD = ONE.subtract(tmpBD);
+	    tmpBD = NewtonsMethodSquareRoot(tmpBD);
+	    tmpBD = TWO.multiply(tmpBD);
+	    tmpBD = TWO.subtract(tmpBD);
+	    side = NewtonsMethodSquareRoot(tmpBD);
 	}
     }
 }
