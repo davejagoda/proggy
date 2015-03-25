@@ -25,6 +25,9 @@ import java.math.BigDecimal;
 // need more math here, but upshot is:
 // S(n) = sqrt ( 2 - 2 * sqrt (1 - S(n-1)^2 ) )
 
+// resources:
+// http://en.wikipedia.org/wiki/Regular_polygon
+
 public class TrianglesToPi {
     public static final int DEGREES_IN_CIRCLE = 360;
     public static final int SIDES_PER_ITERATION = 6;
