@@ -56,7 +56,7 @@ public class TrianglesToPi {
 	BigDecimal side = ONE;
 	BigDecimal tmpBD;
 	for (int i = 0; i < 100; i++) {
-	    System.out.printf("i:%2d number of sides:%35.0f theta:%33.30f length of side:%33.30f half perimeter:%63.60f%n",
+	    System.out.printf("i:%2d number of sides:%32.0f theta:%33.30f length of side:%33.30f pi:%63.60f%n",
 			      i,numSides,theta,side,side.divide(TWO).multiply(numSides));
 	    numSides = numSides.multiply(TWO);
 	    theta = new BigDecimal(DEGREES_IN_CIRCLE).divide(numSides);
