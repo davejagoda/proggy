@@ -16,9 +16,8 @@ def recursivePairPicker(remainingAlphabet, numWires, currentChain):
             pair = ''.join(sorted(pairElement))
             assert(pair not in pairSet)
             pairSet.add(pair)
-        pairString = ''.join(sorted(pairSet))
-        if pairString:
-            setOfPairs.add(pairString)
+        if pairSet:
+            setOfPairs.add(','.join(sorted(pairSet)))
         return(currentChain)
     for pairTuple in itertools.combinations(remainingAlphabet, 2):
         pair = ''.join(sorted(pairTuple))
