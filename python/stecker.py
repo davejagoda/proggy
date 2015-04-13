@@ -11,19 +11,13 @@ import itertools
 def recursivePairPicker(remainingAlphabet, numWires, currentChain):
     if 0 == len(remainingAlphabet) or 0 == numWires:
 #        print('remaining alphabet exhausted or out of wires, current chain: {}'.format(currentChain))
-        pairSet = set([])
-        pairString = ''
+        pairSet = set()
         for pairElement in currentChain:
             pair = ''.join(sorted(pairElement))
             assert(pair not in pairSet)
             pairSet.add(pair)
-        for pairElement in sorted(pairSet):
-            pairString += pairElement
-        if pairString in setOfPairs:
-#            print('already found')
-            pass
-        else:
-#            print('new chain found {}'.format(pairString))
+        pairString = ''.join(sorted(pairSet))
+        if pairString:
             setOfPairs.add(pairString)
         return(currentChain)
     for pairTuple in itertools.combinations(remainingAlphabet, 2):
@@ -42,7 +36,7 @@ if '__main__' == __name__:
 #    print(socketNames)
     while numSockets <= maxSockets:
         while numWires * 2 <= numSockets:
-            setOfPairs = set([])
+            setOfPairs = set()
             print('numSockets: {} numWires: {} availableSockets: {}'.format(numSockets, numWires, socketNames[:numSockets]))
             recursivePairPicker(set(socketNames[:numSockets]), numWires, [])
             print('length of set: {} elements of set: {}'.format(len(setOfPairs), sorted(setOfPairs)))
