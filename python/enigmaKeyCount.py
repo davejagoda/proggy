@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# bibliography:
+# http://www.codesandciphers.co.uk/enigma/steckercount.htm
+
 numSlots = 3
 numRotors = 5
 alphabetSize = 26
