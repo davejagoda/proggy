@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
 
 import os, httplib, time
 
@@ -19,4 +19,5 @@ for i in xrange(10**5):
     resp = conn.getresponse()
     print('status:{} reason:{} data:{}'.format(resp.status, resp.reason, resp.read()))
     conn.close()
-    time.sleep(60)
+#    time.sleep(60) # 70 days!
+    time.sleep(10) # 7 days
