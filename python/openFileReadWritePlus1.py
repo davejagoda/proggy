@@ -6,7 +6,8 @@ if 2 != len(sys.argv):
     print('need exactly one argument - a file to destroy')
     sys.exit(1)
 
-with open(sys.argv[1], 'r+b') as f:
+filename = sys.argv[1]
+with open(filename, 'r+b') as f:
     octets = f.read()
     f.seek(0)
     for octet in octets:
