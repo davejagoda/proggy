@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
-import datetime
+import datetime, sys
 
-print(datetime.datetime.utcnow().replace(microsecond=0).isoformat()+'Z')
+if 1 == len(sys.argv):
+    epoch = datetime.datetime.utcnow()
+else:
+    epoch = datetime.datetime.fromtimestamp(int(sys.argv[1]))
+
+print(epoch.replace(microsecond=0).isoformat()+'Z')
