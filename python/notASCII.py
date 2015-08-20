@@ -3,8 +3,10 @@
 import sys, string, codecs, unicodedata
 
 for file in sys.argv[1:]:
-    f = codecs.open(file, 'r', 'utf8')
-    for datum in f.read():
-        if datum not in string.printable:
-            print(datum.encode('utf8') + ':' + unicodedata.name(datum))
-    f.close()
+    linecount = 0
+    with codecs.open(file, 'r', 'utf8') as f:
+        for line in f.readlines():
+            linecount += 1
+            for datum in line:
+                if datum not in string.printable:
+                    print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), unicodedata.name(datum)))
