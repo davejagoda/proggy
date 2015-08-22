@@ -29,14 +29,17 @@ def loginAndReturnSoup(u, p):
     return(soup)
 
 def displayCheckedOut(soup):
+#   <a class="jacketCoverLink" href="/item/show/973973016_office_space" target="_parent" title="Office Space">
     for c in soup.find_all('a', 'jacketCoverLink'):
-#        print(c)
-        for kid in c.children:
-#            print(kid['title'])
-            pass
         d = c.parent
-        out = d.find_next('span', 'value out')
-        print('UNIT: ' + out.get_text().strip() + ' ' +  kid['title'])
+#       <span class="value overdue">
+#       <span class="value coming_due">
+        out = d.find_next('span', 'value overdue')
+#        print('value overdue', out)
+        if out == None:
+            out = d.find_next('span', 'value coming_due')
+#            print('value comedue', out)
+        print('UNIT: ' + out.get_text().strip() + ' ' +  c['title'])
 
 def fines():
     r = OPENER.open(FINESURL)
