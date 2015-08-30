@@ -18,7 +18,7 @@ def loginAndReturnSoup(u, p):
     data = urllib.urlencode(values)
     r = OPENER.open(LOGINURL, data)
     r = OPENER.open(CHECKEDOUTURL)
-    soup = BeautifulSoup(r.read())
+    soup = BeautifulSoup(r.read(), 'html.parser')
 #    print(soup.prettify().encode('utf8'))
     logged_in_user = soup.find(text=re.compile('Logged in as '))
     try:
@@ -48,7 +48,7 @@ def displayCheckedOut(soup):
 
 def fines():
     r = OPENER.open(FINESURL)
-    soup = BeautifulSoup(r.read())
+    soup = BeautifulSoup(r.read(), 'html.parser')
     fine = soup.find(text=re.compile('\$'))
     print('Fine: {}'.format(fine))
 
