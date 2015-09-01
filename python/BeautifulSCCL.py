@@ -4,7 +4,7 @@
 # this prints out checked out books from SCCL
 
 from bs4 import BeautifulSoup
-import sys, os, getpass, urllib, urllib2, re
+import sys, os, getpass, urllib, urllib2, re, time
 
 LOGINURL = 'https://sccl.bibliocommons.com/user/login'
 LOGOUTURL = 'https://sccl.bibliocommons.com/user/logout'
@@ -28,6 +28,9 @@ def loginAndReturnSoup(u, p):
         sys.exit(1)
     return(soup)
 
+def convertDateFromAmericanTo8601(s):
+    return(time.strftime('%Y-%m-%d', time.strptime(s, '%b %d, %Y')))
+
 def displayCheckedOut(soup):
 #   <a class="jacketCoverLink" href="/item/show/973973016_office_space" target="_parent" title="Office Space">
     for c in soup.find_all('a', 'jacketCoverLink'):
@@ -44,7 +47,7 @@ def displayCheckedOut(soup):
             out = d.find_next('span', 'value coming_due')
         if out == None:
             out = d.find_next('span', 'value out')
-        print('UNIT: {} {}'.format(out.get_text().strip(), title))
+        print('UNIT: {} {}'.format(convertDateFromAmericanTo8601(out.get_text().strip()), title))
 
 def fines():
     r = OPENER.open(FINESURL)
