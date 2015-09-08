@@ -2,7 +2,7 @@
 
 # examples:
 # ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u <USERNAME> -p <PIN> -l 'Logged in as '
-
+# ./requestBeauty.py -s https://stormy-escarpment-6340.herokuapp.com/admin -u <USERNAME> -p <PASSWORD> -l 'Welcome'
 import argparse, requests, bs4, re, urlparse
 
 def getSess(url, username, password, useragent, verbose=False):
