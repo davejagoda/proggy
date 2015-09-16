@@ -4,7 +4,7 @@
 # this prints out checked out books from SCCL
 
 from bs4 import BeautifulSoup
-import sys, os, getpass, urllib, urllib2, re, time
+import sys, os, getpass, urllib, urllib2, re, time, argparse
 
 LOGINURL = 'https://sccl.bibliocommons.com/user/login'
 LOGOUTURL = 'https://sccl.bibliocommons.com/user/logout'
@@ -12,14 +12,15 @@ CHECKEDOUTURL = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
 FINESURL = 'https://sccl.bibliocommons.com/fines'
 OPENER = urllib2.build_opener(urllib2.HTTPCookieProcessor())
 
-def loginAndReturnSoup(u, p):
+def loginAndReturnSoup(u, p, verbose=False):
     values = { 'name' : u,
                'user_pin' : p }
     data = urllib.urlencode(values)
     r = OPENER.open(LOGINURL, data)
     r = OPENER.open(CHECKEDOUTURL)
     soup = BeautifulSoup(r.read(), 'html.parser')
-#    print(soup.prettify().encode('utf8'))
+    if verbose:
+        print(soup.prettify().encode('utf8'))
     logged_in_user = soup.find(text=re.compile('Logged in as '))
     try:
         print('User: {}'.format(logged_in_user))
@@ -42,12 +43,14 @@ def displayCheckedOut(soup):
 #       <span class="value overdue">
 #       <span class="value coming_due">
 #       <span class="value out">
-        out = d.find_next('span', 'value overdue')
-        if out == None:
-            out = d.find_next('span', 'value coming_due')
-        if out == None:
-            out = d.find_next('span', 'value out')
-        print('UNIT: {} {}'.format(convertDateFromAmericanTo8601(out.get_text().strip()), title))
+#       <span class="value item_due_date overdue">
+#       <span class="value item_due_date coming_due">
+#       <span class="value item_due_date out">
+        spans = d.find_all('span')
+        for sp in spans:
+            if 'item_due_date' in sp['class']:
+                out = sp.text
+        print('UNIT: {} {}'.format(convertDateFromAmericanTo8601(out.strip()), title))
 
 def fines():
     r = OPENER.open(FINESURL)
@@ -59,16 +62,17 @@ def logout():
     r = OPENER.open(LOGOUTURL)
 
 if '__main__' == __name__:
-    if len(sys.argv) < 2:
-        print('Usage: {} username [username ...]'.format(sys.argv[0]))
-        sys.exit(1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('usernames', nargs='+', help='username[s]')
+    parser.add_argument('--verbose', '-v', action='store_true', help='be verbose')
+    args = parser.parse_args()
     if os.getenv('SCCLPIN'):
         password = os.getenv('SCCLPIN')
     else:
         password = getpass.getpass()
-    for username in sys.argv[1:]:
+    for username in args.usernames:
         print('USER: {}'.format(username))
-        soup = loginAndReturnSoup(username, password)
+        soup = loginAndReturnSoup(username, password, args.verbose)
         displayCheckedOut(soup)
         fines()
         logout()
