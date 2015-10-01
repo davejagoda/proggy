@@ -19,8 +19,7 @@ def loginAndReturnSoup(u, p, verbose=False):
     r = OPENER.open(LOGINURL, data)
     r = OPENER.open(CHECKEDOUTURL)
     soup = BeautifulSoup(r.read(), 'html.parser')
-    if verbose:
-        print(soup.prettify().encode('utf8'))
+    if verbose: print(soup.prettify().encode('utf8'))
     logged_in_user = soup.find(text=re.compile('Logged in as '))
     try:
         print('User: {}'.format(logged_in_user))
@@ -32,25 +31,24 @@ def loginAndReturnSoup(u, p, verbose=False):
 def convertDateFromAmericanTo8601(s):
     return(time.strftime('%Y-%m-%d', time.strptime(s, '%b %d, %Y')))
 
-def displayCheckedOut(soup):
+def displayCheckedOut(soup, verbose=False):
 #   <a class="jacketCoverLink" href="/item/show/973973016_office_space" target="_parent" title="Office Space">
-    for c in soup.find_all('a', 'jacketCoverLink'):
+    titles = []
+    duedates = []
+    for tt in soup.find_all('a', 'jacketCoverLink'):
         title = None
-        for kid in c.children:
+        for kid in tt.children:
 # find the title of the child, if there's more than one child use the last one
             title = kid['title'].encode('utf8')
-        d = c.parent
-#       <span class="value overdue">
-#       <span class="value coming_due">
-#       <span class="value out">
-#       <span class="value item_due_date overdue">
-#       <span class="value item_due_date coming_due">
-#       <span class="value item_due_date out">
-        spans = d.find_all('span')
-        for sp in spans:
-            if 'item_due_date' in sp['class']:
-                out = sp.text
-        print('UNIT: {} {}'.format(convertDateFromAmericanTo8601(out.strip()), title))
+            if verbose: print(title)
+            titles.append(title)
+# 2015-10-01 <span class="checkedout_status out">
+    for dd in soup.find_all('span', 'checkedout_status'):
+        duedate = convertDateFromAmericanTo8601(dd.text.strip())
+        duedates.append(duedate)
+    for i in xrange(len(titles)):
+        print('UNIT: {} {}'.format(duedates[i], titles[i]))
+    assert len(duedates) == len(titles)
 
 def fines():
     r = OPENER.open(FINESURL)
@@ -73,6 +71,6 @@ if '__main__' == __name__:
     for username in args.usernames:
         print('USER: {}'.format(username))
         soup = loginAndReturnSoup(username, password, args.verbose)
-        displayCheckedOut(soup)
+        displayCheckedOut(soup, args.verbose)
         fines()
         logout()
