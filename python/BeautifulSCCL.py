@@ -28,7 +28,8 @@ def loginAndReturnSoup(u, p, verbose=False):
         sys.exit(1)
     return(soup)
 
-def convertDateFromAmericanTo8601(s):
+def convertDateFromAmericanTo8601(s, verbose=False):
+    if verbose: print(s)
     return(time.strftime('%Y-%m-%d', time.strptime(s, '%b %d, %Y')))
 
 def displayCheckedOut(soup, verbose=False):
@@ -43,8 +44,16 @@ def displayCheckedOut(soup, verbose=False):
             if verbose: print(title)
             titles.append(title)
 # 2015-10-01 <span class="checkedout_status out">
-    for dd in soup.find_all('span', 'checkedout_status'):
-        duedate = convertDateFromAmericanTo8601(dd.text.strip())
+# 2015-10-05 <div class="checkedout_due_date" testid="text_dueDate">
+##              <span class="info_label">
+##               Due on:
+##              </span>
+##              <span class="checkedout_status out">
+##               Oct 21, 2015
+##              </span>
+    for dd in soup.find_all('div', 'checkedout_due_date'):
+        ddd = dd.find('span', 'checkedout_status')
+        duedate = convertDateFromAmericanTo8601(ddd.text.strip(), verbose)
         duedates.append(duedate)
     for i in xrange(len(titles)):
         print('UNIT: {} {}'.format(duedates[i], titles[i]))
