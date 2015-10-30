@@ -1,6 +1,6 @@
 #!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
 
-listOfLists = [
+var listOfLists = [
   ['A ', 'あ', 'ア'],
   ['I ', 'い', 'イ'],
   ['U ', 'う', 'ウ'],
