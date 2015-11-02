@@ -30,14 +30,22 @@ class Bicycle(object):
     def speedness(self):
         return(len(self.chainring_teeth) * len(self.cog_teeth))
 
-fixed_gear_bike = Bicycle('fixie')
-print(fixed_gear_bike)
-print(fixed_gear_bike.biggest_gear_ratio())
-print(fixed_gear_bike.smallest_gear_ratio())
-print('{} is a {}-speed bike'.format(fixed_gear_bike.name, fixed_gear_bike.speedness()))
+    def gears_by_ratio(self):
+        ratios = []
+        for front in self.chainring_teeth:
+            for back in self.cog_teeth:
+                ratios.append(((float(front)/float(back)), front, back))
+        ratios.sort()
+        return(ratios)
 
-dj_bike = Bicycle('my bike', chainring_teeth=[52,42], cog_teeth=[13,15,17,19,21,23])
-print(dj_bike)
-print(dj_bike.biggest_gear_ratio())
-print(dj_bike.smallest_gear_ratio())
-print('{} is a {}-speed bike'.format(dj_bike.name, dj_bike.speedness()))
+if '__main__' == __name__:
+    bikes = [Bicycle('fixie'), Bicycle('my bike', chainring_teeth=[52,42], cog_teeth=[13,15,17,19,21,23])]
+    for bike in bikes:
+        print(bike)
+        print('biggest gear ratio:{}'.format(bike.biggest_gear_ratio()))
+        print('smallest gear ratio:{}'.format(bike.smallest_gear_ratio()))
+        print('{} is a {}-speed bike'.format(bike.name, bike.speedness()))
+        print('gear ratios')
+        for (ratio, chainring, cog) in bike.gears_by_ratio():
+            print('{} {} {:.2f}'.format(chainring, cog, ratio))
+        print('\n') # make room!
