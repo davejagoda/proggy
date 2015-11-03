@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+# my version of this:
+# https://www.jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/
+# I chose bicycles:
+# https://docs.oracle.com/javase/tutorial/java/concepts/object.html
+
 class Bicycle(object):
     '''
     A bicycle has the following attributes:
