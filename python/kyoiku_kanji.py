@@ -54,5 +54,4 @@ if '__main__' == __name__:
     else:
         for grade in range(1,7):
             for row in get_one_section(soup, grade):
-                row.append(unicode(grade))
-                print(u':'.join(row))
+                print(u"['{}','{}',{}]".format(row[0],row[1],grade))
