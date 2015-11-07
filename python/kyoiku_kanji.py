@@ -26,25 +26,33 @@ def parse_one_section(section):
     return(results)
 
 def grade_to_anchor(grade):
-    g2u = {
-        '1': 'First_grade_.2880_kanji.29',
-        '2': 'Second_grade_.28160_kanji.29',
-        '3': 'Third_grade_.28200_kanji.29',
-        '4': 'Fourth_grade_.28200_kanji.29',
-        '5': 'Fifth_grade_.28185_kanji.29',
-        '6': 'Sixth_grade_.28181_kanji.29'
-    }
+    g2u = [
+        'All',
+        'First_grade_.2880_kanji.29',
+        'Second_grade_.28160_kanji.29',
+        'Third_grade_.28200_kanji.29',
+        'Fourth_grade_.28200_kanji.29',
+        'Fifth_grade_.28185_kanji.29',
+        'Sixth_grade_.28181_kanji.29'
+    ]
     return(g2u[grade])
+
+def get_one_section(soup, grade):
+    return(parse_one_section(soup.find('span', id=grade_to_anchor(grade))))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
-    parser.add_argument('grade', help='grade level of kanji (1-6)')
+    parser.add_argument('grade', type=int, choices=[x for x in range(7)], help='grade level of kanji (1-6, 0 for all)')
     args = parser.parse_args()
     r = requests.get(URL)
     assert(200 == r.status_code)
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
-    section = soup.find('span', id=grade_to_anchor(args.grade))
-    results = parse_one_section(section)
-    for row in results:
-        print(u':'.join(row))
+    if args.grade:
+        for row in get_one_section(soup, args.grade):
+            print(u':'.join(row))
+    else:
+        for grade in range(1,7):
+            for row in get_one_section(soup, grade):
+                row.append(unicode(grade))
+                print(u':'.join(row))
