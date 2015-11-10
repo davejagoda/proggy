@@ -40,6 +40,16 @@ class Bicycle(object):
         for front in self.chainring_teeth:
             for back in self.cog_teeth:
                 ratios.append(((float(front)/float(back)), front, back))
+        ratios.sort(reverse=True)
+        return(ratios)
+
+    def gears_by_index(self):
+        index = 0
+        ratios = []
+        for front in self.chainring_teeth:
+            for back in self.cog_teeth:
+                index += 1
+                ratios.append((index, (float(front)/float(back)), front, back))
         ratios.sort()
         return(ratios)
 
@@ -53,4 +63,7 @@ if '__main__' == __name__:
         print('gear ratios')
         for (ratio, chainring, cog) in bike.gears_by_ratio():
             print('{} {} {:.2f}'.format(chainring, cog, ratio))
+        print('gears by index')
+        for (index, ratio, chainring, cog) in bike.gears_by_index():
+            print('{:2d} {} {} {:.2f}'.format(index, chainring, cog, ratio))
         print('\n') # make room!
