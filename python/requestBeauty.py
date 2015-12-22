@@ -17,7 +17,7 @@ def getSess(url, username, password, useragent, verbose=False):
         print(r.status_code)
         print(r.headers)
         print(r.content)
-    soup = bs4.BeautifulSoup(r.content)
+    soup = bs4.BeautifulSoup(r.content, "html.parser")
     if verbose:
         print(soup)
     for f in soup.find_all('form'):
@@ -60,7 +60,7 @@ def postSess(s, url, data, loggedInString, useragent, verbose=False):
         print(r.status_code)
         print(r.headers)
         print(r.content)
-    soup = bs4.BeautifulSoup(r.content)
+    soup = bs4.BeautifulSoup(r.content, "html.parser")
     return(soup.find(text=re.compile(loggedInString)) is not None)
 
 if '__main__' == __name__:
