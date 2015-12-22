@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import subprocess, os, getpass
+import subprocess, os, getpass, argparse
 
 DEVNULL = open(os.devnull, 'wb')
 
@@ -11,9 +11,23 @@ def validate_password(pswd):
     except:
         return(False)
 
+def read_file(file):
+    with open(file, 'r') as f:
+        return([x.strip() for x in f.readlines()])
+
 if '__main__' == __name__:
-    pswd = getpass.getpass()
-    if validate_password(pswd):
-        print('that was it!')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file', help='file with words to check')
+    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
+    args = parser.parse_args()
+    if args.file:
+        for pswd in read_file(args.file):
+            if args.verbose: print('trying:{}'.format(pswd))
+            if validate_password(pswd):
+                print('valid:{}'.format(pswd))
     else:
-        print('wrong password')
+        pswd = getpass.getpass()
+        if validate_password(pswd):
+            print('that was it!')
+        else:
+            print('wrong password')
