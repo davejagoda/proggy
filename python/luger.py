@@ -9,6 +9,7 @@ import itertools, argparse
 def print_permutations(words, r):
     for item in itertools.permutations(words, r):
         print(''.join(item))
+        print(''.join([x.title() for x in item]))
 
 def get_list_of_words_from_file(file):
     with open(file, 'r') as f:
