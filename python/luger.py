@@ -6,6 +6,14 @@
 
 import itertools, argparse
 
+trans_table = {
+    'o': ['0'],
+    'i': ['1', '!'],
+    'a': ['@'],
+    's': ['$'],
+    'e': ['3']
+}
+
 def print_permutations(words, r):
     for item in itertools.permutations(words, r):
         print(''.join(item))
