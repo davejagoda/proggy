@@ -14,10 +14,33 @@ trans_table = {
     'e': ['3']
 }
 
+# walk each word
+# at each position, try all the transforms in the dictionary
+# as you generate each, call the wordwalker again from the new position
+# (so that all current positions are preserved)
+
+def walk_word(results, word, index, debug=False):
+    if len(word) == index:
+        if debug: print('done with this pass, result is:{}'.format(word))
+        results.append(word)
+        return
+    w = word[index] # just to save typing
+    if w in trans_table:
+        if debug: print('found in trans_table')
+        for value in trans_table[w]:
+            new_word =  word[:index] + value + word[index+1:]
+            if debug: print('value:{} new_word:{}'.format(value, new_word))
+            walk_word(results, new_word, index + 1, debug)
+    walk_word(results, word, index + 1, debug)
+
 def print_permutations(words, r):
     for item in itertools.permutations(words, r):
         print(''.join(item))
         print(''.join([x.title() for x in item]))
+#    integrate this code:
+#    results = []
+#    walk_word(results, word, 0, debug=False)
+#    print(results)
 
 def get_list_of_words_from_file(file):
     with open(file, 'r') as f:
