@@ -33,18 +33,21 @@ def walk_word(results, word, index, debug=False):
             walk_word(results, new_word, index + 1, debug)
     walk_word(results, word, index + 1, debug)
 
-def print_permutations(words, r):
-    for item in itertools.permutations(words, r):
-        print(''.join(item))
-        print(''.join([x.title() for x in item]))
+def expand_list_of_words(words):
+    words.extend([x.title() for x in words])
+    return(words)
 #    integrate this code:
 #    results = []
 #    walk_word(results, word, 0, debug=False)
 #    print(results)
 
+def print_permutations(words, r):
+    for item in itertools.permutations(words, r):
+        print(''.join(item))
+
 def get_list_of_words_from_file(file):
     with open(file, 'r') as f:
-        return(f.read().split())
+        return([x.lower() for x in f.read().split()])
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
@@ -54,6 +57,9 @@ if '__main__' == __name__:
     args = parser.parse_args()
     if args.verbose: print(args.file)
     words = get_list_of_words_from_file(args.file)
+    assert(list == type(words))
+    if args.verbose: print(words)
+    words = expand_list_of_words(words)
     if args.verbose: print(words)
     if args.maxWords:
         numWords = min(len(words), args.maxWords)
