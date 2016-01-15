@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, collections, argparse, pprint
+import argparse, operator
 
 def create_list_of_words_from_file(file):
     words = []
@@ -9,10 +9,9 @@ def create_list_of_words_from_file(file):
             words.extend(line.strip().split())
     return(words)
 
-def create_dict_of_uniq_words(words, verbose=False):
+def create_dict_of_uniq_words(words):
     uniq = {}
     for word in words:
-        if verbose: print word
         if word in uniq:
             uniq[word] += 1
         else:
@@ -21,8 +20,10 @@ def create_dict_of_uniq_words(words, verbose=False):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', help='be verbose')
     parser.add_argument('-f', '--file', help='file with words')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-k', '--keysort', action='store_true', help='sort based on key')
+    group.add_argument('-v', '--valsort', action='store_true', help='sort based on value')
     parser.add_argument('words', nargs='*', help='words on the commandline')
     args = parser.parse_args()
     if args.file:
@@ -30,4 +31,13 @@ if '__main__' == __name__:
     else:
         words = []
     words.extend(args.words)
-    pprint.pprint(create_dict_of_uniq_words(words, args.verbose), width=1)
+    dict = create_dict_of_uniq_words(words)
+    if not args.keysort and not args.valsort:
+        for k, v in dict.items():
+            print('{}: {}'.format(k, v))
+    if args.keysort:
+        for k, v in sorted(dict.items(), key=(operator.itemgetter(0))):
+            print('{}: {}'.format(k, v))
+    if args.valsort:
+        for k, v in sorted(dict.items(), key=(operator.itemgetter(1,0))):
+            print('{}: {}'.format(k, v))
