@@ -9,4 +9,7 @@ for file in sys.argv[1:]:
             linecount += 1
             for datum in line:
                 if datum not in string.printable:
-                    print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), unicodedata.name(datum)))
+                    try:
+                        print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), unicodedata.name(datum)))
+                    except:
+                        print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), 'no such unicode name exists'))
