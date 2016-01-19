@@ -2,7 +2,7 @@
 
 # http://en.wikipedia.org/wiki/List_of_Unicode_characters
 
-import sys, unicodedata
+import sys, unicodedata, argparse
 
 def number2u(n):
     if n <= 0xffff:
@@ -12,12 +12,19 @@ def number2u(n):
         print('n > 0xffff')
         return('U+' + '{0:05x}'.format(n))
 
-def number2desc(n):
+def unicode2desc(u):
     return(unicodedata.name(u))
 
-for arg in sys.argv[1:]:
+def process_argument(arg):
     print('argument: ' + arg + ' argument length ' + str(len(arg)))
     unicode_string = arg.decode('utf-8')
     for u in unicode_string:
         print(number2u(ord(u)) + ' ' + u + ' &#' + str(ord(u)) + ';')
-        print(number2desc(ord(u)))
+        print(unicode2desc(u))
+
+if '__main__' == __name__:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('arg', nargs='*')
+    args = parser.parse_args()
+    for arg in args.arg:
+        process_argument(arg)
