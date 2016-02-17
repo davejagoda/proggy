@@ -48,10 +48,12 @@ if '__main__' == __name__:
     r = requests.get(URL)
     assert(200 == r.status_code)
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
+    broken_bar = unichr(0x00a6)
     if args.grade:
         for row in get_one_section(soup, args.grade):
-            print(u':'.join(row))
+            print(broken_bar.join(row))
     else:
         for grade in range(1,7):
             for row in get_one_section(soup, grade):
-                print(u"['{}','{}',{}]".format(row[0],row[1],grade))
+                row.append(str(grade))
+                print(broken_bar.join(row))
