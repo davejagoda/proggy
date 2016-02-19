@@ -3,7 +3,7 @@
 
 import argparse, requests, bs4
 
-URL = 'https://en.wikipedia.org/wiki/ISO_3166-1'
+BASEURL = 'https://en.wikipedia.org'
 
 def parse_table(soup, verbose=False):
     results = []
@@ -24,6 +24,7 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
     args = parser.parse_args()
+    URL = BASEURL + '/wiki/ISO_3166-1'
     r = requests.get(URL)
     if args.verbose: print(r.status_code)
     assert(200 == r.status_code)
