@@ -7,7 +7,7 @@ URL = 'https://en.wikipedia.org/wiki/ISO_3166-1'
 
 def parse_table(soup, verbose=False):
     results = []
-    table = soup.find('table')
+    table = soup.find('table', 'wikitable sortable')
     if verbose: print(table)
     row_num = 0
     for tr in table.find_all('tr'):
