@@ -7,19 +7,22 @@ BASEURL = 'https://en.wikipedia.org'
 
 def parse_subtable(soup, verbose=False):
     results = []
-    table = soup.find('table', 'wikitable sortable')
-    if verbose: print(table)
-    if None == table:
+    tables = soup.find_all('table', 'wikitable sortable')
+    if verbose: print(tables)
+    if [] == tables:
         return(results)
-    row_num = 0
-    for tr in table.find_all('tr'):
-        if verbose: print(tr)
-        td = tr.find_all('td')
-        if 0 == len(td) and 0 == row_num:
-            if verbose: print('header!')
-        else:
-            results.append((td[0].text, td[1].text))
-        row_num += 1
+    for table in tables:
+        row_num = 0
+        for tr in table.find_all('tr'):
+            if verbose: print(tr)
+            td = tr.find_all('td')
+            if 0 == len(td) and 0 == row_num:
+                if verbose: print('header!')
+            else:
+                key = td[0].text.split(' ')[0]
+                value = ' '.join(td[1].text.split('\n')).strip()
+                results.append((key, value))
+            row_num += 1
     return(results)
 
 def parse_table(soup, verbose=False):
