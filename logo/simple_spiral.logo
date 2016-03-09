@@ -1,0 +1,6 @@
+clearscreen window hideturtle
+repeat 360 [
+  forward 100
+  rt 89
+  wait 5
+]
