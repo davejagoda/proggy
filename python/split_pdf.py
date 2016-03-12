@@ -4,6 +4,13 @@
 # http://www.cs.cmu.edu/~benhdj/Mac/splitPDF.py
 # by benhdj@cs.cmu.edu (Benjamin Han)
 
+# this depends on CoreGraphics, which means it is OS X only
+# this should work on machines that have ghostscript installed:
+# http://www.cs.virginia.edu/~weimer/pdfsplit/pdfsplit
+# by Westley Weimer
+# Usage: pdfsplit input.pdf first_page last_page output.pdf
+# yes | gs -dBATCH -sOutputFile="$4" -dFirstPage=$2 -dLastPage=$3 -sDEVICE=pdfwrite "$1" >& /dev/null
+
 import argparse
 import os
 import CoreGraphics
