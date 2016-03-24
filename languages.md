@@ -1,3 +1,7 @@
+---
+title: languages
+layout: default
+---
 Arabic
 
 Bengali
