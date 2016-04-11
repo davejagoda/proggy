@@ -1,15 +1,24 @@
 #!/usr/bin/python
 
-import sys, string, codecs, unicodedata
+import sys, codecs, fileinput, string, unicodedata
 
-for file in sys.argv[1:]:
-    linecount = 0
-    with codecs.open(file, 'r', 'utf8') as f:
-        for line in f.readlines():
-            linecount += 1
-            for datum in line:
-                if datum not in string.printable:
-                    try:
-                        print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), unicodedata.name(datum)))
-                    except:
-                        print('line:{} -> {}:{}'.format(linecount, datum.encode('utf8'), 'no such unicode name exists'))
+def emit_output(filename, linenumber, character, charactername):
+    print('file:{} line:{} -> {}:{}'.format(filename, linenumber, character, charactername))
+
+def process_line(line):
+    for datum in line:
+        if datum not in string.printable:
+            try:
+                charactername = unicodedata.name(datum)
+            except:
+                charactername = 'no such unicode name exists'
+            emit_output(fileinput.filename(), fileinput.filelineno(), datum.encode('utf-8'), charactername)
+
+if '__main__' == __name__:
+    current_file = None
+    sys.stdin = codecs.getreader('utf-8')(sys.stdin)
+    for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
+        if fileinput.filename() != current_file:
+            current_file = fileinput.filename()
+            print('processing:{}'.format(current_file))
+        process_line(line)
