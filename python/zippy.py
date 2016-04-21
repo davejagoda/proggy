@@ -11,11 +11,17 @@ def walk_zips(srvr, userId):
                zip +\
                '</Zip5></ZipCode></CityStateLookupRequest>'
         print(path)
-        conn = httplib.HTTPConnection(srvr)
-        conn.request('GET', path)
-        resp = conn.getresponse()
-        print('status:{} reason:{} data:{}'.format(resp.status, resp.reason, resp.read()))
-        conn.close()
+        done = False
+        while not done:
+            try:
+                conn = httplib.HTTPConnection(srvr)
+                conn.request('GET', path)
+                resp = conn.getresponse()
+                print('status:{} reason:{} data:{}'.format(resp.status, resp.reason, resp.read()))
+                conn.close()
+                done = True
+            except Exception as e:
+                print('Exception:{}'.format(str(e)))
 #        time.sleep(60) # 70 days!
         time.sleep(5) # 3 days
 #handle this error more gracefully:
