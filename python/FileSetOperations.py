@@ -14,9 +14,8 @@ def handleArguments():
     return(args.f1, args.f2, args.difference, args.intersection, args.union, args.verbose)
 
 def fileToSet(file):
-    f = open(file)
-    lines = [line.strip() for line in f.readlines()]
-    f.close()
+    with open(file) as f:
+        lines = [line.strip() for line in f.readlines()]
     return(set(lines))
 
 if '__main__' == __name__:
