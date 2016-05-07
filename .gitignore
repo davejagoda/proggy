@@ -6,3 +6,6 @@
 
 # Ruby bundler
 /vendor/
+
+# Jekyll
+/_site/
