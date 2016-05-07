@@ -4,8 +4,6 @@
 # Python
 *.py[cod]
 
-# Ruby bundler
-/vendor/
-
-# Jekyll
+#jekyll
 /_site/
+/vendor/
