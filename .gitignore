@@ -1,6 +1,3 @@
-#emacs
-*~
-
 #jekyll
-_site/
-vendor/
+/_site/
+/vendor/
