@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import argparse
+import argparse, re
 
 def handleArguments():
     parser = argparse.ArgumentParser()
@@ -18,20 +18,29 @@ def fileToSet(file):
         lines = [line.strip() for line in f.readlines()]
     return(set(lines))
 
+def printed_nicely(label, s):
+    print('{}:'.format(label))
+    """ Sort the given iterable in the way that humans expect."""
+# http://stackoverflow.com/questions/2669059/how-to-sort-alpha-numeric-set-in-python
+    convert = lambda text: int(text) if text.isdigit() else text
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    for item in sorted(s, key = alphanum_key):
+        print(' {}'.format(item))
+
 if '__main__' == __name__:
     (f1, f2, diff, inter, union, verbose) = handleArguments()
     s1 = fileToSet(f1)
     s2 = fileToSet(f2)
     if verbose:
-        print('s1:'+str(s1))
-        print('s2:'+str(s2))
+        printed_nicely('s1', s1)
+        printed_nicely('s2', s2)
     if diff:
-        print('s1-s2' + str(s1-s2))
-        print('s2-s1' + str(s2-s1))
+        printed_nicely('s1-s2', s1-s2)
+        printed_nicely('s2-s1', s2-s1)
     if inter:
-        print('intersection:' + str(s1&s2))
+        printed_nicely('intersection:', s1&s2)
     if union:
-        print('union:' + str(s1|s2))
+        printed_nicely('union:', s1|s2)
     if s1.issubset(s2) and s2.issubset(s1):
         print('the sets are the same')
     else:
