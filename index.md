@@ -8,4 +8,6 @@ directory called `proggy`. This is that pile.
 
 [code](https://github.com/davejagoda/proggy)
 
+[hello](hello.html)
+
 [languages](languages.html)
