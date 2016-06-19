@@ -6,3 +6,7 @@ layout: default
 ```python
 print('hello')
 ```
+
+```ruby
+puts 'hello'
+```
