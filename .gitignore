@@ -7,3 +7,6 @@
 #jekyll
 /_site/
 /vendor/
+
+#virtualenv
+/python/venv/
