@@ -1,7 +1,7 @@
 * columns matter in fortran
 * to compile:
-* gfortran centigrade_to_fahrenheit.for -o centigrade_to_fahrenheit
-      PROGRAM CENTIGRADE_TO_FAHRENHEIT
+* gfortran fahrenheit_celsius.for -o fahrenheit_celsius
+      PROGRAM FAHRENHEIT_CELSIUS
       INTEGER C, Z
       REAL R
       PARAMETER (Z = 32)
