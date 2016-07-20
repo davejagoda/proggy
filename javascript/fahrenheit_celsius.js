@@ -1,7 +1,5 @@
 #!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
 
-/* columns don't matter in JavaScript */
-
 lower =   0; /* lower limit of temperature table */
 upper = 300; /* upper limit of temperature table */
 step  =  20; /* step size */
