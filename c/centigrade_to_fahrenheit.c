@@ -2,7 +2,7 @@
 
 /* columns don't matter in c
  to compile:
- gcc centrigrade_to_fahrenheit.c -o centrigrade_to_fahrenheit */
+ gcc centigrade_to_fahrenheit.c -o centigrade_to_fahrenheit */
 
 int main()
 {

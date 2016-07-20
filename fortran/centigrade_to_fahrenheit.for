@@ -1,6 +1,6 @@
 * columns matter in fortran
 * to compile:
-* gfortran centrigrade_to_fahrenheit.for -o centrigrade_to_fahrenheit
+* gfortran centigrade_to_fahrenheit.for -o centigrade_to_fahrenheit
       PROGRAM CENTIGRADE_TO_FAHRENHEIT
       INTEGER C, Z
       REAL R
