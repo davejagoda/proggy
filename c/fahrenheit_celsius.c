@@ -2,7 +2,7 @@
 
 /* columns don't matter in c
  to compile:
- gcc fahrenheit-celsius.c -o fahrenheit-celsius */
+ gcc fahrenheit_celsius.c -o fahrenheit_celsius */
 
 int main()
 {
