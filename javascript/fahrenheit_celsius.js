@@ -10,6 +10,6 @@ var step  =  20; /* step size */
 var fahr = lower;
 while (fahr <= upper) {
     var celsius = (5.0/9.0) * (fahr-32.0);
-    print(pad(fahr.toFixed(0), 3), pad(celsius.toFixed(1), 6));
+    print(pad(fahr.toFixed(),3), pad(celsius.toFixed(1),6));
     fahr = fahr + step;
 }
