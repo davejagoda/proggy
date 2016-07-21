@@ -3,6 +3,8 @@
 require 'bundler/setup'
 require 'rouge'
 
+puts('Rouge version: ' + Rouge.version)
+
 for arg in ARGV
   puts arg
   source = File.read(arg)
