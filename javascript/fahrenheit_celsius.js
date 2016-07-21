@@ -1,12 +1,17 @@
 #!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
 
-lower =   0; /* lower limit of temperature table */
-upper = 300; /* upper limit of temperature table */
-step  =  20; /* step size */
+function leftPad (str, len) {
+    while (str.length < len) str = ' ' + str;
+    return str;
+}
 
-fahr = lower;
+var lower =   0; /* lower limit of temperature table */
+var upper = 300; /* upper limit of temperature table */
+var step  =  20; /* step size */
+
+var fahr = lower;
 while (fahr <= upper) {
-    celsius = (5.0/9.0) * (fahr-32.0);
-    print(fahr, celsius.toFixed(1));
+    var celsius = (5.0/9.0) * (fahr-32.0);
+    print(leftPad(fahr.toFixed(0), 3), leftPad(celsius.toFixed(1), 6));
     fahr = fahr + step;
 }
