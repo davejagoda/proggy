@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 if (2 != $argc) {
-    echo "need exactly one argument: full path to wp-config.php file";
+    echo "need exactly one argument: full path to wp-config.php file\n";
     exit;
 }
 
