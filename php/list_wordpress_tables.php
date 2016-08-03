@@ -12,7 +12,13 @@ if (! mysql_connect(DB_HOST, DB_USER, DB_PASSWORD)) {
     exit;
 }
 
-$tables = mysql_list_tables(DB_NAME);
-while($table = mysql_fetch_row($tables)) {
-    echo "$table[0]\n";
+$result = mysql_list_tables(DB_NAME);
+while($row = mysql_fetch_row($result)) {
+    $tables[] = $row[0];
 }
+
+foreach ($tables as $table) {
+    $result = mysql_query("SELECT COUNT(*) FROM $table");
+    echo $table, " ", mysql_result($result, 0), "\n";
+}
+?>
