@@ -23,11 +23,13 @@ def getSess(url, username, password, useragent, verbose=0):
     if verbose > 1:
         print(soup)
     for f in soup.find_all('form'):
-        if 'post' == f['method']:
+        if f.has_attr('method') and 'post' == f['method']:
             action = f['action']
             if verbose > 0:
                 print('ACTION:',action)
             for c in f.find_all('input'):
+                if verbose > 0:
+                    print('INPUT:{}'.format(c))
                 try:
                     value = c['value']
                 except:
@@ -76,7 +78,7 @@ if '__main__' == __name__:
     parser.add_argument('-a', '--userAgentString')
     parser.add_argument('-v', '--verbose', action='count')
     args = parser.parse_args()
-    if args.verbose:
+    if args.verbose > 0:
         print(args.site, args.username, args.password)
     (s, action, data) = getSess(args.site, args.username, args.password, args.userAgentString, verbose=args.verbose)
     if args.verbose > 0:
