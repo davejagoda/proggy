@@ -25,8 +25,8 @@ def getSess(url, tag, verbose=0):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-u', '--url', required=True)
-    parser.add_argument('-t', '--tag', required=True)
+    parser.add_argument('url')
+    parser.add_argument('tag')
     parser.add_argument('-v', '--verbose', action='count')
     args = parser.parse_args()
     if args.verbose > 0:
