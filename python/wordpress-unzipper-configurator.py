@@ -8,10 +8,9 @@
 
 import argparse, os, subprocess
 
-def process_wordpress_directory(new_dir_name, basename):
+def process_wordpress_directory(new_dir_name, basename, verbose):
     wp_config        = os.path.join(new_dir_name, 'wp-config.php')
     wp_config_sample = os.path.join(new_dir_name, 'wp-config-sample.php')
-    print(wp_config_sample)
     assert(not os.path.exists(wp_config))
     assert(os.path.isfile(wp_config_sample))
     with open(wp_config_sample, 'r') as org_f:
@@ -25,7 +24,7 @@ def process_wordpress_directory(new_dir_name, basename):
                     line = "define('DB_PASSWORD', '{}');\r\n".format(basename)
                 new_f.write(line)
 
-def process_zip(zip_file_name, src, dst):
+def process_zip(zip_file_name, src, dst, verbose):
     zip_file_with_path = os.path.join(src, zip_file_name)
     assert(os.path.isfile(zip_file_with_path))
     basename, extension = os.path.splitext(zip_file_name)
@@ -37,21 +36,22 @@ def process_zip(zip_file_name, src, dst):
     os.rename(org_dir_name, new_dir_name)
     return(new_dir_name, basename)
 
-def process_directory(src, dst):
+def process_directory(src, dst, verbose):
     assert(os.path.isdir(src))
     assert(not os.path.exists(dst))
-    print('{} is a directory'.format(src))
     for root, dirs, filenames in os.walk(src):
         for filename in filenames:
-            print('about to process {}'.format(filename))
-            new_dir_name, basename = process_zip(filename, root, dst)
-            print('about to process directory {}'.format(new_dir_name))
-            process_wordpress_directory(new_dir_name, basename)
+            if verbose > 0:
+                print('about to process {}'.format(filename))
+            new_dir_name, basename = process_zip(filename, root, dst, verbose)
+            if verbose > 0:
+                print('about to process directory {}'.format(new_dir_name))
+            process_wordpress_directory(new_dir_name, basename, verbose)
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='count', help='show verbose output')
     parser.add_argument('-s', '--src', help='directory full of zip files', required=True)
     parser.add_argument('-d', '--dst', help='directory in which to unzip', required=True)
     args = parser.parse_args()
-    process_directory(args.src, args.dst)
+    process_directory(args.src, args.dst, args.verbose)
