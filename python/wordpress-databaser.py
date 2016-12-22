@@ -8,6 +8,11 @@ import argparse, os, subprocess
 
 def create_wordpress_database(db_name, verbose):
     subprocess.check_output(['mysqladmin', '-u', 'root', 'create', db_name])
+    db_command = 'GRANT ALL PRIVILEGES ON {0}.* TO "{0}"@"localhost" IDENTIFIED BY "{0}";'.format(db_name)
+    if verbose > 0:
+        print(db_command)
+    p1 = subprocess.Popen(['echo', db_command], stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(['mysql', '-uroot', db_name], stdin=p1.stdout)
 
 def drop_wordpress_database(db_name, verbose):
     subprocess.check_output(['mysqladmin', '-u', 'root', '-f', 'drop', db_name])
@@ -19,10 +24,12 @@ def process_directory(src, dropDatabase, verbose):
         for dir_name in dirs:
             if verbose > 0:
                 print('about to process {}'.format(dir_name))
+            db_name = dir_name.replace('-','_') # convert '-' to '_' to reduce quoting in MySQL
+            db_name = db_name.replace('.','_') # convert '.' to '_' to reduce quoting in MySQL
             if dropDatabase:
-                drop_wordpress_database(dir_name, verbose)
+                drop_wordpress_database(db_name, verbose)
             else:
-                create_wordpress_database(dir_name, verbose)
+                create_wordpress_database(db_name, verbose)
         break # only want the first level of directories
 
 if '__main__' == __name__:
