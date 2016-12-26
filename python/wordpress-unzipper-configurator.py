@@ -13,15 +13,17 @@ def process_wordpress_directory(new_dir_name, basename, verbose):
     wp_config_sample = os.path.join(new_dir_name, 'wp-config-sample.php')
     assert(not os.path.exists(wp_config))
     assert(os.path.isfile(wp_config_sample))
+    db_name = basename.replace('-','_') # convert '-' to '_' to reduce quoting in MySQL
+    db_name = db_name.replace('.','_') # convert '.' to '_' to reduce quoting in MySQL
     with open(wp_config_sample, 'r') as org_f:
         with open(wp_config, 'w') as new_f:
             for line in org_f:
                 if line.startswith("define('DB_NAME'"):
-                    line = "define('DB_NAME', '{}');\r\n".format(basename)
+                    line = "define('DB_NAME', '{}');\r\n".format(db_name)
                 if line.startswith("define('DB_USER'"):
-                    line = "define('DB_USER', '{}');\r\n".format(basename)
+                    line = "define('DB_USER', '{}');\r\n".format(db_name)
                 if line.startswith("define('DB_PASSWORD'"):
-                    line = "define('DB_PASSWORD', '{}');\r\n".format(basename)
+                    line = "define('DB_PASSWORD', '{}');\r\n".format(db_name)
                 new_f.write(line)
 
 def process_zip(zip_file_name, src, dst, verbose):
