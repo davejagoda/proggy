@@ -1,5 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import time
 
-print time.time()
+print(time.time())
