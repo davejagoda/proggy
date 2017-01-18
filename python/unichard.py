@@ -5,6 +5,7 @@ import unicodedata
 
 def make_table_of_characters():
     characters = {}
+    characters['all']                   = 0x00000
     characters['businessmanlevitating'] = 0x1f574
     characters['copyright']             = 0x000a9
     characters['floppy']                = 0x1f4be
@@ -27,6 +28,6 @@ if '__main__' == __name__:
         parser.add_argument(arg_name, action='store_true')
     args = parser.parse_args()
     for k, v in args.__dict__.items():
-        if v:
-            print(chr(characters[k]), end='')
+        if args.all or v:
+            print(chr(characters[k]), ' ', end='')
     print()
