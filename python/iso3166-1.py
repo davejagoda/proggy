@@ -7,7 +7,8 @@ BASEURL = 'https://en.wikipedia.org'
 
 def parse_table(soup, verbose=False):
     results = []
-    table = soup.find('table', 'wikitable sortable')
+    # get the last table
+    table = soup.find_all('table', 'wikitable sortable')[-1]
     if verbose: print(table)
     row_num = 0
     for tr in table.find_all('tr'):
