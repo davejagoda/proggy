@@ -52,7 +52,8 @@ def process_directory(src, dst, verbose):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='count', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='increase output verbosity')
     parser.add_argument('-s', '--src', help='directory full of zip files', required=True)
     parser.add_argument('-d', '--dst', help='directory in which to unzip', required=True)
     args = parser.parse_args()

@@ -34,7 +34,8 @@ def process_directory(src, dropDatabase, verbose):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='count', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='increase output verbosity')
     parser.add_argument('-s', '--src', help='directory of unzipped wordpress installs', required=True)
     parser.add_argument('--dropDatabase', action='store_true', help='drop all matching databases, very dangerous!')
     args = parser.parse_args()
