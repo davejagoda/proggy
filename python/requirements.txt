@@ -1,4 +1,5 @@
 awscli
 beautifulsoup4
+boto3
 html5lib
 requests
