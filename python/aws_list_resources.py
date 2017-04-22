@@ -4,30 +4,51 @@
 
 import argparse
 import boto3
-import pprint
 import Queue
 import threading
 
 def output_region_data(element):
-    (region_name, resources) = element
-    if 0 == len(resources):
-        print('{}:{}'.format(region_name, 'None'))
-    else:
-        print(region_name)
-        for item in resources:
-            pprint.pprint(item)
+    (region_name, keys, resv, secg) = element
+    print(region_name)
+    if keys: print(keys)
+    if resv: print(resv)
+    if secg: print(secg)
+
+def extract_response(response, response_type):
+    assert(2 == len(response))
+    assert(200 == response['ResponseMetadata']['HTTPStatusCode'])
+    results = response[response_type]
+    assert(list == type(results))
+    return(results)
+
+def parse_keys_response(response):
+    keys = extract_response(response, 'KeyPairs')
+    return('\n'.join(['K {} {}'.format(k['KeyFingerprint'],
+                                     k['KeyName']) for k in keys]))
+
+def parse_resv_response(response):
+    resv = extract_response(response, 'Reservations')
+    return('\n'.join(['I {} {} {} {} {}'.format(r['Instances'][0]['InstanceId'],
+                                                r['Instances'][0]['ImageId'],
+                                                r['Instances'][0]['InstanceType'],
+                                                r['Instances'][0]['PublicDnsName'],
+                                                r['Instances'][0]['KeyName']) for r in resv]))
+
+def parse_secg_response(response):
+    secg = extract_response(response, 'SecurityGroups')
+    return('\n'.join(['S {} {} {}'.format(s['GroupId'],
+                                          s['GroupName'],
+                                          s['Description']) for s in secg]))
 
 def get_instance_data_from_region(q, region_name):
     session = boto3.session.Session(region_name=region_name)
     ec2 = session.client('ec2')
-    response = ec2.describe_instances()
-    assert(2 == len(response))
-    for resource in response:
-        if 'ResponseMetadata' != resource:
-            assert('Reservations' == resource)
-            assert(list == type(response[resource]))
-            q.put((region_name, response[resource]))
-    return
+
+    keys = parse_keys_response(ec2.describe_key_pairs())
+    resv = parse_resv_response(ec2.describe_instances())
+    secg = parse_secg_response(ec2.describe_security_groups())
+
+    q.put((region_name, keys, resv, secg))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
