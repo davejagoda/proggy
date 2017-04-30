@@ -53,7 +53,7 @@ def get_instance_data_from_region(q, region_name):
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--threads', action='store_true',
-                        help='use this argument to run mutiple threads')
+                        help='use this argument to run multiple threads')
     args = parser.parse_args()
     ec2 = boto3.client('ec2')
     response = ec2.describe_regions()
