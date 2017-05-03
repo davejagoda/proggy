@@ -10,3 +10,6 @@
 
 #virtualenv
 /python/venv/
+
+#npm
+/javascript/node_modules/
