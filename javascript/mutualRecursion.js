@@ -1,15 +1,15 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 // this kills Safari
 
 function chicken(arg) {
-  print("chicken:" + ++arg);
+  console.log('chicken:' + ++arg);
   return egg(arg);
 }
 
 function egg(arg) {
-  print("egg:" + ++arg);
+  console.log('egg:' + ++arg);
   return chicken(arg);
 }
 
-print(chicken(0) + " came first.");
+console.log(chicken(0) + ' came first.');

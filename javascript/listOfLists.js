@@ -1,4 +1,4 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 var listOfLists = [
   ['A ', 'あ', 'ア'],
@@ -51,7 +51,7 @@ var listOfLists = [
   ['N ', 'ん', 'ン']
 ];
 
-print('list length:' + listOfLists.length);
+console.log('list length:' + listOfLists.length);
 for (var i = 0; i < listOfLists.length; i++) {
-  print(listOfLists[i][0] + ' is ' + listOfLists[i][1] + ' is ' + listOfLists[i][2]);
+  console.log(listOfLists[i][0] + ' is ' + listOfLists[i][1] + ' is ' + listOfLists[i][2]);
 }

@@ -1,9 +1,9 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 // this should take an argument
 // what is lstrip and rstrip or strip all whitespace in JavaScript?
 
-listOfLists = [
+var listOfLists = [
   ['A ', 'あ', 'ア'],
   ['I ', 'い', 'イ'],
   ['U ', 'う', 'ウ'],
@@ -55,7 +55,7 @@ listOfLists = [
 ];
 
 function findIt(s, lol) {
-  print(s);
+  console.log(s);
   for (var i = 0; i < lol.length; i++) {
     for (var j = 0; j < lol[i].length; j++) {
       if (s.toUpperCase() === lol[i][j]) {
@@ -66,12 +66,13 @@ function findIt(s, lol) {
   return([-1,-1]);
 }
 
-print('list length:' + listOfLists.length);
+console.log('list length:' + listOfLists.length);
 for (var i = 0; i < listOfLists.length; i++) {
-  print(listOfLists[i][0] + ' is ' + listOfLists[i][1] + ' is ' + listOfLists[i][2]);
+  console.log(listOfLists[i][0] + ' is ' + listOfLists[i][1] + ' is ' + listOfLists[i][2]);
 }
 
-print(findIt('WO', listOfLists));
-print(findIt('wo', listOfLists));
-print(findIt('ん', listOfLists));
-print(findIt('a', listOfLists));
+console.log(findIt('WO', listOfLists));
+console.log(findIt('wo', listOfLists));
+console.log(findIt('ん', listOfLists));
+console.log(findIt('a ', listOfLists));
+console.log(findIt('日', listOfLists));

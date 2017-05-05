@@ -1,10 +1,10 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 var i = 1;
 var j = 1;
 
 while ( j !== 0 ) {
-    j = j / 2;
-    print(i, j);
-    i++;
+  j = j / 2;
+  console.log(i, j);
+  i++;
 }

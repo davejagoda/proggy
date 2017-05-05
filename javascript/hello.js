@@ -1,8 +1,8 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 function main() {
-    print("main");
+  console.log('main');
 }
 
-print("hello");
+console.log('hello');
 main();

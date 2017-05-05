@@ -1,12 +1,12 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
 var dict = {'a': '1',
-	    'b': '2',
-	    'c': '3'};
+            'b': '2',
+            'c': '3'};
 
-print('dict:' + dict);
-print('keys:' + Object.keys(dict));
+console.log('dict:' + dict);
+console.log('keys:' + Object.keys(dict));
 
 for (var key in dict) {
-    print('key:' + key + ' value:' + dict[key]);
+  console.log('key:' + key + ' value:' + dict[key]);
 }

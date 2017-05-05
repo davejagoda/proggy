@@ -1,3 +1,3 @@
-#!/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc
+#!/usr/bin/env node
 
-print(String.fromCharCode(0x203d));
+console.log(String.fromCharCode(0x203d));

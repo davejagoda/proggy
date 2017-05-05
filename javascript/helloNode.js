@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 var http = require('http');
-var port = 8080
-var data = '<!doctype html>\n<html>\n<head>\n<title>hello</title>\n<meta charset="utf-8" />\n</head>\n<body>\n<b>hello</b>\n</body>\n</html>\n'
+var port = 8080;
+var data = '<!doctype html>\n<html>\n<head>\n<title>hello</title>\n<meta charset="utf-8" />\n</head>\n<body>\n<b>hello</b>\n</body>\n</html>\n';
 
 http.createServer(function (req, res) {
   console.log('url: ' + req.url);
