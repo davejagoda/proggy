@@ -9,13 +9,14 @@ class Bicycle(object):
     '''
     A bicycle has the following attributes:
 
-    chainring_teeth: a list of integers representing the number of teeth on the chainring
-    cog_teeth: a list of integers representing the number of teeth on the cog
-    tire_size: the size of the bike tire in inches or millimeters
-    tire_units: a string either 'mm' or 'in'
+    chainring_teeth: list of integers representing the number of chainring teeth
+    cog_teeth:       list of integers representing the number of cog teeth
+    tire_size:       size of the bike tire in inches or millimeters
+    tire_units:      string either 'mm' or 'in'
     '''
 
-    def __init__(self, name, chainring_teeth=[44], cog_teeth=[16], tire_size=700, tire_units='mm'):
+    def __init__(self, name, chainring_teeth=[44], cog_teeth=[16],
+                 tire_size=700, tire_units='mm'):
         self.name = name
         self.chainring_teeth = chainring_teeth
         self.cog_teeth = cog_teeth
@@ -24,7 +25,8 @@ class Bicycle(object):
 
     def __repr__(self):
         return('name:{}\nchainrings:{}\ncogs:{}\nsize:{}\nunits:{}'.\
-                   format(self.name, self.chainring_teeth, self.cog_teeth, self.tire_size, self.tire_units))
+                   format(self.name, self.chainring_teeth, self.cog_teeth,
+                          self.tire_size, self.tire_units))
 
     def biggest_gear_ratio(self):
         return(float(max(self.chainring_teeth))/float(min(self.cog_teeth)))
@@ -54,7 +56,8 @@ class Bicycle(object):
         return(ratios)
 
 if '__main__' == __name__:
-    bikes = [Bicycle('fixie'), Bicycle('my bike', chainring_teeth=[52,42], cog_teeth=[13,15,17,19,21,23])]
+    bikes = [Bicycle('fixie'), Bicycle('road', chainring_teeth=[52,42],
+                                       cog_teeth=[13,15,17,19,21,23])]
     for bike in bikes:
         print(bike)
         print('biggest gear ratio:{}'.format(bike.biggest_gear_ratio()))
