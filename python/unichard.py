@@ -17,6 +17,7 @@ def make_table_of_characters():
     characters['pi']                    = 0x003a0
     characters['poo']                   = 0x1f4a9
     characters['radical']               = 0x0221a
+    characters['sunglasses']            = 0x1f60e
     characters['tengu']                 = 0x1f47a
     return(characters)
 
