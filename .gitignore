@@ -8,8 +8,5 @@
 /_site/
 /vendor/
 
-#virtualenv
-/python/venv/
-
 #npm
 /javascript/node_modules/

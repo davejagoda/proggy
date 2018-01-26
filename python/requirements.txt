@@ -1,7 +1,0 @@
-# -*- coding: utf-8 -*-
-awscli
-beautifulsoup4
-boto3
-dateparser
-html5lib
-requests
