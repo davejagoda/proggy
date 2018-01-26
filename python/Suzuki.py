@@ -1,3 +1,3 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-print unichr(0x9234).encode('utf8') + unichr(0x6728).encode('utf8')
+print(chr(0x9234) + chr(0x6728))
