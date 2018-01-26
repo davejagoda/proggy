@@ -1,6 +1,3 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-print unichr(0x2669).encode('utf8'),
-print unichr(0x266a).encode('utf8'),
-print unichr(0x266b).encode('utf8'),
-print unichr(0x266c).encode('utf8')
+print(' '.join([chr(0x2669), chr(0x266a), chr(0x266b), chr(0x266c)]))
