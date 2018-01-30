@@ -20,10 +20,8 @@ def print_unicode_entry(n):
 # in position 0: ordinal not in range(128)
 
     print u.encode('utf8'), unicodedata.category(u),
-    try:
-        print unicodedata.name(u)
-    except:
-        print 'unicodedata has no name defined'
+    print unicodedata.name(u, 'unicodedata has no name defined')
+
 if __name__ == '__main__':
     for i in xrange(0x110000):
         print_unicode_entry(i)
