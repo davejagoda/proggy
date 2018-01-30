@@ -12,15 +12,15 @@ def print_unicode_entry(n):
 #    else:
 #        u = unichr(n)
     u = get_unicode_using_unicode_escape(n)
-    print '{:8d} {:8x}'.format(n, n),
+    print '{:7d} {:6x} {} {} {}'.format(
+        n, n, u.encode('utf8'), unicodedata.category(u),
+        unicodedata.name(u, 'unicodedata has no name defined')
+        )
 
 # you'll get this error if you try to pipe the output to 'more' or to a file
 # without encoding the unicode string (default encoding is 'ASCII'):
 # UnicodeEncodeError: 'ascii' codec can't encode character u'\x80'
 # in position 0: ordinal not in range(128)
-
-    print u.encode('utf8'), unicodedata.category(u),
-    print unicodedata.name(u, 'unicodedata has no name defined')
 
 if __name__ == '__main__':
     for i in xrange(0x110000):
