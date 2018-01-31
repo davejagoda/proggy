@@ -11,13 +11,15 @@ import subprocess
 import sys
 import urlparse
 
-def transform_owner(s, owner_name=None):
-    # validate the file
+def transform_owner(s, owner_name, verbose):
+    # validate the file and set owner if not provided
     for line in s:
         m = re.search(r'Owner: (\S+)$', line)
         if m:
             if None == owner_name:
                 owner_name=m.group(1)
+                if verbose > 0:
+                    print('transform_owner found owner:{}'.format(owner_name))
             assert(owner_name == m.group(1))
         m = re.search(r'OWNER TO (\S+);$', line)
         if m:
@@ -48,31 +50,36 @@ def transform_uk_constraints(s):
         new_s.append(line)
     return(new_s)
 
-def get_dburl_from_app_name(app_name):
+def get_dburl_from_app_name(app_name, verbose):
+    if verbose > 0:
+        print('getting dburl from app name')
     return(subprocess.check_output(['heroku', 'config:get', 'DATABASE_URL',
                                     '-a', app_name]).rstrip())
 
-def get_dburl_from_remote_name(remote_name):
+def get_dburl_from_remote_name(remote_name, verbose):
+    if verbose > 0:
+        print('getting dburl from remote name')
     return(subprocess.check_output(['heroku', 'config:get', 'DATABASE_URL',
                                     '-r', remote_name]).rstrip())
 
-def parse_dburl(dburl):
-    print('this is a dburl:{}'.format(dburl))
-# postgres://u1gortvdvfd01u:p4iqaa9e0dfrki853jbv7rbojha@ec2-34-199-75-50.compute-1.amazonaws.com:5432/dauu64pup9pcvu
-# postgres://uefmnl76p2hlj6:p7d2e0egsdpc6g8rdkvg5eh972s@ec2-107-22-248-239.compute-1.amazonaws.com:5472/d41ieoml16tkrd
-# regex should handle no username, no password, and no port
+def parse_dburl(dburl, verbose):
+    if verbose > 0:
+        print('this is a dburl:{}'.format(dburl))
+# should handle no username, no password, and no port in dburl
     o = urlparse.urlparse(dburl)
     dbname = o.path[1:]  or 'postgres'
     dbhost = o.hostname  or 'localhost'
     dbport = str(o.port) or '5432'
     dbuser = o.username  or 'postgres'
     dbpass = o.password  or 'postgres'
-    print(dbname, dbhost, dbport, dbuser, dbpass)
+    if verbose > 0:
+        print(dbname, dbhost, dbport, dbuser, dbpass)
     return(dbname, dbhost, dbport, dbuser, dbpass)
 
-def get_data_from_dburl(dburl):
-    (dbname, dbhost, dbport, dbuser, dbpass) = parse_dburl(dburl)
-    print('boom', dbname, dbhost, dbport, dbuser, dbpass)
+def get_data_from_dburl(dburl, verbose):
+    (dbname, dbhost, dbport, dbuser, dbpass) = parse_dburl(dburl, verbose)
+    if verbose > 0:
+        print('getting data from dburl')
     env = os.environ
     env['PGPASSWORD'] = dbpass
     return(subprocess.check_output(['pg_dump', '-s',
@@ -105,6 +112,8 @@ if '__main__' == __name__:
                         help='do not xform unique key constraints')
     parser.add_argument('-w', '--write', action='store_true',
                         help='write xformed data')
+    parser.add_argument('-v', '--verbose', action='count',
+                        help='verbose output')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-a', '--app', action='store_true',
                        help='use heroku app config to get DBURL for schema')
@@ -118,25 +127,26 @@ if '__main__' == __name__:
     u1 = None
     u2 = None
     if args.app:
-        u1 = get_dburl_from_app_name(args.s1)
-        u2 = get_dburl_from_app_name(args.s2)
+        u1 = get_dburl_from_app_name(args.s1, args.verbose)
+        u2 = get_dburl_from_app_name(args.s2, args.verbose)
     if args.remote:
-        u1 = get_dburl_from_remote_name(args.s1)
-        u2 = get_dburl_from_remote_name(args.s2)
+        u1 = get_dburl_from_remote_name(args.s1, args.verbose)
+        u2 = get_dburl_from_remote_name(args.s2, args.verbose)
     if args.dburl:
         u1 = args.s1
         u2 = args.s2
-    print('dburl\n{}\n{}'.format(u1, u2))
     if args.file:
+        owner_name = None
         d1 = get_data_from_file(args.s1)
         d2 = get_data_from_file(args.s2)
     else:
-        # file not provided, get it from the DBURL
-        d1 = get_data_from_dburl(u1)
-        d2 = get_data_from_dburl(u2)
+        d1 = get_data_from_dburl(u1, args.verbose)
+        d2 = get_data_from_dburl(u2, args.verbose)
     if not args.no_owner_xform:
-        d1 = transform_owner(d1)
-        d2 = transform_owner(d2)
+        (_, _, _, o1, _) = parse_dburl(u1, args.verbose)
+        d1 = transform_owner(d1, o1, args.verbose)
+        (_, _, _, o2, _) = parse_dburl(u2, args.verbose)
+        d2 = transform_owner(d2, o2, args.verbose)
     if not args.no_fk_xform:
         d1 = transform_fk_constraints(d1)
         d2 = transform_fk_constraints(d2)
