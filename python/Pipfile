@@ -11,6 +11,7 @@ awscli = "*"
 "beautifulsoup4" = "*"
 "boto3" = "*"
 dateparser = "*"
+futures = "*"
 "html5lib" = "*"
 requests = "*"
 
