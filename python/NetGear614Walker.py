@@ -25,11 +25,11 @@ def get_radio(br):
     return br.response().read()
 
 def usage(program, ip, user, exit_status):
-    print "Usage: " + program + " [options]"
-    print "-h: display this message"
-    print "-d: IP address (default:" + ip + ")"
-    print "-u: username (default:" + user + ")"
-    print "-p: password"
+    print(("Usage: " + program + " [options]"))
+    print("-h: display this message")
+    print(("-d: IP address (default:" + ip + ")"))
+    print(("-u: username (default:" + user + ")"))
+    print("-p: password")
     sys.exit(exit_status)
 
 if __name__=='__main__':
@@ -51,14 +51,14 @@ if __name__=='__main__':
             password = arg
     if password == '':
         password = getpass.getpass()
-    print "IP:" + ip + " User:" + user + " Password:" + password
+    print(("IP:" + ip + " User:" + user + " Password:" + password))
     url = 'http://' + ip + '/'
     br = netgear_login(url, user, password)
-    print "AAA"
-    print "get uptime"
-    print get_uptime(br)
-    print "get status"
-    print get_status(br)
-    print "get radio"
-    print get_radio(br)
-    print "ZZZ"
+    print("AAA")
+    print("get uptime")
+    print((get_uptime(br)))
+    print("get status")
+    print((get_status(br)))
+    print("get radio")
+    print((get_radio(br)))
+    print("ZZZ")

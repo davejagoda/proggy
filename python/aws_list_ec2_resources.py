@@ -4,7 +4,7 @@
 
 import argparse
 import boto3
-import Queue
+import queue
 import threading
 
 def output_region_data(element):
@@ -57,7 +57,7 @@ if '__main__' == __name__:
     args = parser.parse_args()
     ec2 = boto3.client('ec2')
     response = ec2.describe_regions()
-    q = Queue.Queue()
+    q = queue.Queue()
     thread_list = []
     for region in response['Regions']:
         assert(2 == len(region))

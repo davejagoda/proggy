@@ -10,4 +10,4 @@ else:
     except:
         epoch = datetime.datetime.fromtimestamp(float(sys.argv[1])/1000.0)
 
-print(epoch.replace(microsecond=0).isoformat()+'Z')
+print((epoch.replace(microsecond=0).isoformat()+'Z'))

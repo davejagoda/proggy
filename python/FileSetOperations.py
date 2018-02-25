@@ -19,13 +19,13 @@ def fileToSet(file):
     return(set(lines))
 
 def printed_nicely(label, s):
-    print('{}:'.format(label))
+    print(('{}:'.format(label)))
     """ Sort the given iterable in the way that humans expect."""
 # http://stackoverflow.com/questions/2669059/how-to-sort-alpha-numeric-set-in-python
     convert = lambda text: int(text) if text.isdigit() else text
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     for item in sorted(s, key = alphanum_key):
-        print(' {}'.format(item))
+        print((' {}'.format(item)))
 
 if '__main__' == __name__:
     (f1, f2, diff, inter, union, verbose) = handleArguments()

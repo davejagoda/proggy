@@ -7,7 +7,7 @@
 import sys, datetime
 
 def printHeader():
-    print """<!DOCTYPE html>
+    print("""<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -43,14 +43,14 @@ def printHeader():
   </tr>
 </thead>
 <tbody>
-"""
+""")
 
 def printFooter():
-    print """</tbody>
+    print("""</tbody>
 </table>
 </body>
 </html>
-"""
+""")
 
 def getSundayStartDate(d):
     shiftDays = - ( (d.weekday() + 1) % 7)
@@ -74,21 +74,21 @@ if __name__ == '__main__':
 
     currDate = getSundayStartDate(startDate)
     printHeader()
-    for i in xrange(26*7):
+    for i in range(26*7):
         if i % 7 == 0:
-            print "  <tr>"
-        print "    <td>",
+            print("  <tr>")
+        print("    <td>", end=' ')
         if i == 0:
-            print currDate.year, currDate.strftime('%b'), currDate.day,
+            print(currDate.year, currDate.strftime('%b'), currDate.day, end=' ')
         else:
             if currDate.month == 1 and currDate.day == 1:
-                print currDate.year,
+                print(currDate.year, end=' ')
             if currDate.day == 1:
-                print currDate.strftime('%b'),
-            print currDate.day,
-        print "</td>"
+                print(currDate.strftime('%b'), end=' ')
+            print(currDate.day, end=' ')
+        print("</td>")
         if i % 7 == 6:
-            print "  </tr>"
+            print("  </tr>")
         currDate = currDate + datetime.timedelta(1)
 
     printFooter()

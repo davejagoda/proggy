@@ -26,7 +26,7 @@ def Spanish():
     with open('José', 'a') as f:
         f.write('José')
         f.write('\n')
-    jose = 'Jose' + unichr(0x301)
+    jose = 'Jose' + chr(0x301)
     with open(jose, 'a') as f:
         f.write(jose.encode('utf8'))
         f.write('\n')
@@ -34,12 +34,12 @@ def Spanish():
 def catalog(path):
     print(path)
     for root, dirs, files in os.walk(path):
-        print 'root', root, 'dirs', dirs, 'files', files
+        print(('root', root, 'dirs', dirs, 'files', files))
         for entry in files:
             if (isAscii(entry)):
                 pass
             else:
-                print('notAlpha', entry)
+                print(('notAlpha', entry))
 
 if '__main__' == __name__:
     Spanish()

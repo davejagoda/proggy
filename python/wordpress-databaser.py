@@ -23,7 +23,7 @@ def process_directory(src, dropDatabase, verbose):
     for root, dirs, filenames in os.walk(src):
         for dir_name in dirs:
             if verbose > 0:
-                print('about to process {}'.format(dir_name))
+                print(('about to process {}'.format(dir_name)))
             db_name = dir_name.replace('-','_') # convert '-' to '_' to reduce quoting in MySQL
             db_name = db_name.replace('.','_') # convert '.' to '_' to reduce quoting in MySQL
             if dropDatabase:

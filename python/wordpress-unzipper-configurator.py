@@ -44,10 +44,10 @@ def process_directory(src, dst, verbose):
     for root, dirs, filenames in os.walk(src):
         for filename in filenames:
             if verbose > 0:
-                print('about to process {}'.format(filename))
+                print(('about to process {}'.format(filename)))
             new_dir_name, basename = process_zip(filename, root, dst, verbose)
             if verbose > 0:
-                print('about to process directory {}'.format(new_dir_name))
+                print(('about to process directory {}'.format(new_dir_name)))
             process_wordpress_directory(new_dir_name, basename, verbose)
 
 if '__main__' == __name__:

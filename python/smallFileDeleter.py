@@ -12,17 +12,17 @@ def processDirectory(path, size):
 #            print(fullpath + ':' + str(os.path.getsize(fullpath)))
             if os.path.getsize(fullpath) <= size:
                 f = open(os.path.join(root, entry), 'rb')
-                print 'reading', entry
-                print f.read()
+                print(('reading', entry))
+                print((f.read()))
                 f.close()
-                print 'closing'
+                print('closing')
                 input_prompt = 'Press Y to delete file: ' + fullpath + ', anything else to keep it: '
-                response = raw_input(input_prompt)
+                response = eval(input(input_prompt))
                 if response == 'Y':
                     os.unlink(fullpath)
 
 def usage():
-    print('Usage: ' + sys.argv[0] + ' <directory> [<max file size>]')
+    print(('Usage: ' + sys.argv[0] + ' <directory> [<max file size>]'))
     sys.exit(1)
 
 if __name__ == '__main__':

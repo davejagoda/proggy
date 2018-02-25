@@ -27,10 +27,10 @@ if '__main__' == __name__:
     args = parser.parse_args()
     URL = BASEURL + '/wiki/ISO_3166-1'
     r = requests.get(URL)
-    if args.verbose: print(r.status_code)
+    if args.verbose: print((r.status_code))
     assert(200 == r.status_code)
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
     if args.verbose: print(soup)
-    broken_bar = unichr(0x00a6)
+    broken_bar = chr(0x00a6)
     for row in parse_table(soup, args.verbose):
-        print(broken_bar.join(row))
+        print((broken_bar.join(row)))

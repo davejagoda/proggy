@@ -27,5 +27,5 @@ if '__main__' == __name__:
             user = None
             host = remote
         if args.verbose:
-            print('{}@{}'.format(user, host))
-        print(host_connect(ssh, user, host, args.command))
+            print(('{}@{}'.format(user, host)))
+        print((host_connect(ssh, user, host, args.command)))

@@ -22,9 +22,9 @@ if '__main__' == __name__:
     args = parser.parse_args()
     if args.file:
         for pswd in read_file(args.file):
-            if args.verbose: print('trying:{}'.format(pswd))
+            if args.verbose: print(('trying:{}'.format(pswd)))
             if validate_password(pswd):
-                print('valid:{}'.format(pswd))
+                print(('valid:{}'.format(pswd)))
     else:
         pswd = getpass.getpass()
         if validate_password(pswd):

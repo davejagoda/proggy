@@ -3,7 +3,7 @@
 # examples:
 # ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u <USERNAME> -p <PIN> -l 'Logged in as '
 # ./requestBeauty.py -s https://stormy-escarpment-6340.herokuapp.com/admin -u <USERNAME> -p <PASSWORD> -l 'Welcome'
-import argparse, requests, bs4, re, urlparse
+import argparse, requests, bs4, re, urllib.parse
 
 def getSess(url, username, password, useragent, verbose=0):
     if useragent:
@@ -14,11 +14,11 @@ def getSess(url, username, password, useragent, verbose=0):
     s = requests.Session()
     r = s.get(url, headers=headers)
     if verbose > 0:
-        print('HTTP status_code:{}'.format(r.status_code))
-        print('HTTP history:{}'.format(r.history))
-        print('HTTP headers:{}'.format(r.headers))
+        print(('HTTP status_code:{}'.format(r.status_code)))
+        print(('HTTP history:{}'.format(r.history)))
+        print(('HTTP headers:{}'.format(r.headers)))
     if verbose > 1:
-        print(r.content)
+        print((r.content))
     soup = bs4.BeautifulSoup(r.content, 'html5lib')
     if verbose > 1:
         print(soup)
@@ -26,19 +26,19 @@ def getSess(url, username, password, useragent, verbose=0):
         if f.has_attr('method') and 'post' == f['method']:
             action = f['action']
             if verbose > 0:
-                print('ACTION:',action)
+                print(('ACTION:',action))
             for c in f.find_all('input'):
                 if verbose > 0:
-                    print('INPUT:{}'.format(c))
+                    print(('INPUT:{}'.format(c)))
                 try:
                     value = c['value']
                 except:
                     value = ''
                 if verbose > 0:
                     try:
-                        print(c['name'],c['type'], value.encode('utf8'))
+                        print((c['name'],c['type'], value.encode('utf8')))
                     except:
-                        print('NO NAME',c['type'], value.encode('utf8'))
+                        print(('NO NAME',c['type'], value.encode('utf8')))
                 if 'text' == c['type']:
                     value = username
                 if 'password' == c['type']:
@@ -46,7 +46,7 @@ def getSess(url, username, password, useragent, verbose=0):
                 try:
                     data.append((c['name'],value))
                 except:
-                    print('no name exception:{}'.format(c))
+                    print(('no name exception:{}'.format(c)))
     return(s, action, data)
 
 def postSess(s, url, data, loggedInString, useragent, verbose=0):
@@ -56,16 +56,16 @@ def postSess(s, url, data, loggedInString, useragent, verbose=0):
         headers = {'User-Agent': 'Mozilla/5.0'}
     headers['Referer'] = url
     if verbose > 0:
-        print('url:{}'.format(url))
-        print('headers:{}'.format(headers))
-        print('data:{}'.format(data))
+        print(('url:{}'.format(url)))
+        print(('headers:{}'.format(headers)))
+        print(('data:{}'.format(data)))
     r = s.post(url, headers=headers, data=data)
     if verbose > 0:
-        print('HTTP status_code:{}'.format(r.status_code))
-        print('HTTP history:{}'.format(r.history))
-        print('HTTP headers:{}'.format(r.headers))
+        print(('HTTP status_code:{}'.format(r.status_code)))
+        print(('HTTP history:{}'.format(r.history)))
+        print(('HTTP headers:{}'.format(r.headers)))
     if verbose > 1:
-        print(r.content)
+        print((r.content))
     soup = bs4.BeautifulSoup(r.content, 'html5lib')
     return(soup.find(text=re.compile(loggedInString)) is not None)
 
@@ -79,14 +79,14 @@ if '__main__' == __name__:
     parser.add_argument('-v', '--verbose', action='count')
     args = parser.parse_args()
     if args.verbose > 0:
-        print(args.site, args.username, args.password)
+        print((args.site, args.username, args.password))
     (s, action, data) = getSess(args.site, args.username, args.password, args.userAgentString, verbose=args.verbose)
     if args.verbose > 0:
         print(action)
         print(data)
-    (scheme, netloc, path, params, query, fragment) = urlparse.urlparse(action)
+    (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(action)
     if '' == scheme:
-        (scheme, netloc, path, params, query, fragment) = urlparse.urlparse(args.site)
+        (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(args.site)
         action = scheme + '://' + netloc + '/' + action
     if postSess(s, action, data, args.loggedInString, args.userAgentString, verbose=args.verbose):
         print('logged in')

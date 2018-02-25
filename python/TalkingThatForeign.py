@@ -14,5 +14,5 @@ for line in stdout.split('\n'):
         (left,right) = line.split('#')
         if (None == re.search(pattern, left)):
             leftsplit=left.split(' ');
-            print leftsplit[0], right
+            print((leftsplit[0], right))
             subprocess.call(['say', '-v', leftsplit[0], right])

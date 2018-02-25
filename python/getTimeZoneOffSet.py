@@ -13,4 +13,4 @@ if hh < 0:
     hh *= -1
 else:
     sign = '+'
-print('{}{:02d}:{:02d}'.format(sign,hh,mm))
+print(('{}{:02d}:{:02d}'.format(sign,hh,mm)))

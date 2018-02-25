@@ -11,7 +11,7 @@ class RandomClass:
         return('name:{} rank:{}'.format(self.name, self.rank))
 
 def random_generator():
-    ranks = range(10)
+    ranks = list(range(10))
     objects = []
     while ranks:
         selected = ranks.pop(random.randrange(len(ranks)))
@@ -22,6 +22,6 @@ def random_generator():
 if __name__ == '__main__':
     min_id = 0
     for o in sorted([o for o in random_generator()]):
-        print('id:{} {}'.format(id(o), o))
+        print(('id:{} {}'.format(id(o), o)))
         assert(min_id < id(o))
         min_id = id(o)

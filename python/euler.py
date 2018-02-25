@@ -16,11 +16,11 @@ if __name__ == "__main__":
     done = False
     while (not done):
         try:
-            print "%1.60f" % (1.0 / fac(i))
+            print(("%1.60f" % (1.0 / fac(i))))
             e += 1.0 / fac(i)
-            print "%1.60f" % e
+            print(("%1.60f" % e))
             i += 1
         except:
             done = True
 
-    print "%1.60f <- math.e" % math.e
+    print(("%1.60f <- math.e" % math.e))

@@ -6,7 +6,7 @@ def get_uptime(url, user, password):
     br = mechanize.Browser()
     br.set_handle_robots(False)
     br.add_password(url, user, password)
-    print br.open(url).code
+    print((br.open(url).code))
     r = br.response().read()
     p = re.search(r"System Up Time\D+<!>(.*)<!>", r)
     return p.group(1)
@@ -15,17 +15,17 @@ def get_uptime_no_401(url, user, password):
     b64login = base64.b64encode("%s:%s" % (user, password))
     br = mechanize.Browser()
     br.addheaders.append(("Authorization", "Basic " + b64login ))
-    print br.open(url).code
+    print((br.open(url).code))
     r = br.response().read()
     p = re.search(r"System Up Time\D+<!>(.*)<!>", r)
     return p.group(1)
 
 def usage(program, ip, user, exit_status):
-    print "Usage: " + program + " [options]"
-    print "-h: display this message"
-    print "-d: IP address (default:" + ip + ")"
-    print "-u: username (default:" + user + ")"
-    print "-p: password"
+    print(("Usage: " + program + " [options]"))
+    print("-h: display this message")
+    print(("-d: IP address (default:" + ip + ")"))
+    print(("-u: username (default:" + user + ")"))
+    print("-p: password")
     sys.exit(exit_status)
 
 if __name__=="__main__":
@@ -48,6 +48,6 @@ if __name__=="__main__":
     if password == "":
         password = getpass.getpass()
     url = "http://" + ip + "/RST_stattbl.htm"
-    print get_uptime_no_401(url, user, password)
+    print((get_uptime_no_401(url, user, password)))
 
 # why we are making one authed then one unauthed request?

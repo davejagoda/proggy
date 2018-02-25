@@ -23,11 +23,11 @@ def print_range(lo, hi):
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     ranges = make_table_of_ranges()
-    for r in ranges.keys():
+    for r in list(ranges.keys()):
         arg_name = '--{}'.format(r)
         parser.add_argument(arg_name, action='store_true')
     args = parser.parse_args()
-    for k, v in args.__dict__.items():
+    for k, v in list(args.__dict__.items()):
         if v:
             print(k)
             print_range(ranges[k][0], ranges[k][1])

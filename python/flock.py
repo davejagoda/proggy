@@ -10,7 +10,7 @@ except:
     print('failed to lock')
     sys.exit(1)
 
-raw_input('press a key to release lock and exit')
+eval(input('press a key to release lock and exit'))
 
 os.close(f)
 os.unlink(lockfile)

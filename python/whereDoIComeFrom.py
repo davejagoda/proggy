@@ -31,7 +31,7 @@ if '__main__' == __name__:
     lines = stdout.split('\n')
     for line in lines:
         process_line(line, places)
-    print(json.dumps(places, indent=2))
+    print((json.dumps(places, indent=2)))
     new_json_file_path = '{}.{}'.format(json_file_path, datetime.datetime.utcnow().replace(microsecond=0).isoformat()+'Z')
     with open(new_json_file_path, 'w') as f:
         json.dump(places, f)

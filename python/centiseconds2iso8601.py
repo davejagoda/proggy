@@ -3,4 +3,4 @@
 import datetime, sys
 
 for date in sys.argv[1:]:
-    print(datetime.datetime.fromtimestamp(float(date)/100))
+    print((datetime.datetime.fromtimestamp(float(date)/100)))

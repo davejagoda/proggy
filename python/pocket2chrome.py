@@ -33,18 +33,18 @@ if not os.path.exists(args.pocket):
     print('pocket export file not found')
     sys.exit(1)
 if os.path.exists(args.chrome) and not args.force:
-    print args.force
+    print((args.force))
     print('bookmarks exists, refusing to overwrite')
     sys.exit(1)
 
 with open(args.pocket, 'r') as f_in:
     with open(args.chrome, 'w') as f_out:
         f_out.write(preamble)
-        for line in f_in.xreadlines():
+        for line in f_in:
             if 2 < args.verbose:
-                print(line.rstrip())
+                print((line.rstrip()))
             parts = line.split(' | ')
             if 1 < args.verbose and 2 != len(parts):
-                print('found multiple delimiters in this line:{}'.format(line.rstrip()))
+                print(('found multiple delimiters in this line:{}'.format(line.rstrip())))
             f_out.write(amble.format(parts[0], ' | '.join(parts[1:]).rstrip()))
         f_out.write(postamble)

@@ -17,10 +17,10 @@ def multichoose(n, k):
 if '__main__' == __name__:
 # if the dice had sections (top, middle, bottom)
     print('permutations with repetition = k ** n')
-    print('with sections: {}'.format(numColors ** numDice))
+    print(('with sections: {}'.format(numColors ** numDice)))
 # the dice have no sections (top, middle, bottom)
     print('k-combinations with repetition = n multichoose k')
-    print('without sections and with repetitions: {}'.format(multichoose(numColors, numDice)))
+    print(('without sections and with repetitions: {}'.format(multichoose(numColors, numDice))))
 # no repetitions
     print('k-combinations without repetitition = n choose k')
-    print('without sections and without repetition: {}'.format(choose(numColors, numDice)))
+    print(('without sections and without repetition: {}'.format(choose(numColors, numDice))))

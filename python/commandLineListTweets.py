@@ -11,11 +11,11 @@ tokens=[
 
 for token in tokens:
     if not os.getenv(token):
-        print 'error: set', token, 'environment variable'
+        print(('error: set', token, 'environment variable'))
         sys.exit(1)
 
 if len(sys.argv) != 2:
-    print 'Usage:', sys.argv[0], 'screen_name'
+    print(('Usage:', sys.argv[0], 'screen_name'))
     sys.exit(1)
 
 auth = tweepy.OAuthHandler(os.getenv('ConsumerKey'),
@@ -28,7 +28,7 @@ api = tweepy.API(auth)
 #for s in tweepy.Cursor(api.user_timeline).items():
 
 # this well get the tweets of the user passed in
-for s in tweepy.Cursor(api.user_timeline, id=sys.argv[1]).items():
-    print s.id, s.text
-    print
+for s in list(tweepy.Cursor(api.user_timeline, id=sys.argv[1]).items()):
+    print((s.id, s.text))
+    print()
     time.sleep(5)

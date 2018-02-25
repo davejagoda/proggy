@@ -11,4 +11,4 @@ import django
 django.setup()
 
 for m in django.apps.apps.get_models():
-    print('{}:{}'.format(m.__name__,m.objects.count()))
+    print(('{}:{}'.format(m.__name__,m.objects.count())))

@@ -11,11 +11,11 @@ tokens=[
 
 for token in tokens:
     if not os.getenv(token):
-        print 'error: set', token, 'environment variable'
+        print(('error: set', token, 'environment variable'))
         sys.exit(1)
 
 if len(sys.argv) != 2:
-    print 'Usage:', sys.argv[0], '<message to tweet>'
+    print(('Usage:', sys.argv[0], '<message to tweet>'))
     sys.exit(1)
 
 auth = tweepy.OAuthHandler(os.getenv('ConsumerKey'),
@@ -25,7 +25,7 @@ auth.set_access_token(os.getenv('AccessTokenKey'),
 api = tweepy.API(auth)
 try:
     api.update_status(sys.argv[1])
-    print 'tweeted:', sys.argv[1], 'as user:', api.me().name
+    print(('tweeted:', sys.argv[1], 'as user:', api.me().name))
 except:
-    print 'tweet failed'
+    print('tweet failed')
 

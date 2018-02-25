@@ -20,8 +20,8 @@ if '__main__' == __name__:
         min_words = min(min_words, len(line.split(args.delimiter)))
         max_line = max(max_line, len(line))
         min_line = min(min_line, len(line))
-    print('max words per line={}'.format(max_words))
-    print('min words per line={}'.format(min_words))
+    print(('max words per line={}'.format(max_words)))
+    print(('min words per line={}'.format(min_words)))
     if args.linelength:
-        print('max length line={}'.format(max_line))
-        print('min length line={}'.format(min_line))
+        print(('max length line={}'.format(max_line)))
+        print(('min length line={}'.format(min_line)))

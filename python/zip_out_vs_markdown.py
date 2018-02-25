@@ -34,11 +34,11 @@ def process_file(filename, zip_dict, verbose=False):
                 continue
             valid_line_count += 1
             if zip_dict[zip5] != (state, city):
-                print('mismatch: current:{} {} new:{} {}'.format(
-                    zip_dict[zip5][0], zip_dict[zip5][1], state, city))
-    print('exceptions:{} invalid:{} valid:{} valid+invalid:{}'.format(
+                print(('mismatch: current:{} {} new:{} {}'.format(
+                    zip_dict[zip5][0], zip_dict[zip5][1], state, city)))
+    print(('exceptions:{} invalid:{} valid:{} valid+invalid:{}'.format(
         exception_line_count, invalid_line_count, valid_line_count,
-        invalid_line_count + valid_line_count))
+        invalid_line_count + valid_line_count)))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
@@ -47,5 +47,5 @@ if '__main__' == __name__:
     args = parser.parse_args()
     zip_dict = build_dictionary_of_known_zip_codes()
     if args.verbose:
-        print('file:{}'.format(args.filename))
+        print(('file:{}'.format(args.filename)))
     process_file(args.filename, zip_dict, args.verbose)

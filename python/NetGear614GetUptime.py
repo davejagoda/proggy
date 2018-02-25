@@ -1,22 +1,22 @@
 #!/usr/bin/python
 
-import sys, getopt, getpass, urllib2, re, base64
+import sys, getopt, getpass, urllib.request, urllib.error, urllib.parse, re, base64
 
 def get_uptime(url, user, password):
     b64login = base64.b64encode("%s:%s" % (user, password))
-    req = urllib2.Request(url)
+    req = urllib.request.Request(url)
     req.add_header("Authorization", "Basic " + b64login )
-    res = urllib2.urlopen(req)
+    res = urllib.request.urlopen(req)
     body = res.read()
     p = re.search(r"System Up Time\D+<!>(.*)<!>", body)
     return p.group(1)
 
 def usage(program, ip, user, exit_status):
-    print "Usage: " + program + " [options]"
-    print "-h: display this message"
-    print "-d: IP address (default:" + ip + ")"
-    print "-u: username (default:" + user + ")"
-    print "-p: password"
+    print(("Usage: " + program + " [options]"))
+    print("-h: display this message")
+    print(("-d: IP address (default:" + ip + ")"))
+    print(("-u: username (default:" + user + ")"))
+    print("-p: password")
     sys.exit(exit_status)
 
 if __name__=="__main__":
@@ -39,4 +39,4 @@ if __name__=="__main__":
     if password == "":
         password = getpass.getpass()
     url = "http://" + ip + "/RST_stattbl.htm"
-    print get_uptime(url, user, password)
+    print((get_uptime(url, user, password)))

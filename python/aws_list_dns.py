@@ -7,18 +7,18 @@ import pprint
 def print_domains(response, verbose):
     print('DOMAINS')
     if verbose > 0:
-        print('Number of domains found:{}'.format(len(response['Domains'])))
+        print(('Number of domains found:{}'.format(len(response['Domains']))))
         pprint.pprint(response)
     for domain in response['Domains']:
-        print(domain['DomainName'])
+        print((domain['DomainName']))
 
 def print_zones(response, verbose):
     print('ZONES')
     if verbose > 0:
-        print('Number of zones found:{}'.format(len(response['HostedZones'])))
+        print(('Number of zones found:{}'.format(len(response['HostedZones']))))
         pprint.pprint(response)
     for zone in response['HostedZones']:
-        print(zone['Name'])
+        print((zone['Name']))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()

@@ -16,7 +16,7 @@ def unpackBinarySID(binarySIDString):
     assert 0 == first2bytes
     idAuthority = last4bytes
     listOfIDs = [revision, idAuthority] + list(struct.unpack('<IIIII',subIDs))
-    listOfStrings = ['S'] + map(str, listOfIDs)
+    listOfStrings = ['S'] + list(map(str, listOfIDs))
     SID = '-'.join(listOfStrings)
     return(SID)
 
@@ -27,4 +27,4 @@ if '__main__' == __name__:
     assert 40 == len(args.base64encodedSID)
     binarySIDString = convertFromSIDString(args.base64encodedSID)
     assert 28 == len(binarySIDString)
-    print(unpackBinarySID(binarySIDString))
+    print((unpackBinarySID(binarySIDString)))

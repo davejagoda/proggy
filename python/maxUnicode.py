@@ -1,4 +1,4 @@
 #!/usr/bin/python
 
 import sys
-print(sys.maxunicode)
+print((sys.maxunicode))

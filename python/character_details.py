@@ -18,11 +18,11 @@ def unicode2desc(u):
 
 def process_unicode_string(unicode_string):
     for u in unicode_string:
-        print(u'{} {} &#{};'.format(number2u(ord(u)), u, str(ord(u))))
-        print(unicode2desc(u))
+        print(('{} {} &#{};'.format(number2u(ord(u)), u, str(ord(u)))))
+        print((unicode2desc(u)))
 
 def process_argument(arg):
-    print('processing argument: {} argument length: {}'.format(arg, len(arg)))
+    print(('processing argument: {} argument length: {}'.format(arg, len(arg))))
     unicode_string = arg.decode('utf-8')
     process_unicode_string(unicode_string)
 

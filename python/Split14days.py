@@ -12,7 +12,7 @@ listOfDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 listOfPeople = ['D','S']
 
 def usage():
-    print('Usage: ' + sys.argv[0] + ' <list of integers that add up to 14>')
+    print(('Usage: ' + sys.argv[0] + ' <list of integers that add up to 14>'))
     sys.exit(1)
 
 def checkSumIs14(args):
@@ -36,10 +36,10 @@ if __name__ == '__main__':
     j = 0
     s = ''
     v = 0 # toggle
-    for k in xrange(2):
+    for k in range(2):
         for val in values:
             v += 1
-            for i in xrange(val):
+            for i in range(val):
 #                s = s + '{:3d}'.format(j)
 #                s = s + listOfDays[(j + offset) % 7] + ' '
                 s = s + listOfPeople[v % 2] + '   '

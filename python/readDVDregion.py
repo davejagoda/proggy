@@ -26,7 +26,7 @@ def findFiles(directory, extensions):
         for root, dirs, files in os.walk(directory):
             for file in files:
                 if re.search(extension, file):
-                    if args.verbose: print(os.path.join(root,file))
+                    if args.verbose: print((os.path.join(root,file)))
                     returnList.append(os.path.join(root,file))
     return(returnList)
 
@@ -54,12 +54,12 @@ if '__main__' == __name__:
     parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()
     if args.verbose: print('entering main')
-    print(args.file)
+    print((args.file))
     volume = attach(args.file)
     files = findFiles(volume, ['IFO','BUP'])
     for file in files:
         result = readOctets(file, 36)
         if 0 != result:
-            print(file, interpretOctet(result))
+            print((file, interpretOctet(result)))
     detach(volume)
     if args.verbose: print('exiting main')

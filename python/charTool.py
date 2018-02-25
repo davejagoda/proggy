@@ -11,6 +11,6 @@ if '__main__' == __name__:
     with codecs.open(args.file, 'r', encoding='utf-8') as f:
         chars = f.read()
     if args.count:
-        print(len(chars))
+        print((len(chars)))
     if args.nth:
-        print(chars[int(args.nth)])
+        print((chars[int(args.nth)]))

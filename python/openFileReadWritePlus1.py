@@ -11,5 +11,5 @@ with open(filename, 'r+b') as f:
     octets = f.read()
     f.seek(0)
     for octet in octets:
-        print(octet,ord(octet),ord(octet) + 1 % 255)
+        print((octet,ord(octet),ord(octet) + 1 % 255))
         f.write(chr((ord(octet) + 1) % 255))

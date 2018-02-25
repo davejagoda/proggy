@@ -9,7 +9,7 @@ parser.add_argument('-v', '--verbose', action='store_true', help='show verbose o
 args = parser.parse_args()
 if args.verbose:
     print('about to echo arguments')
-print('source[s]:{}'.format(args.source))
-print('destination:{}'.format(args.destination))
+print(('source[s]:{}'.format(args.source)))
+print(('destination:{}'.format(args.destination)))
 if args.verbose:
     print('just echoed arguments')

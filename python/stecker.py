@@ -36,10 +36,10 @@ if '__main__' == __name__:
     while numSockets <= maxSockets:
         while numWires * 2 <= numSockets:
             setOfPairs = set()
-            print('numSockets: {} numWires: {} availableSockets: {}'.format(numSockets, numWires, socketNames[:numSockets]))
+            print(('numSockets: {} numWires: {} availableSockets: {}'.format(numSockets, numWires, socketNames[:numSockets])))
             recursivePairPicker(set(socketNames[:numSockets]), numWires, [])
-            print('length of set: {} elements of set: {}'.format(len(setOfPairs), sorted(setOfPairs)))
+            print(('length of set: {} elements of set: {}'.format(len(setOfPairs), sorted(setOfPairs))))
             numWires += 1
         numSockets += 1
         numWires = 0
-        print
+        print()

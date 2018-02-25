@@ -9,10 +9,10 @@ def processDirectory(path):
             with open(fullpath, 'rb') as f:
                 file_contents = f.read()
                 if '\t' in file_contents:
-                    print('tab found in {}'.format(fullpath))
+                    print(('tab found in {}'.format(fullpath)))
 
 def usage():
-    print('Usage: ' + sys.argv[0] + ' <directory>')
+    print(('Usage: ' + sys.argv[0] + ' <directory>'))
     sys.exit(1)
 
 if __name__ == '__main__':

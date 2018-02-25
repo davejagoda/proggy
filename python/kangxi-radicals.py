@@ -29,6 +29,6 @@ if '__main__' == __name__:
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
     if args.verbose:
         print(soup)
-    broken_bar = unichr(0x00a6)
+    broken_bar = chr(0x00a6)
     for row in parse_table(soup):
-        print(broken_bar.join(row))
+        print((broken_bar.join(row)))

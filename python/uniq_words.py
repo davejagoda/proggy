@@ -33,11 +33,11 @@ if '__main__' == __name__:
     words.extend(args.words)
     dict = create_dict_of_uniq_words(words)
     if not args.keysort and not args.valsort:
-        for k, v in dict.items():
-            print('{}: {}'.format(k, v))
+        for k, v in list(dict.items()):
+            print(('{}: {}'.format(k, v)))
     if args.keysort:
-        for k, v in sorted(dict.items(), key=(operator.itemgetter(0))):
-            print('{}: {}'.format(k, v))
+        for k, v in sorted(list(dict.items()), key=(operator.itemgetter(0))):
+            print(('{}: {}'.format(k, v)))
     if args.valsort:
-        for k, v in sorted(dict.items(), key=(operator.itemgetter(1,0))):
-            print('{}: {}'.format(k, v))
+        for k, v in sorted(list(dict.items()), key=(operator.itemgetter(1,0))):
+            print(('{}: {}'.format(k, v)))

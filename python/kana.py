@@ -6,8 +6,8 @@ def make_list(lo, hi):
 # risuto is Romaji for list, since lower case l is easily confused
 # it is a list of pairs (tuples) like this: (romaji, kana)
     risuto = []
-    for i in xrange(lo,hi):
-        kana = unichr(i)
+    for i in range(lo,hi):
+        kana = chr(i)
         try:
             name = unicodedata.name(kana)
         except:
@@ -22,6 +22,6 @@ if '__main__' == __name__:
     hiragana = make_list(0x3040,0x30a0)
     katakana = make_list(0x30a0,0x3100)
     assert(len(hiragana) == len(katakana))
-    for i in xrange(len(hiragana)):
+    for i in range(len(hiragana)):
         assert(hiragana[i][0] == katakana[i][0])
-        print('{}:{}:{}'.format(hiragana[i][0], hiragana[i][1].encode('utf8'), katakana[i][1].encode('utf8')))
+        print(('{}:{}:{}'.format(hiragana[i][0], hiragana[i][1].encode('utf8'), katakana[i][1].encode('utf8'))))

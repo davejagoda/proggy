@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage: " + sys.argv[0] + " <filename>")
+    print(("Usage: " + sys.argv[0] + " <filename>"))
     sys.exit(1)
 
 f = open(sys.argv[1])
@@ -27,6 +27,6 @@ soup = BeautifulSoup(html_doc)
 #for span in soup.find_all("span", "rank"):
 #    print(span)
 for td in soup.find_all("td", "university-name"):
-    print td.a.contents[0].encode('utf8'), ':', td.p.contents[0]
+    print((td.a.contents[0].encode('utf8'), ':', td.p.contents[0]))
 
 f.close()

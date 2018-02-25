@@ -31,9 +31,9 @@ if '__main__' == __name__:
         URL = BASEURL + letter
         if args.verbose: print(URL)
         r = requests.get(URL)
-        if args.verbose: print(r.status_code)
+        if args.verbose: print((r.status_code))
         assert(200 == r.status_code)
         soup = bs4.BeautifulSoup(r.content, 'html.parser')
         if args.verbose: print(soup)
         for row in parse_table(soup, args.verbose):
-            print(row[:3])
+            print((row[:3]))

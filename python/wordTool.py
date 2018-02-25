@@ -13,16 +13,16 @@ if '__main__' == __name__:
     with open(args.file, 'r') as f:
         words = f.read().split()
     if args.count:
-        print(len(words))
+        print((len(words)))
     if args.measure:
         min = len(words[0])
         max = len(words[0])
         for word in words[1:]:
             if len(word) > max: max = len(word)
             if len(word) < min: min = len(word)
-        print('longest word:{} shortest word:{}'.format(max, min))
+        print(('longest word:{} shortest word:{}'.format(max, min)))
     if args.nth:
-        print(words[args.nth])
+        print((words[args.nth]))
     if args.length:
         for word in words:
             if len(word) == args.length:

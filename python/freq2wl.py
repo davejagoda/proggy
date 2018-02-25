@@ -9,4 +9,4 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('frequency', type=float, help='frequency in Hertz (1/second)')
     args = parser.parse_args()
-    print('wavelength in meters: {}'.format(C/args.frequency))
+    print(('wavelength in meters: {}'.format(C/args.frequency)))

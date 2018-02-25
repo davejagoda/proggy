@@ -11,7 +11,7 @@ def parse_table(soup):
         if 4 == len(td):
             lst = td[0].text.split('.')
             if 1 < int(lst[0]):
-                print(td[0].text)
+                print((td[0].text))
                 a = td[1].find_all('a')
                 assert(3 == len(a))
                 url = a[0]['href']

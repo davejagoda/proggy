@@ -20,7 +20,7 @@ def print_unicode_entry(n):
         u = '<U+{:x}>'.format(n) # surrogate
     else:
         q = urllib.parse.quote(u)
-    print('{:7d} {:6x} {:12} {} {} {}'.format(n, n, q, u, category, name))
+    print(('{:7d} {:6x} {:12} {} {} {}'.format(n, n, q, u, category, name)))
 
 # you'll get this error if you try to pipe the output to 'more' or to a file
 # without encoding the unicode string (default encoding is 'ASCII'):

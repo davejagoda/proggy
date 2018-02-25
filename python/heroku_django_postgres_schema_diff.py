@@ -9,7 +9,7 @@ import os
 import re
 import subprocess
 import sys
-import urlparse
+import urllib.parse
 
 def transform_owner(s, owner_name, verbose):
     # validate the file and set owner if not provided
@@ -19,7 +19,7 @@ def transform_owner(s, owner_name, verbose):
             if None == owner_name:
                 owner_name=m.group(1)
                 if verbose > 0:
-                    print('transform_owner found owner:{}'.format(owner_name))
+                    print(('transform_owner found owner:{}'.format(owner_name)))
             assert(owner_name == m.group(1))
         m = re.search(r'OWNER TO (\S+);$', line)
         if m:
@@ -64,16 +64,16 @@ def get_dburl_from_remote_name(remote_name, verbose):
 
 def parse_dburl(dburl, verbose):
     if verbose > 0:
-        print('this is a dburl:{}'.format(dburl))
+        print(('this is a dburl:{}'.format(dburl)))
 # should handle no username, no password, and no port in dburl
-    o = urlparse.urlparse(dburl)
+    o = urllib.parse.urlparse(dburl)
     dbname = o.path[1:]  or 'postgres'
     dbhost = o.hostname  or 'localhost'
     dbport = str(o.port) or '5432'
     dbuser = o.username  or 'postgres'
     dbpass = o.password  or 'postgres'
     if verbose > 0:
-        print(dbname, dbhost, dbport, dbuser, dbpass)
+        print((dbname, dbhost, dbport, dbuser, dbpass))
     return(dbname, dbhost, dbport, dbuser, dbpass)
 
 def get_data_from_dburl(dburl, verbose):
@@ -157,7 +157,7 @@ if '__main__' == __name__:
         f1 = 'f1.out'
         f2 = 'f2.out'
         if os.path.exists(f1) or os.path.exists(f2):
-            print('refusing to overwrite {} or {} file'.format(f1, f2))
+            print(('refusing to overwrite {} or {} file'.format(f1, f2)))
         else:
             write_file(f1, d1)
             write_file(f2, d2)

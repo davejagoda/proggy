@@ -19,4 +19,4 @@ if '__main__' == __name__:
             c = '\\' + chr(96 + ord(k))
         else:
             c = k.encode('utf8')
-        print('{}:{}'.format(c, d[k]))
+        print(('{}:{}'.format(c, d[k])))

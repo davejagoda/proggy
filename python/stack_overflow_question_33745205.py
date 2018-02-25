@@ -9,7 +9,7 @@ urls = (
 )
 
 for url in urls:
-    print('fetching {} ...'.format(url))
+    print(('fetching {} ...'.format(url)))
     try:
         request.urlopen(url).read()
     except:

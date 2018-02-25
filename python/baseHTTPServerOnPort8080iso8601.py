@@ -13,13 +13,13 @@
 #Accept-Language: en-US,en;q=0.5
 #Accept-Encoding: gzip, deflate
 
-import BaseHTTPServer, SimpleHTTPServer, time, argparse
+import http.server, http.server, time, argparse
 
-class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class djHTTPServer(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         print('get')
         response = self.path + '\nClientHeaders\n' + str(self.headers)
-        print(dir(self.headers))
+        print((dir(self.headers)))
         self.send_response(200)
         self.send_header("Content-type", "text")
         self.send_header("Content-Length", len(response))
@@ -50,9 +50,9 @@ class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
     def log_request(self, code):
         print(code)
-        print(dir(self))
-        print(self.raw_requestline)
-        print(self.headers)
+        print((dir(self)))
+        print((self.raw_requestline))
+        print((self.headers))
         return(code)
 
 if '__main__' == __name__:
@@ -61,7 +61,7 @@ if '__main__' == __name__:
     parser.add_argument('-s', '--ssl', action='store_true', help='SSL')
     parser.add_argument('-v', '--verbose', action='store_true', help='be verbose')
     args = parser.parse_args()
-    httpd = BaseHTTPServer.HTTPServer(('',int(args.port)), djHTTPServer)
+    httpd = http.server.HTTPServer(('',int(args.port)), djHTTPServer)
     if args.ssl:
         httpd.socket = ssl.wrap_socket(httpd.socket, certfile='localhost.pem', server_side=True)
     httpd.serve_forever()

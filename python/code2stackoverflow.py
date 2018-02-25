@@ -7,4 +7,4 @@ args = parser.parse_args()
 
 with open(args.file, 'r') as f:
     for line in f.readlines():
-        print('    {}'.format(line.rstrip()))
+        print(('    {}'.format(line.rstrip())))

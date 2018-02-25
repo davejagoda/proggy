@@ -60,13 +60,13 @@ if '__main__' == __name__:
                                        cog_teeth=[13,15,17,19,21,23])]
     for bike in bikes:
         print(bike)
-        print('biggest gear ratio:{}'.format(bike.biggest_gear_ratio()))
-        print('smallest gear ratio:{}'.format(bike.smallest_gear_ratio()))
-        print('{} is a {}-speed bike'.format(bike.name, bike.speedness()))
+        print(('biggest gear ratio:{}'.format(bike.biggest_gear_ratio())))
+        print(('smallest gear ratio:{}'.format(bike.smallest_gear_ratio())))
+        print(('{} is a {}-speed bike'.format(bike.name, bike.speedness())))
         print('gear ratios')
         for (ratio, chainring, cog) in bike.gears_by_ratio():
-            print('{} {} {:.2f}'.format(chainring, cog, ratio))
+            print(('{} {} {:.2f}'.format(chainring, cog, ratio)))
         print('gears by index')
         for (index, ratio, chainring, cog) in bike.gears_by_index():
-            print('{:2d} {} {} {:.2f}'.format(index, chainring, cog, ratio))
+            print(('{:2d} {} {} {:.2f}'.format(index, chainring, cog, ratio)))
         print('\n') # make room!
