@@ -3,8 +3,13 @@
 import argparse
 import boto3
 
+def print_bucket_summary(client, bucket_name, verbose):
+    print('B {} {}'.format(
+        client.get_bucket_location(Bucket=bucket_name)['LocationConstraint'],
+        bucket_name
+    ))
+
 def print_bucket_contents(s3, bucket_name, verbose):
-    print('B {}'.format(bucket_name))
     bucket = s3.Bucket(bucket_name)
     for item in bucket.objects.all():
         key = item.key
@@ -19,12 +24,19 @@ def print_bucket_contents(s3, bucket_name, verbose):
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='count', default=0)
-    parser.add_argument('-b', '--bucket')
+    parser.add_argument('-b', '--buckets', nargs='*')
+    parser.add_argument('-c', '--contents', action='store_true')
     args = parser.parse_args()
-    s3 = boto3.resource('s3')
-    if args.bucket:
-        print_bucket_contents(s3, args.bucket, args.verbose)
+    client = boto3.client('s3') # low level client
+    s3 = boto3.resource('s3') # high level resource
+    if args.buckets:
+        bucket_list = args.buckets
     else:
-        for bucket in s3.buckets.all():
-            bucket_name = bucket.name
-            print_bucket_contents(s3, bucket_name, args.verbose)
+        bucket_list = [bucket.name for bucket in s3.buckets.all()]
+    for bucket_name in bucket_list:
+        print_bucket_summary(client, bucket_name, args.verbose)
+        if args.contents:
+            try:
+                print_bucket_contents(s3, bucket_name, args.verbose)
+            except Exception as e:
+                print('Caught exception:{} on bucket:{}'.format(e, bucket_name))

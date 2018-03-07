@@ -4,8 +4,9 @@
 
 import argparse
 import boto3
-import Queue
+import queue
 import threading
+import aws_lib
 
 def output_region_data(element):
     (region_name, keys, resv, secg) = element
@@ -14,20 +15,13 @@ def output_region_data(element):
     if resv: print(resv)
     if secg: print(secg)
 
-def extract_response(response, response_type):
-    assert(2 == len(response))
-    assert(200 == response['ResponseMetadata']['HTTPStatusCode'])
-    results = response[response_type]
-    assert(list == type(results))
-    return(results)
-
 def parse_keys_response(response):
-    keys = extract_response(response, 'KeyPairs')
+    keys = aws_lib.extract_response(response, 'KeyPairs')
     return('\n'.join(['K {} {}'.format(k['KeyFingerprint'],
                                      k['KeyName']) for k in keys]))
 
 def parse_resv_response(response):
-    resv = extract_response(response, 'Reservations')
+    resv = aws_lib.extract_response(response, 'Reservations')
     return('\n'.join(['I {} {} {} {} {}'.format(r['Instances'][0]['InstanceId'],
                                                 r['Instances'][0]['ImageId'],
                                                 r['Instances'][0]['InstanceType'],
@@ -35,7 +29,7 @@ def parse_resv_response(response):
                                                 r['Instances'][0]['KeyName']) for r in resv]))
 
 def parse_secg_response(response):
-    secg = extract_response(response, 'SecurityGroups')
+    secg = aws_lib.extract_response(response, 'SecurityGroups')
     return('\n'.join(['S {} {} {}'.format(s['GroupId'],
                                           s['GroupName'],
                                           s['Description']) for s in secg]))
@@ -57,7 +51,7 @@ if '__main__' == __name__:
     args = parser.parse_args()
     ec2 = boto3.client('ec2')
     response = ec2.describe_regions()
-    q = Queue.Queue()
+    q = queue.Queue()
     thread_list = []
     for region in response['Regions']:
         assert(2 == len(region))

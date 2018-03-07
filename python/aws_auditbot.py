@@ -4,8 +4,9 @@
 
 import argparse
 import boto3
-import Queue
+import queue
 import threading
+import aws_lib
 
 def output_region_data(element):
     (region_name, secg, vpc) = element
@@ -13,21 +14,14 @@ def output_region_data(element):
     if secg: print(secg)
     if vpc: print(vpc)
 
-def extract_response(response, response_type):
-    assert(2 == len(response))
-    assert(200 == response['ResponseMetadata']['HTTPStatusCode'])
-    results = response[response_type]
-    assert(list == type(results))
-    return(results)
-
 def parse_secg_response(response):
-    secg = extract_response(response, 'SecurityGroups')
+    secg = aws_lib.extract_response(response, 'SecurityGroups')
     return('\n'.join(['S {} {} {}'.format(s['GroupId'],
                                           s['GroupName'],
                                           s['Description']) for s in secg if 'VpcId' not in s]))
 
 def parse_vpc_response(response):
-    vpc = extract_response(response, 'Vpcs')
+    vpc = aws_lib.extract_response(response, 'Vpcs')
     return('\n'.join(['V {}'.format(v['VpcId']) for v in vpc if not v['IsDefault']]))
 
 def get_instance_data_from_region(q, region_name):
@@ -45,7 +39,7 @@ if '__main__' == __name__:
     args = parser.parse_args()
     ec2 = boto3.client('ec2')
     response = ec2.describe_regions()
-    q = Queue.Queue()
+    q = queue.Queue()
     thread_list = []
     for region in response['Regions']:
         assert(2 == len(region))
