@@ -4,10 +4,13 @@ import argparse
 import boto3
 
 def print_bucket_summary(client, bucket_name, verbose):
-    print('B {} {}'.format(
-        client.get_bucket_location(Bucket=bucket_name)['LocationConstraint'],
-        bucket_name
-    ))
+    bucket_location = client.get_bucket_location(
+        Bucket=bucket_name)['LocationConstraint']
+    # When the bucket's region is US East (N. Virginia),
+    # Amazon S3 returns an empty string for the bucket's region
+    if None == bucket_location:
+        bucket_location = 'us-east-1'
+    print('B {} {}'.format(bucket_location, bucket_name))
 
 def print_bucket_contents(s3, bucket_name, verbose):
     bucket = s3.Bucket(bucket_name)
