@@ -4,6 +4,8 @@ import argparse
 import collections
 import json
 import openpyxl
+import os
+import sys
 
 def process_tab(tab_name, verbose):
     ws = collections.OrderedDict()
@@ -16,6 +18,7 @@ def process_tab(tab_name, verbose):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('xlsfile', help='the source spreadsheet')
+parser.add_argument('-o', '--outfile', action='store_true')
 parser.add_argument('-v', '--verbose', action='count', default=0)
 args = parser.parse_args()
 
@@ -27,4 +30,14 @@ for tab_name in wb.sheetnames:
     if args.verbose > 0:
         print(tab_name)
     jobj[tab_name] = process_tab(tab_name, args.verbose)
-print(json.dumps(jobj, ensure_ascii=False, indent=2))
+output = json.dumps(jobj, ensure_ascii=False, indent=2)
+if args.outfile:
+    (root, ext) = os.path.splitext(args.xlsfile)
+    jsonfile = '{}.json'.format(root)
+    if os.path.exists(jsonfile):
+        print('sorry, {} already exists, refusing to overwrite'.format(jsonfile))
+        sys.exit(1)
+    with open(jsonfile, 'w') as f:
+        f.write('{}\n'.format(output))
+else:
+    print(output)
