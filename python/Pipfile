@@ -12,6 +12,7 @@ awscli = "*"
 "boto3" = "*"
 dateparser = "*"
 "html5lib" = "*"
+openpyxl = "*"
 requests = "*"
 
 
