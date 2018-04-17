@@ -2,6 +2,7 @@
 
 import argparse
 import collections
+import datetime
 import json
 import openpyxl
 import os
@@ -32,12 +33,18 @@ for tab_name in wb.sheetnames:
     if args.verbose > 0:
         print(tab_name)
     jobj[tab_name] = process_tab(tab_name, args.verbose)
-output = json.dumps(jobj, default=str, ensure_ascii=False, indent=2)
+
+output = json.dumps(jobj, ensure_ascii=False, indent=2,
+                    default = lambda x: (
+                        x.isoformat() if isinstance(x, datetime.datetime)
+                        else json.JSONEncoder().default(x))
+                    )
+
 if args.outfile:
     (root, ext) = os.path.splitext(args.xlsfile)
     jsonfile = '{}.json'.format(root)
     if os.path.exists(jsonfile):
-        print('sorry, {} already exists, refusing to overwrite'.format(jsonfile))
+        print('file {} already exists, refusing to overwrite'.format(jsonfile))
         sys.exit(1)
     with open(jsonfile, 'w') as f:
         f.write('{}\n'.format(output))
