@@ -11,6 +11,8 @@ def process_tab(tab_name, verbose):
     ws = collections.OrderedDict()
     for row in wb[tab_name].rows:
         for cell in row:
+            if cell.value is None:
+                continue
             if verbose > 0:
                 print('{}:{}'.format(cell.coordinate, cell.value))
             ws[cell.coordinate] = cell.value
@@ -30,7 +32,7 @@ for tab_name in wb.sheetnames:
     if args.verbose > 0:
         print(tab_name)
     jobj[tab_name] = process_tab(tab_name, args.verbose)
-output = json.dumps(jobj, ensure_ascii=False, indent=2)
+output = json.dumps(jobj, default=str, ensure_ascii=False, indent=2)
 if args.outfile:
     (root, ext) = os.path.splitext(args.xlsfile)
     jsonfile = '{}.json'.format(root)
