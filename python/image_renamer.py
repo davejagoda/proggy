@@ -23,7 +23,10 @@ def generateNameFromExif(filename, verbose):
     if verbose > 1:
         pprint.pprint(exif)
     (date_str, time_str) = exif['DateTime'].replace(':','-').split()
-    subsec =  exif['SubsecTimeOriginal']
+    try:
+        subsec =  exif['SubsecTimeOriginal']
+    except KeyError:
+        subsec = '000'
     camera = exif['Model'].replace(' ','_')
     return('{}T{}.{}{}.jpg'.format(date_str, time_str, subsec, camera))
 
