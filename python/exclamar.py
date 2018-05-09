@@ -1,5 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys
 
-print(' '.join([unichr(0x00a1).encode('utf8') + arg + unichr(0x0021).encode('utf8') for arg in sys.argv[1:]]))
+print(' '.join([chr(0x00a1) + arg + chr(0x0021) for arg in sys.argv[1:]]))

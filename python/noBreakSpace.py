@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # all the non-breaking spaces
@@ -9,10 +9,10 @@
 # for formatting:
 #      45       2d - Pd HYPHEN-MINUS
 
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0xa0).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0x202f).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0xfeff).encode('utf8'),unichr(0x2d).encode('utf8'))
-print '{}{}{}'.format(unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'),unichr(0x2d).encode('utf8'))
+print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0xa0),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0x202f),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0xfeff),chr(0x2d)))
+print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))

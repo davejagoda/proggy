@@ -1,3 +1,3 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-print(unichr(0x00a6).encode('utf8'))
+print(chr(0x00a6))
