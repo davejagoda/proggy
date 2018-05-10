@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # given a directory full of a bunch of wordpress zip files
 # like this wordpress-2.0.1.zip
@@ -54,7 +54,9 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='increase output verbosity')
-    parser.add_argument('-s', '--src', help='directory full of zip files', required=True)
-    parser.add_argument('-d', '--dst', help='directory in which to unzip', required=True)
+    parser.add_argument('-s', '--src',  required=True,
+                        help='directory full of zip files')
+    parser.add_argument('-d', '--dst', required=True,
+                        help='directory in which to unzip')
     args = parser.parse_args()
     process_directory(args.src, args.dst, args.verbose)

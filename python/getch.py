@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 #bibliography: http://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user
 

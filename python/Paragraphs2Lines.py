@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # print out:
 # 1) the first line of the file
@@ -26,4 +26,3 @@ if __name__ == '__main__':
     f.close()
     if len(out_line) > 0:
         print(out_line)
-

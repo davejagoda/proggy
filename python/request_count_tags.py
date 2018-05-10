@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import bs4
@@ -27,7 +27,7 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('url')
     parser.add_argument('tag')
-    parser.add_argument('-v', '--verbose', action='count')
+    parser.add_argument('-v', '--verbose', default=0, action='count')
     args = parser.parse_args()
     if args.verbose > 0:
         print(args.url, args.tag)

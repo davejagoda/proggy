@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys, math
 
@@ -10,17 +10,17 @@ def fac(n):
         result *= i
     return result
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     e = 0
     i = 0
     done = False
     while (not done):
         try:
-            print "%1.60f" % (1.0 / fac(i))
+            print('%1.60f' % (1.0 / fac(i)))
             e += 1.0 / fac(i)
-            print "%1.60f" % e
+            print('%1.60f' % e)
             i += 1
         except:
             done = True
 
-    print "%1.60f <- math.e" % math.e
+    print('%1.60f <- math.e' % math.e)

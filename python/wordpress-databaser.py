@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # given a directory full of unzipped wordpress installs
 # e.g. from wordpress-unzipper-configurator.py
@@ -36,7 +36,9 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='increase output verbosity')
-    parser.add_argument('-s', '--src', help='directory of unzipped wordpress installs', required=True)
-    parser.add_argument('--dropDatabase', action='store_true', help='drop all matching databases, very dangerous!')
+    parser.add_argument('-s', '--src', required=True,
+                        help='directory of unzipped wordpress installs')
+    parser.add_argument('--dropDatabase', action='store_true',
+                        help='drop all matching databases, very dangerous!')
     args = parser.parse_args()
     process_directory(args.src, args.dropDatabase, args.verbose)

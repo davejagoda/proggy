@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # http://stackoverflow.com/questions/2846653/how-to-use-threading-in-python
 

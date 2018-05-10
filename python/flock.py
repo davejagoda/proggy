@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import os, sys
+import os
+import sys
 
 lockfile = '.flock'
 
@@ -10,7 +11,7 @@ except:
     print('failed to lock')
     sys.exit(1)
 
-raw_input('press a key to release lock and exit')
+input('press a key to release lock and exit')
 
 os.close(f)
 os.unlink(lockfile)

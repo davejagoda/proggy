@@ -1,10 +1,11 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import argparse, os
 
 def build_dictionary_of_known_zip_codes():
     home = os.path.expanduser('~')
-    zip_file = '{}/src/github/davejagoda.github.io/data/zip_codes.md'.format(home)
+    zip_file = '{}/src/github/davejagoda.github.io/data/zip_codes.md'.format(
+        home)
     zip_dict = {}
     with open(zip_file, 'r') as f:
         for line in f.readlines():

@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import sys, os
+import os
+import sys
 
 for filename in sys.argv[1:]:
     if ' ' in filename:

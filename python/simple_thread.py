@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # https://docs.python.org/2/library/queue.html
 
 import argparse
-import Queue
+import queue
 import threading
 
 def source():
@@ -11,7 +11,7 @@ def source():
         return([line.rstrip() for line in f.readlines()])
 
 def do_work(item):
-    print '{}:{}\n'.format(item, len(item)),
+    print('{}:{}'.format(item, len(item)))
 
 def worker():
     while True:
@@ -26,7 +26,7 @@ args = parser.parse_args()
 if args.verbose:
     print('thread_count:{}'.format(args.thread_count))
 
-q = Queue.Queue()
+q = queue.Queue()
 for i in range(args.thread_count):
     t = threading.Thread(target=worker)
     t.daemon = True

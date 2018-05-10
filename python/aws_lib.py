@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 def extract_response(response, response_type):
     assert(2 == len(response))

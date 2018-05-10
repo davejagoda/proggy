@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # bibliography:
 # http://www.codesandciphers.co.uk/enigma/steckercount.htm

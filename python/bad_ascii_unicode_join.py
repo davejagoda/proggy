@@ -1,4 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
+
+# do not conver this to python3
 
 english_a = chr(97)
 print(english_a, type(english_a))

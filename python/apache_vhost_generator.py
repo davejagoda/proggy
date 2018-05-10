@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -36,4 +36,5 @@ if '__main__' == __name__:
     for server_name in args.server_names:
         if args.verbose:
             print(server_name)
-        print(write_vhost_conf(server_name, args.port, args.destination_directory))
+        print(write_vhost_conf(server_name, args.port,
+                               args.destination_directory))

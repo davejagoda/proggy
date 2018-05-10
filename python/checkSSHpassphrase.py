@@ -1,12 +1,17 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import subprocess, os, getpass, argparse
+import argparse
+import getpass
+import os
+import subprocess
 
 DEVNULL = open(os.devnull, 'wb')
 
 def validate_password(pswd):
     try:
-        subprocess.check_call(['ssh-keygen', '-y', '-f', os.getenv('HOME') + '/.ssh/id_rsa', '-P', pswd], stdout=DEVNULL, stderr=DEVNULL)
+        subprocess.check_call(['ssh-keygen', '-y', '-f', os.getenv('HOME') +
+                               '/.ssh/id_rsa', '-P', pswd],
+                              stdout=DEVNULL, stderr=DEVNULL)
         return(True)
     except:
         return(False)
@@ -18,7 +23,8 @@ def read_file(file):
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', help='file with words to check')
-    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='show verbose output')
     args = parser.parse_args()
     if args.file:
         for pswd in read_file(args.file):

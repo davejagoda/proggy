@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # offset controls which day of the week we start with
@@ -9,6 +9,7 @@ import sys
 
 listOfDays = ['日','月','火','水','木','金','土']
 listOfDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+lenOfWeek = len(listOfDays)
 listOfPeople = ['D','S']
 
 def usage():
@@ -30,20 +31,18 @@ if __name__ == '__main__':
         usage()
     values = checkSumIs14(sys.argv[1:])
     s = ''
-    for j in range(7):
-        s = s + listOfDays[(j + offset) % 7] + ' '
+    for _ in range(lenOfWeek):
+        s = s + '{:2}'.format(listOfDays[(_ + offset) % lenOfWeek]) + ' '
     print(s)
     j = 0
     s = ''
     v = 0 # toggle
-    for k in xrange(2):
+    for k in range(2):
         for val in values:
             v += 1
-            for i in xrange(val):
-#                s = s + '{:3d}'.format(j)
-#                s = s + listOfDays[(j + offset) % 7] + ' '
+            for i in range(val):
                 s = s + listOfPeople[v % 2] + '   '
                 j += 1
-                if j % 7 == 0:
+                if j % lenOfWeek == 0:
                     print(s)
                     s = ''

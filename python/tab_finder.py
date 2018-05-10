@@ -1,12 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import sys, os
+import os
+import sys
 
 def processDirectory(path):
     for root, dirs, files in os.walk(path):
         for entry in files:
             fullpath = os.path.join(root, entry)
-            with open(fullpath, 'rb') as f:
+            with open(fullpath, 'r') as f:
                 file_contents = f.read()
                 if '\t' in file_contents:
                     print('tab found in {}'.format(fullpath))

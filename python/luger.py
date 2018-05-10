@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # consider a set of n words
 # how many ways can you arrange them?

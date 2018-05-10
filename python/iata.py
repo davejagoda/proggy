@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -25,9 +25,10 @@ def parse_table(soup, verbose=False):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='show verbose output')
     args = parser.parse_args()
-    for letter in string.uppercase:
+    for letter in string.ascii_uppercase:
         URL = BASEURL + letter
         if args.verbose: print(URL)
         r = requests.get(URL)

@@ -1,13 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import argparse
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('file', help='file to process')
-    parser.add_argument('-c', '--count', action='store_true', help='count the number of words')
-    parser.add_argument('-l', '--length', type=int, help='print words with the given length')
-    parser.add_argument('-m', '--measure', action='store_true', help='show length of the shortest and longest words')
+    parser.add_argument('-c', '--count', action='store_true',
+                        help='count the number of words')
+    parser.add_argument('-l', '--length', type=int,
+                        help='print words with the given length')
+    parser.add_argument('-m', '--measure', action='store_true',
+                        help='show length of the shortest and longest words')
     parser.add_argument('-n', '--nth', type=int, help='print the nth word')
     args = parser.parse_args()
     with open(args.file, 'r') as f:

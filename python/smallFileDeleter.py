@@ -1,23 +1,23 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys, os
 
 def processDirectory(path, size):
 #from os.path import join
     for root, dirs, files in os.walk(path):
-#        print 'root', root, 'dirs', dirs, 'files', files
+#        print('root', root, 'dirs', dirs, 'files', files)
         for entry in files:
 #            f = open(join(root, entry), 'rb')
             fullpath = os.path.join(root, entry)
 #            print(fullpath + ':' + str(os.path.getsize(fullpath)))
             if os.path.getsize(fullpath) <= size:
                 f = open(os.path.join(root, entry), 'rb')
-                print 'reading', entry
-                print f.read()
+                print('reading', entry)
+                print(f.read())
                 f.close()
-                print 'closing'
-                input_prompt = 'Press Y to delete file: ' + fullpath + ', anything else to keep it: '
-                response = raw_input(input_prompt)
+                print('closing')
+                prompt = 'Y to delete file: {} '.format(fullpath)
+                response = input(prompt)
                 if response == 'Y':
                     os.unlink(fullpath)
 

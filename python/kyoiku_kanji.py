@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import argparse, requests, bs4
@@ -42,13 +42,15 @@ def get_one_section(soup, grade):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
-    parser.add_argument('grade', type=int, choices=[x for x in range(7)], help='grade level of kanji (1-6, 0 for all)')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='show verbose output')
+    parser.add_argument('grade', type=int, choices=[x for x in range(7)],
+                        help='grade level of kanji (1-6, 0 for all)')
     args = parser.parse_args()
     r = requests.get(URL)
     assert(200 == r.status_code)
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
-    broken_bar = unichr(0x00a6)
+    broken_bar = chr(0x00a6)
     if args.grade:
         for row in get_one_section(soup, args.grade):
             print(broken_bar.join(row))

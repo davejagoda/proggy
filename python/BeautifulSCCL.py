@@ -1,25 +1,32 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # this prints out checked out books from SCCL
 
 from bs4 import BeautifulSoup
-import sys, os, getpass, urllib, urllib2, re, time, argparse
+import argparse
+import getpass
+import os
+import re
+import sys
+import time
+import urllib
 
 LOGINURL = 'https://sccl.bibliocommons.com/user/login'
 LOGOUTURL = 'https://sccl.bibliocommons.com/user/logout'
 CHECKEDOUTURL = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
 FINESURL = 'https://sccl.bibliocommons.com/fines'
-OPENER = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
 
 def loginAndReturnSoup(u, p, verbose=False):
     values = { 'name' : u,
                'user_pin' : p }
-    data = urllib.urlencode(values)
+    data = urllib.parse.urlencode(values).encode('utf-8')
+
     r = OPENER.open(LOGINURL, data)
     r = OPENER.open(CHECKEDOUTURL)
     soup = BeautifulSoup(r.read(), 'html.parser')
-    if verbose: print(soup.prettify().encode('utf8'))
+    if verbose: print(soup.prettify())
     logged_in_user = soup.find(text=re.compile('Logged in as '))
     try:
         print('User: {}'.format(logged_in_user))
@@ -40,7 +47,7 @@ def displayCheckedOut(soup, verbose=False):
         title = None
         for kid in tt.children:
 # find the title of the child, if there's more than one child use the last one
-            title = kid['title'].encode('utf8')
+            title = kid['title']
             if verbose: print(title)
             titles.append(title)
 # 2015-10-01 <span class="checkedout_status out">
@@ -55,7 +62,7 @@ def displayCheckedOut(soup, verbose=False):
         ddd = dd.find('span', 'checkedout_status')
         duedate = convertDateFromAmericanTo8601(ddd.text.strip(), verbose)
         duedates.append(duedate)
-    for i in xrange(len(titles)):
+    for i in range(len(titles)):
         print('UNIT: {} {}'.format(duedates[i], titles[i]))
     assert len(duedates) == len(titles)
 
@@ -71,7 +78,8 @@ def logout():
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('usernames', nargs='+', help='username[s]')
-    parser.add_argument('--verbose', '-v', action='store_true', help='be verbose')
+    parser.add_argument('--verbose', '-v', action='store_true',
+                        help='be verbose')
     args = parser.parse_args()
     if os.getenv('SCCLPIN'):
         password = os.getenv('SCCLPIN')

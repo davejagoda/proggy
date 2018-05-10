@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import argparse, codecs
 
@@ -18,5 +18,5 @@ if '__main__' == __name__:
         if ord(k) < 32:
             c = '\\' + chr(96 + ord(k))
         else:
-            c = k.encode('utf8')
+            c = k
         print('{}:{}'.format(c, d[k]))

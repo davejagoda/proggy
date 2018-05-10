@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import argparse, requests, bs4
@@ -23,7 +23,8 @@ def parse_table(soup, verbose=False):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', help='show verbose output')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='show verbose output')
     args = parser.parse_args()
     URL = BASEURL + '/wiki/ISO_3166-1'
     r = requests.get(URL)
@@ -31,6 +32,6 @@ if '__main__' == __name__:
     assert(200 == r.status_code)
     soup = bs4.BeautifulSoup(r.content, 'html.parser')
     if args.verbose: print(soup)
-    broken_bar = unichr(0x00a6)
+    broken_bar = chr(0x00a6)
     for row in parse_table(soup, args.verbose):
         print(broken_bar.join(row))

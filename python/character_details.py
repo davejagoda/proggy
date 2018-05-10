@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # http://en.wikipedia.org/wiki/List_of_Unicode_characters
@@ -23,8 +23,7 @@ def process_unicode_string(unicode_string):
 
 def process_argument(arg):
     print('processing argument: {} argument length: {}'.format(arg, len(arg)))
-    unicode_string = arg.decode('utf-8')
-    process_unicode_string(unicode_string)
+    process_unicode_string(arg)
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()

@@ -1,9 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-rtl = unichr(0x202e).encode('utf8')
-ltr = unichr(0x202d).encode('utf8')
-pop = unichr(0x202c).encode('utf8')
+rtl = chr(0x202e)
+ltr = chr(0x202d)
+pop = chr(0x202c)
 
-print 'hi', rtl, 'hi', ltr, 'hi'
-print 'hi', rtl, 'hi', pop, 'hi'
-
+print('hi', rtl, 'hi', ltr, 'hi')
+print('hi', rtl, 'hi', pop, 'hi')

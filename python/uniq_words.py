@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import argparse, operator
 
@@ -22,8 +22,10 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', help='file with words')
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-k', '--keysort', action='store_true', help='sort based on key')
-    group.add_argument('-v', '--valsort', action='store_true', help='sort based on value')
+    group.add_argument('-k', '--keysort', action='store_true',
+                       help='sort based on key')
+    group.add_argument('-v', '--valsort', action='store_true',
+                       help='sort based on value')
     parser.add_argument('words', nargs='*', help='words on the commandline')
     args = parser.parse_args()
     if args.file:
