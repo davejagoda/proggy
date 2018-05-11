@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys, smtplib
 assert (2 == len(sys.argv)), "provide email address as an argument"
