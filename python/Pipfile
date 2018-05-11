@@ -14,3 +14,6 @@ requests = "*"
 pillow = "!=5.1.0"
 
 [dev-packages]
+
+[requires]
+python_version = "3.6"
