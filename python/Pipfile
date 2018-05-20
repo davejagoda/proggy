@@ -12,6 +12,7 @@ dateparser = "*"
 openpyxl = "*"
 requests = "*"
 pillow = "!=5.1.0"
+tweepy = "*"
 
 [dev-packages]
 
