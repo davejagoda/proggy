@@ -1,9 +1,14 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import sys, codecs, fileinput, string, unicodedata
+import codecs
+import fileinput
+import string
+import sys
+import unicodedata
 
 def emit_output(filename, linenumber, character, charactername):
-    print('file:{0} line:{1} -> {2}:{3}'.format(filename, linenumber, character, charactername))
+    print('file:{0} line:{1} -> {2}:{3}'.format(
+        filename, linenumber, character, charactername))
 
 def process_line(line):
     for datum in line:
@@ -12,7 +17,8 @@ def process_line(line):
                 charactername = unicodedata.name(datum)
             except:
                 charactername = 'no such unicode name exists'
-            emit_output(fileinput.filename(), fileinput.filelineno(), datum.encode('utf-8'), charactername)
+            emit_output(fileinput.filename(), fileinput.filelineno(),
+                        datum, charactername)
 
 if '__main__' == __name__:
     current_file = None
