@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import random
 
@@ -7,11 +7,13 @@ class RandomClass:
     def __init__(self, name, rank):
         self.name = name
         self.rank = rank
+    def __lt__(self, other):
+        return id(self) < id(other)
     def __repr__(self):
-        return('name:{} rank:{}'.format(self.name, self.rank))
+        return 'name:{} rank:{}'.format(self.name, self.rank)
 
 def random_generator():
-    ranks = range(10)
+    ranks = list(range(10))
     objects = []
     while ranks:
         selected = ranks.pop(random.randrange(len(ranks)))
