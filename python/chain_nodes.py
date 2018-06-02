@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 # this program expects a file containing a list of nodes, one per line
 # it will create a chain of nodes, randomly choosing from the remaining nodes

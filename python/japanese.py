@@ -18,7 +18,6 @@ def print_range(lo, hi):
             name = 'NONE'
         if '' == unicodedata.decomposition(c) and 'LETTER' in name and 'SMALL' not in name:
             print(c)
-#        print(c.encode('utf8'), name)
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
