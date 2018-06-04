@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys, os, hashlib
 from os.path import join
@@ -9,7 +9,7 @@ for path in sys.argv[1:]:
     print(path)
 #    for entry in sorted(os.listdir(path)):
     for root, dirs, files in os.walk(sys.argv[1]):
-        print 'root', root, 'dirs', dirs, 'files', files
+        print('root', root, 'dirs', dirs, 'files', files)
         for entry in files:
             f = open(join(root, entry), 'rb')
             m = hashlib.md5()
@@ -21,4 +21,3 @@ for path in sys.argv[1:]:
                     break
             print('MD5 (' + entry + ') = ' +  m.hexdigest())
             f.close()
-

@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 you will need to do all (or most) of the following to get this to work:
-source venv/bin/activate
-export DJANGO_SETTINGS_MODULE=<APPNAME>.settings
 export PGUSER=<USERNAME>
 export PGPASSWORD=<PASSWORD>
 export PGHOST=<HOSTNAME>
+export DJANGO_SETTINGS_MODULE=<APPNAME>.settings
+pipenv run ./django_count_all_objects_in_all_models.py
 '''
 import django
 django.setup()
