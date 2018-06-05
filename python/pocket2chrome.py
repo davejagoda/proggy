@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -23,28 +23,32 @@ postamble = '''    </DL><p>
 '''
 
 parser = argparse.ArgumentParser()
-parser.add_argument('pocket', help='input text file containing exported Pocket URLs')
-parser.add_argument('chrome', help='output HTML file suitable for importing to Chrome')
-parser.add_argument('-f', '--force', action='store_true', help='allow overwriting Chome bookmarks file')
-parser.add_argument('-v', '--verbose', action='count', help='show verbose output')
+parser.add_argument('pocket',
+                    help='input text file containing exported Pocket URLs')
+parser.add_argument('chrome',
+                    help='output HTML file suitable for importing to Chrome')
+parser.add_argument('-f', '--force', action='store_true',
+                    help='allow overwriting Chome bookmarks file')
+parser.add_argument('-v', '--verbose', action='count', default=0,
+                    help='show verbose output')
 args = parser.parse_args()
 
 if not os.path.exists(args.pocket):
     print('pocket export file not found')
     sys.exit(1)
 if os.path.exists(args.chrome) and not args.force:
-    print args.force
     print('bookmarks exists, refusing to overwrite')
     sys.exit(1)
 
 with open(args.pocket, 'r') as f_in:
     with open(args.chrome, 'w') as f_out:
         f_out.write(preamble)
-        for line in f_in.xreadlines():
+        for line in f_in:
             if 2 < args.verbose:
                 print(line.rstrip())
             parts = line.split(' | ')
             if 1 < args.verbose and 2 != len(parts):
-                print('found multiple delimiters in this line:{}'.format(line.rstrip()))
+                print('found multiple delimiters in this line:{}'.format(
+                    line.rstrip()))
             f_out.write(amble.format(parts[0], ' | '.join(parts[1:]).rstrip()))
         f_out.write(postamble)
