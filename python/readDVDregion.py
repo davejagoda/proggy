@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-# make this work on Linux
+
 # 2 relevant files
-# /Volumes/<name>/VIDEO_TS/VIDEO_TS.IFO
-# /Volumes/<name>/VIDEO_TS/VIDEO_TS.BUP
+# VIDEO_TS/VIDEO_TS.IFO
+# VIDEO_TS/VIDEO_TS.BUP
 
-import argparse, subprocess, re, os
+import argparse
+import os
+import platform
+import re
+import subprocess
 
-def attach(filename):
+
+def attach_osx(filename):
     stdout = subprocess.getoutput('hdiutil attach {}'.format(filename))
 # output is tab delimited, thus this would also find the mount name:
 # hdiutil attach DVD.iso | cut -f 3
@@ -15,8 +20,18 @@ def attach(filename):
     if args.verbose: print(stdout)
     return(match.group(1))
 
-def detach(volume):
+def attach_linux(filename):
+    tmpdir = subprocess.getoutput('mktemp -d')
+    stdout = subprocess.getoutput('archivemount {} {}'.format(filename, tmpdir))
+    return(tmpdir)
+
+def detach_osx(volume):
     stdout = subprocess.getoutput('hdiutil detach {}'.format(volume))
+    if args.verbose: print(stdout)
+    return
+
+def detach_linux(volume):
+    stdout = subprocess.getoutput('fusermount -u {}'.format(volume))
     if args.verbose: print(stdout)
     return
 
@@ -53,13 +68,16 @@ if '__main__' == __name__:
     parser.add_argument('file', help='the file containing the raw DVD image')
     parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()
-    if args.verbose: print('entering main')
-    print(args.file)
-    volume = attach(args.file)
+    if 'Darwin' == platform.system():
+        volume = attach_osx(args.file)
+    else:
+        volume = attach_linux(args.file)
     files = findFiles(volume, ['IFO','BUP'])
     for file in files:
         result = readOctets(file, 36)
         if 0 != result:
             print(file, interpretOctet(result))
-    detach(volume)
-    if args.verbose: print('exiting main')
+    if 'Darwin' == platform.system():
+        detach_osx(volume)
+    else:
+        detach_linux(volume)
