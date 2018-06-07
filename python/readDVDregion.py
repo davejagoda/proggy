@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # make this work on Linux
 # 2 relevant files
 # /Volumes/<name>/VIDEO_TS/VIDEO_TS.IFO
@@ -7,7 +7,7 @@
 import argparse, subprocess, re, os
 
 def attach(filename):
-    stdout = subprocess.check_output(['hdiutil', 'attach', filename])
+    stdout = subprocess.getoutput('hdiutil attach {}'.format(filename))
 # output is tab delimited, thus this would also find the mount name:
 # hdiutil attach DVD.iso | cut -f 3
     pattern = '^/dev/disk\d+\s+(/Volumes/.*)$'
@@ -16,7 +16,7 @@ def attach(filename):
     return(match.group(1))
 
 def detach(volume):
-    stdout = subprocess.check_output(['hdiutil', 'detach', volume])
+    stdout = subprocess.getoutput('hdiutil detach {}'.format(volume))
     if args.verbose: print(stdout)
     return
 
@@ -31,11 +31,11 @@ def findFiles(directory, extensions):
     return(returnList)
 
 def readOctets(filename, count):
-# read the first count octets of a file, returns ord of the last octet
+# read the first count octets of a file, return the last octet
     if args.verbose: print(filename)
     f = open(filename, 'rb')
     chunk = f.read(count)
-    return(ord(chunk[-1]))
+    return(chunk[-1])
 
 def interpretOctet(octet):
     regions = []
