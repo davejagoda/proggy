@@ -1,6 +1,11 @@
 'from this: https://discuss.howtogeek.com/t/see-system-product-key-fast/12931
+'invoke like this to get output on console
+'cscript See_Product_Key.vbs
 Set WshShell = CreateObject("WScript.Shell")
-MsgBox ConvertToKey(WshShell.RegRead("HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\DigitalProductId"))
+ConvertedKey = ConvertToKey(WshShell.RegRead("HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\DigitalProductId"))
+'this line will make a pop up with the key
+'MsgBox ConvertedKey
+WScript.StdOut.WriteLine ConvertedKey
 
 Function ConvertToKey(Key)
         Const KeyOffset = 52
