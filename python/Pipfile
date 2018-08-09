@@ -14,6 +14,7 @@ openpyxl = "*"
 paramiko = "*"
 requests = "*"
 pillow = "!=5.1.0"
+simple-salesforce = "*"
 tweepy = "*"
 
 [dev-packages]
