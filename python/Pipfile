@@ -13,11 +13,11 @@ django = "*"
 openpyxl = "*"
 paramiko = "*"
 requests = "*"
-pillow = "!=5.1.0"
+pillow = "*"
 simple-salesforce = "*"
 tweepy = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
