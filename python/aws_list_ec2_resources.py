@@ -17,22 +17,25 @@ def output_region_data(element):
 
 def parse_keys_response(response):
     keys = aws_lib.extract_response(response, 'KeyPairs')
-    return('\n'.join(['K {} {}'.format(k['KeyFingerprint'],
-                                     k['KeyName']) for k in keys]))
+    return('\n'.join(['K {} {}'.format(
+        k['KeyFingerprint'],
+        k['KeyName']) for k in keys]))
 
 def parse_resv_response(response):
     resv = aws_lib.extract_response(response, 'Reservations')
-    return('\n'.join(['I {} {} {} {} {}'.format(r['Instances'][0]['InstanceId'],
-                                                r['Instances'][0]['ImageId'],
-                                                r['Instances'][0]['InstanceType'],
-                                                r['Instances'][0]['PublicDnsName'],
-                                                r['Instances'][0]['KeyName']) for r in resv]))
+    return('\n'.join(['I {} {} {} {} {}'.format(
+        r['Instances'][0]['InstanceId'],
+        r['Instances'][0]['ImageId'],
+        r['Instances'][0]['InstanceType'],
+        r['Instances'][0]['PublicDnsName'],
+        r['Instances'][0]['KeyName']) for r in resv]))
 
 def parse_secg_response(response):
     secg = aws_lib.extract_response(response, 'SecurityGroups')
-    return('\n'.join(['S {} {} {}'.format(s['GroupId'],
-                                          s['GroupName'],
-                                          s['Description']) for s in secg]))
+    return('\n'.join(['S {} {} {}'.format(
+        s['GroupId'],
+        s['GroupName'],
+        s['Description']) for s in secg]))
 
 def get_instance_data_from_region(q, region_name):
     session = boto3.session.Session(region_name=region_name)
