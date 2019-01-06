@@ -6,9 +6,12 @@ import unicodedata
 def make_table_of_characters():
     characters = {}
     characters['all']                   = 0x00000
+    characters['bomb']                  = 0x1f4a3
     characters['businessmanlevitating'] = 0x1f574
+    characters['cop']                   = 0x1f46e
     characters['copyright']             = 0x000a9
     characters['floppy']                = 0x1f4be
+    characters['gun']                   = 0x1f52b
     characters['heart']                 = 0x02665
     characters['middlefinger']          = 0x1f595
     characters['infinity']              = 0x0221e
