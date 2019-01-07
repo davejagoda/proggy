@@ -16,6 +16,7 @@ def make_table_of_characters():
     characters['middlefinger']          = 0x1f595
     characters['infinity']              = 0x0221e
     characters['interrobang']           = 0x0203d
+    characters['key']                   = 0x1f511
     characters['nj']                    = 0x001cc
     characters['pi']                    = 0x003a0
     characters['poo']                   = 0x1f4a9
