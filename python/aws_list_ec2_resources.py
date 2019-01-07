@@ -85,7 +85,7 @@ def parse_neti_response(response):
         results.append((
             'N',
             n['NetworkInterfaceId'],
-            n['Association']['PublicDnsName']
+            n['PrivateIpAddress']
         ))
     return results
 
