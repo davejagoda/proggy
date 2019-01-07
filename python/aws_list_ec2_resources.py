@@ -2,8 +2,10 @@
 
 # http://stackoverflow.com/questions/2846653/how-to-use-threading-in-python
 
-# TBD
-# Termination Protection
+COP  = chr(0x1f46e)
+BOMB = chr(0x1f4a3)
+KEY  = chr(0x1f511)
+DISK = chr(0x1f4be)
 
 import argparse
 import boto3
@@ -11,56 +13,101 @@ import queue
 import threading
 import aws_lib
 
+def print_results(results):
+    for result in results:
+        print(' '.join(result))
+
 def output_region_data(element):
     (region_name, keyp, resv, vols, neti, secg) = element
     print(region_name)
-    if keyp: print(keyp)
-    if resv: print(resv)
-    if vols: print(vols)
-    if neti: print(neti)
-    if secg: print(secg)
+    if keyp: print_results(keyp)
+    if resv: print_results(resv)
+    if vols: print_results(vols)
+    if neti: print_results(neti)
+    if secg: print_results(secg)
+
+def is_API_termination_disabled(ec2, instance_id):
+    if (ec2.describe_instance_attribute(InstanceId=instance_id,
+                                        Attribute='disableApiTermination'
+    )['DisableApiTermination']['Value']):
+        return COP
+    else:
+        return BOMB
 
 def parse_keyp_response(response):
+    # results is a list of tuples
+    results = []
     keyp = aws_lib.extract_response(response, 'KeyPairs')
-    return('\n'.join(['K {} {}'.format(
-        k['KeyFingerprint'],
-        k['KeyName']) for k in keyp]))
+    for k in keyp:
+        results.append((
+            'K',
+            KEY,
+            k['KeyFingerprint'],
+            k['KeyName']
+        ))
+    return results
 
-def parse_resv_response(response):
+def process_and_parse_resv_response(ec2, response):
+    # results is a list of tuples
+    results = []
     resv = aws_lib.extract_response(response, 'Reservations')
-    return('\n'.join(['I {} {} {} {} {}'.format(
-        r['Instances'][0]['InstanceId'],
-        r['Instances'][0]['ImageId'],
-        r['Instances'][0]['InstanceType'],
-        r['Instances'][0]['PublicDnsName'],
-        r['Instances'][0]['KeyName']) for r in resv]))
+    for r in resv:
+        results.append((
+            'I',
+            is_API_termination_disabled(ec2, r['Instances'][0]['InstanceId']),
+            r['Instances'][0]['InstanceId'],
+            r['Instances'][0]['ImageId'],
+            r['Instances'][0]['InstanceType'],
+            r['Instances'][0]['PublicDnsName'],
+            r['Instances'][0]['KeyName']
+        ))
+    return results
 
 def parse_vols_response(response):
+    # results is a list of tuples
+    results = []
     vols = aws_lib.extract_response(response, 'Volumes')
-    return('\n'.join(['V {} {}GB {}'.format(
-        v['VolumeId'],
-        v['Size'],
-        v['VolumeType']) for v in vols]))
+    for v in vols:
+        results.append((
+            'V',
+            DISK,
+            v['VolumeId'],
+            '{}GB'.format(v['Size']),
+            v['VolumeType']
+        ))
+    return results
 
 def parse_neti_response(response):
+    # results is a list of tuples
+    results = []
     neti = aws_lib.extract_response(response, 'NetworkInterfaces')
-    return('\n'.join(['N {} {}'.format(
-        n['NetworkInterfaceId'],
-        n['Association']['PublicDnsName']) for n in neti]))
+    for n in neti:
+        results.append((
+            'N',
+            n['NetworkInterfaceId'],
+            n['Association']['PublicDnsName']
+        ))
+    return results
 
 def parse_secg_response(response):
+    # results is a list of tuples
+    results = []
     secg = aws_lib.extract_response(response, 'SecurityGroups')
-    return('\n'.join(['S {} {} {}'.format(
-        s['GroupId'],
-        s['GroupName'],
-        s['Description']) for s in secg]))
+    for s in secg:
+        results.append((
+            'S',
+            s['GroupId'],
+            s['GroupName'],
+            s['Description']
+        ))
+    return results
 
-def get_instance_data_from_region(q, region_name):
+def get_data_from_region(q, region_name):
     session = boto3.session.Session(region_name=region_name)
     ec2 = session.client('ec2')
 
     keyp = parse_keyp_response(ec2.describe_key_pairs())
-    resv = parse_resv_response(ec2.describe_instances())
+    resv = process_and_parse_resv_response(ec2, ec2.describe_instances())
     vols = parse_vols_response(ec2.describe_volumes())
     neti = parse_neti_response(ec2.describe_network_interfaces())
     secg = parse_secg_response(ec2.describe_security_groups())
@@ -83,10 +130,10 @@ if '__main__' == __name__:
                region['Endpoint'])
         if args.threads:
             thread_list.append(threading.Thread(target=
-                                                get_instance_data_from_region,
+                                                get_data_from_region,
                                                 args=(q, region_name)))
         else:
-            get_instance_data_from_region(q, region_name)
+            get_data_from_region(q, region_name)
     for t in thread_list:
         t.start()
     for t in thread_list:
