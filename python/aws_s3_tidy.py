@@ -50,6 +50,6 @@ if '__main__' == __name__:
         print('{:>5}#{}'.format(count, summary))
         if 0 == count:
             if args.fix:
-                print(client.delete_bucket(bucket_name))
+                print(client.delete_bucket(Bucket=bucket_name))
             else:
                 print('empty bucket')
