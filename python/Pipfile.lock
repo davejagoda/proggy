@@ -25,11 +25,11 @@
         },
         "awscli": {
             "hashes": [
-                "sha256:7b8401cb0979b50c2bde9803550100b1683080dc9b90255b02d00a8eeb55e7a7",
-                "sha256:b55b5fb1ab8158025bb950a441f987a7114bf4ad487b25ed2498483cbbb4b516"
+                "sha256:9cbc48eff6f8c9ee2072be2caf569dd5f18734d61e020556b792ba509bbb03f0",
+                "sha256:e0b9afc24c591ecb04d02a34d9e8d3508a4bd25c713d10a358cdad09abbbcf8e"
             ],
             "index": "pypi",
-            "version": "==1.16.127"
+            "version": "==1.16.130"
         },
         "bcrypt": {
             "hashes": [
@@ -66,18 +66,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:80f24c01a630e6be409d70aa1b1e30076eda1daf8456157ec210aea2d8d51f2c",
-                "sha256:f259046902b1daa542a08f08796d000160e9801a87f470faf940addacedcc7d7"
+                "sha256:39e9b6516a72864f5a6b69f38edac087cc4ba623095f4528b916620e63de32b3",
+                "sha256:a3eb22bb975a200a69084ec2bb69819e483ad531bf05e7b73861fc1b333aad42"
             ],
             "index": "pypi",
-            "version": "==1.9.117"
+            "version": "==1.9.120"
         },
         "botocore": {
             "hashes": [
-                "sha256:6c3b1b3344d7bb53a85d3877047e5f29a46f13deb27bda2e85a6d24d7a27c5bf",
-                "sha256:c2a8ae81bb2dfd70951279a1b63ba7ef89333675f9ff479b008ce14fcd9872c1"
+                "sha256:2bf8768887bfb008406eec725eecf6f174307dac00f5fad244cdd5d39c6c2147",
+                "sha256:c0f9c57e7a8c65f17a62a0926c3e73686f6ae1c08abf3b5a63cc3a5bcc4c437b"
             ],
-            "version": "==1.12.117"
+            "version": "==1.12.120"
         },
         "certifi": {
             "hashes": [
@@ -283,7 +283,6 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:96b25fc927a3824b16d6356889b33869128b7a32a9fc1f932d5bd8964c982638",
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
             "version": "==2.19"
