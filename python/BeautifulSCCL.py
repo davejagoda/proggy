@@ -5,8 +5,8 @@
 from bs4 import BeautifulSoup
 import argparse
 import getpass
+import json
 import os
-import re
 import sys
 import time
 import urllib
@@ -14,7 +14,6 @@ import urllib
 LOGINURL = 'https://sccl.bibliocommons.com/user/login'
 LOGOUTURL = 'https://sccl.bibliocommons.com/user/logout'
 CHECKEDOUTURL = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
-FINESURL = 'https://sccl.bibliocommons.com/fines'
 OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
 
 def loginAndReturnSoup(u, p, verbose=False):
@@ -26,12 +25,6 @@ def loginAndReturnSoup(u, p, verbose=False):
     r = OPENER.open(CHECKEDOUTURL)
     soup = BeautifulSoup(r.read(), 'html.parser')
     if verbose: print(soup.prettify())
-    logged_in_user = soup.find(text=re.compile('Logged in as '))
-    try:
-        print('User: {}'.format(logged_in_user))
-    except:
-        print('Bad password')
-        sys.exit(1)
     return(soup)
 
 def convertDateFromAmericanTo8601(s, verbose=False):
@@ -39,37 +32,27 @@ def convertDateFromAmericanTo8601(s, verbose=False):
     return(time.strftime('%Y-%m-%d', time.strptime(s, '%b %d, %Y')))
 
 def displayCheckedOut(soup, verbose=False):
-#   <a class="jacketCoverLink" href="/item/show/973973016_office_space" target="_parent" title="Office Space">
-    titles = []
-    duedates = []
-    for tt in soup.find_all('a', 'jacketCoverLink'):
-        title = None
-        for kid in tt.children:
-# find the title of the child, if there's more than one child use the last one
-            title = kid['title']
-            if verbose: print(title)
-            titles.append(title)
-# 2015-10-01 <span class="checkedout_status out">
-# 2015-10-05 <div class="checkedout_due_date" testid="text_dueDate">
-##              <span class="info_label">
-##               Due on:
-##              </span>
-##              <span class="checkedout_status out">
-##               Oct 21, 2015
-##              </span>
-    for dd in soup.find_all('div', 'checkedout_due_date'):
-        ddd = dd.find('span', 'checkedout_status')
-        duedate = convertDateFromAmericanTo8601(ddd.text.strip(), verbose)
-        duedates.append(duedate)
-    for i in range(len(titles)):
-        print('UNIT: {} {}'.format(duedates[i], titles[i]))
-    assert len(duedates) == len(titles)
+    # find this in the soup:
+    # 'script data-iso-key="_0" type="application/json">'
+    app_json_script = soup.find('script', {'type': 'application/json'})
+    try:
+        j = json.loads(app_json_script.get_text())
+    except:
+        print('failed to log in')
+        sys.exit(1)
+    print('Email: {}'.format(
+        j['entities']['accounts']['69905905']['digitalNotificationEmail']))
+    results = []
+    for value in j['entities']['checkouts'].values():
+        results.append('{}:{}'.format(value['dueDate'], value['bibTitle']))
+    results.sort()
+    print(os.linesep.join(results))
 
-def fines():
-    r = OPENER.open(FINESURL)
-    soup = BeautifulSoup(r.read(), 'html.parser')
-    fine = soup.find(text=re.compile('\$'))
-    print('Fine: {}'.format(fine))
+def fines(soup, verbose=False):
+    # find this in the soup:
+    # <span class="cp-dollar-amount" data-reactid="144">
+    fine = soup.find('span', {'class': 'cp-dollar-amount'})
+    print('Fine: {}'.format(fine.get_text()))
 
 def logout():
     r = OPENER.open(LOGOUTURL)
@@ -88,5 +71,5 @@ if '__main__' == __name__:
         print('USER: {}'.format(username))
         soup = loginAndReturnSoup(username, password, args.verbose)
         displayCheckedOut(soup, args.verbose)
-        fines()
+        fines(soup, args.verbose)
         logout()
