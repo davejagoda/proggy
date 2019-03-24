@@ -40,13 +40,15 @@ def displayCheckedOut(soup, verbose=False):
     except:
         print('failed to log in')
         sys.exit(1)
+    keys_list = list(j['entities']['accounts'])
     print('Email: {}'.format(
-        j['entities']['accounts']['69905905']['digitalNotificationEmail']))
+        j['entities']['accounts'][keys_list[0]]['digitalNotificationEmail']))
     results = []
     for value in j['entities']['checkouts'].values():
         results.append('{}:{}'.format(value['dueDate'], value['bibTitle']))
     results.sort()
-    print(os.linesep.join(results))
+    if results:
+        print(os.linesep.join(results))
 
 def fines(soup, verbose=False):
     # find this in the soup:
