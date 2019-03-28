@@ -100,6 +100,11 @@ def parse_secg_response(response):
             s['GroupName'],
             s['Description']
         ))
+        for ip_perm in s['IpPermissions']:
+            if ip_perm['IpProtocol'] != '-1':
+                to_port = str(ip_perm['ToPort'])
+                for cidr_ip in ip_perm['IpRanges']:
+                    results.append((to_port, cidr_ip['CidrIp']))
     return results
 
 def get_data_from_region(q, region_name):
