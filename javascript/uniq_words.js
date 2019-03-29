@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
+const fs = require('fs');
 
 if (3 !== process.argv.length) {
   console.log('Provide exactly one argument: a file to read');
   process.exit(1);
 }
 
-var file = process.argv[2];
-var uniq = {};
+const file = process.argv[2];
+let uniq = {};
 
 fs.readFile(file, 'utf8', function(err, data) {
   if (err) {
