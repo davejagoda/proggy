@@ -64,7 +64,7 @@ def validate_resource_records(rr, verbose):
     for r in rr:
         assert(r.keys() == model_dict.keys())
         if verbose > 1:
-            print('nsname:{}'.format(n['Name']))
+            print('nsname:{}'.format(r['Value']))
         nameservers.append(remove_trailing_dot(r['Value']))
     return nameservers
 
