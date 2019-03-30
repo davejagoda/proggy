@@ -80,17 +80,50 @@ def get_zone_details(zone_detail, verbose):
         if 'NS' == rrs['Type']:
             return validate_resource_records(rrs['ResourceRecords'], verbose)
 
+def find_A_record(zone_detail, verbose):
+    if verbose > 1:
+        pprint.pprint(zone_detail)
+    for rrs in zone_detail['ResourceRecordSets']:
+        if 'A' == rrs['Type']:
+            return rrs['ResourceRecords'][0]['Value']
+    return None
+
 def set_nameservers(zone_name, list_of_nameservers, verbose):
-    print('fixing')
+    print('fixing nameservers')
     r53domains = boto3.client('route53domains', region_name='us-east-1')
     r53domains.update_domain_nameservers(
         DomainName=zone_name, Nameservers=[dict(
             Name=nameserver) for nameserver in list_of_nameservers])
 
+def create_A_record(zone_name, zone_id, ip_address, verbose):
+    print('creating A record')
+    r53 = boto3.client('route53', region_name='us-east-1')
+    r53.change_resource_record_sets(
+        HostedZoneId=zone_id,
+        ChangeBatch={
+            'Changes': [
+                {
+                    'Action': 'CREATE',
+                    'ResourceRecordSet': {
+                        'Name': zone_name,
+                        'Type': 'A',
+                        'TTL': 300,
+                        'ResourceRecords': [
+                            {
+                                'Value': ip_address
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    )
+
 if '__main__' == __name__:
     domains_hash = {}
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='count', default=0)
+    parser.add_argument('-a', '--a_record_ip', default=None)
     args = parser.parse_args()
     r53domains = boto3.client('route53domains', region_name='us-east-1')
     domains = get_domains(r53domains.list_domains(), args.verbose)
@@ -104,12 +137,21 @@ if '__main__' == __name__:
         zone_name = remove_trailing_dot(zone_name)
         list_of_nameservers = get_zone_details(r53.list_resource_record_sets(
             HostedZoneId=zone_id), args.verbose)
+        A_record = find_A_record(r53.list_resource_record_sets(
+            HostedZoneId=zone_id), args.verbose)
+        if None == A_record and args.a_record_ip is not None:
+            fix_it = input('create A record Y/N ')
+            if 'Y' == fix_it:
+                create_A_record(zone_name, zone_id, args.a_record_ip,
+                                args.verbose)
+        else:
+            print(A_record)
         if list_of_nameservers == domains_hash[zone_name]:
             print(zone_name + ' match')
         else:
             print(zone_name + ' no match: {} {}'.format(
                 list_of_nameservers, domains_hash[zone_name]))
-            fix_it = input('fix Y/N ')
+            fix_it = input('fix nameservers Y/N ')
             if 'Y' == fix_it:
                 set_nameservers(zone_name, list_of_nameservers, args.verbose)
     if args.verbose > 0:
