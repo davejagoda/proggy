@@ -4,13 +4,17 @@ import argparse
 import boto3
 import pprint
 
-def print_domains(response, verbose):
-    print('DOMAINS')
+def print_domains(r53domains, verbose):
     if verbose > 0:
-        print('Number of domains found:{}'.format(len(response['Domains'])))
-        pprint.pprint(response)
-    for domain in response['Domains']:
-        print(domain['DomainName'])
+        print('Number of domains found:{}'.format(len(r53domains['Domains'])))
+        pprint.pprint(r53domains)
+    print('Domain Name          Auto Lock Expiry')
+    for domain in r53domains['Domains']:
+        print('{:20} {} {} {}'.format(
+            domain['DomainName'],
+            domain['AutoRenew'],
+            domain['TransferLock'],
+            domain['Expiry']))
 
 def print_zones(response, verbose):
     print('ZONES')
