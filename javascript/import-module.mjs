@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-modules
 
 console.log('begin');
-const { square, cube } = require('./module');
+import { square, cube } from './module.mjs';
 for (var i = 0; i < 3; i++) {
   console.log(i, square(i), cube(i));
 }
