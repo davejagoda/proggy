@@ -121,14 +121,20 @@ def get_data_from_region(q, region_name):
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--regions', nargs='*',
+                        help='list of regions to query')
     parser.add_argument('-t', '--threads', action='store_true',
                         help='use this argument to run multiple threads')
     args = parser.parse_args()
     ec2 = boto3.client('ec2')
     response = ec2.describe_regions()
+    regions = [r for r in response['Regions']]
+    if args.regions:
+        # delete the regions that weren't named
+        regions = [r for r in regions if r['RegionName'] in args.regions]
     q = queue.Queue()
     thread_list = []
-    for region in response['Regions']:
+    for region in regions:
         assert(2 == len(region))
         region_name = region['RegionName']
         assert('ec2.{}.amazonaws.com'.format(region_name) ==
