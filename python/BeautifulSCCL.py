@@ -11,9 +11,6 @@ import sys
 import time
 import urllib
 
-LOGINURL = 'https://sccl.bibliocommons.com/user/login'
-LOGOUTURL = 'https://sccl.bibliocommons.com/user/logout'
-CHECKEDOUTURL = 'http://sccl.bibliocommons.com/checkedout?display_quantity=25'
 OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
 
 def loginAndReturnSoup(u, p, verbose=False):
@@ -62,9 +59,18 @@ def logout():
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('usernames', nargs='+', help='username[s]')
+    parser.add_argument('--paloalto', '-p', action='store_true',
+                        help='check Palo Alto library instead of SCCL')
     parser.add_argument('--verbose', '-v', action='store_true',
                         help='be verbose')
     args = parser.parse_args()
+    if args.paloalto:
+        loc = 'paloalto'
+    else:
+        loc = 'sccl'
+    LOGINURL = 'https://{}.bibliocommons.com/user/login'.format(loc)
+    LOGOUTURL = 'https://{}.bibliocommons.com/user/logout'.format(loc)
+    CHECKEDOUTURL = 'http://{}.bibliocommons.com/checkedout?display_quantity=25'.format(loc)
     if os.getenv('SCCLPIN'):
         password = os.getenv('SCCLPIN')
     else:
