@@ -135,7 +135,7 @@ if '__main__' == __name__:
     q = queue.Queue()
     thread_list = []
     for region in regions:
-        assert(2 == len(region))
+        assert(3 == len(region))
         region_name = region['RegionName']
         assert('ec2.{}.amazonaws.com'.format(region_name) ==
                region['Endpoint'])
