@@ -18,12 +18,13 @@ def print_results(results):
         print(' '.join(result))
 
 def output_region_data(element):
-    (region_name, keyp, resv, vols, neti, secg) = element
+    (region_name, keyp, resv, vols, neti, elip, secg) = element
     print(region_name)
     if keyp: print_results(keyp)
     if resv: print_results(resv)
     if vols: print_results(vols)
     if neti: print_results(neti)
+    if elip: print_results(elip)
     if secg: print_results(secg)
 
 def is_API_termination_disabled(ec2, instance_id):
@@ -89,6 +90,19 @@ def parse_neti_response(response):
         ))
     return results
 
+def parse_elip_response(response):
+    # results is a list of tuples
+    results = []
+    elip = aws_lib.extract_response(response, 'Addresses')
+    for e in elip:
+        print(e)
+        results.append((
+            'E',
+            e['NetworkInterfaceId'],
+            e['PublicIp']
+        ))
+    return results
+
 def parse_secg_response(response):
     # results is a list of tuples
     results = []
@@ -115,9 +129,10 @@ def get_data_from_region(q, region_name):
     resv = process_and_parse_resv_response(ec2, ec2.describe_instances())
     vols = parse_vols_response(ec2.describe_volumes())
     neti = parse_neti_response(ec2.describe_network_interfaces())
+    elip = parse_elip_response(ec2.describe_addresses())
     secg = parse_secg_response(ec2.describe_security_groups())
 
-    q.put((region_name, keyp, resv, vols, neti, secg))
+    q.put((region_name, keyp, resv, vols, neti, elip, secg))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
