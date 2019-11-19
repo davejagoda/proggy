@@ -95,7 +95,6 @@ def parse_elip_response(response):
     results = []
     elip = aws_lib.extract_response(response, 'Addresses')
     for e in elip:
-        print(e)
         results.append((
             'E',
             e['NetworkInterfaceId'],
