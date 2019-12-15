@@ -103,9 +103,9 @@ def create_A_record(zone_name, zone_id, ip_address, verbose):
         ChangeBatch={
             'Changes': [
                 {
-                    'Action': 'CREATE',
+                    'Action': 'UPSERT',
                     'ResourceRecordSet': {
-                        'Name': zone_name,
+                        'Name': '*.{}.'.format(zone_name),
                         'Type': 'A',
                         'TTL': 300,
                         'ResourceRecords': [
@@ -139,7 +139,7 @@ if '__main__' == __name__:
             HostedZoneId=zone_id), args.verbose)
         A_record = find_A_record(r53.list_resource_record_sets(
             HostedZoneId=zone_id), args.verbose)
-        if None == A_record and args.a_record_ip is not None:
+        if args.a_record_ip is not None:
             fix_it = input('create A record Y/N ')
             if 'Y' == fix_it:
                 create_A_record(zone_name, zone_id, args.a_record_ip,
