@@ -3,7 +3,8 @@
 'cscript See_Product_Key.vbs
 Set WshShell = CreateObject("WScript.Shell")
 ConvertedKey = ConvertToKey(WshShell.RegRead("HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\DigitalProductId"))
-'this line will make a pop up with the key
+'MsgBox will make a pop up, StdOut will write to stdout
+'If you get an error, trying swapping the commenting on the next two lines
 'MsgBox ConvertedKey
 WScript.StdOut.WriteLine ConvertedKey
 
