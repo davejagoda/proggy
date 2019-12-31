@@ -23,7 +23,9 @@ def process_line(line):
 if '__main__' == __name__:
     current_file = None
     sys.stdin = codecs.getreader('utf-8')(sys.stdin)
-    for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
+    # https://docs.python.org/3/howto/unicode.html#converting-to-bytes
+    for line in fileinput.input(openhook=fileinput.hook_encoded(
+            'utf-8', 'replace')):
         if fileinput.filename() != current_file:
             current_file = fileinput.filename()
             print('processing:{0}'.format(current_file))
