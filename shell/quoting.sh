@@ -17,3 +17,18 @@ else
         echo ${arg}
     done
 fi
+
+
+# this looks confusing, but
+# Once one is inside $(...), quoting starts all over from scratch.
+# from https://unix.stackexchange.com/questions/289574/nested-double-quotes-in-highly-voted-one-liner
+
+dqdq="$(basename "tmp/foo bar")"
+dqsq="$(basename 'tmp/foo bar')"
+if [[ ${dqdq} == ${dqsq} ]]
+then
+    echo 'SAME: double quote and single quote produce the same results'
+else
+    echo 'DIFF: double quote and single quote produce different results'
+fi
+echo "dqdq:${dqdq} dqsq:${dqsq}"
