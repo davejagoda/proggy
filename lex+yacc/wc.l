@@ -1,4 +1,6 @@
-/* lex wc.l && cc lex.yy.c -o wc -ll */
+/* compile like this:
+lex wc.l && cc lex.yy.c -o wc -ll
+*/
 
 %{
 int words = 0;
@@ -8,14 +10,14 @@ int chars = 0;
 
 %%
 
-[^ \t\n]+  { words++; chars += strlen(yytext); }
-\n         { lines++; chars++; }
-.          { chars++; }
+[^ \t\n]+ { words++; chars += strlen(yytext); }
+\n        { lines++; chars++; }
+.         { chars++; }
 
 %%
 
 int main(int argc, char **argv)
 {
-  yylex();
-  printf("%d %d %d\n", lines, words, chars);
+    yylex();
+    printf("%d %d %d\n", lines, words, chars);
 }
