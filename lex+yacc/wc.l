@@ -1,5 +1,5 @@
 /* compile like this:
-lex wc.l && cc lex.yy.c -o wc -ll
+flex wc.l && cc lex.yy.c -o wc -ll
 */
 
 %{
