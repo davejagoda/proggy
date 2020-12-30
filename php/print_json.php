@@ -1,5 +1,4 @@
 #!/usr/bin/env php
-
 <?php
 if (count($argv) == 1) {
     print("Usage: $argv[0] json_file_or_url [json_file_or_url ...]\n");
