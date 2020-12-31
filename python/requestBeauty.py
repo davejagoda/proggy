@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-# examples:
-# ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u <USERNAME> -p <PIN> -l 'Logged in as '
-# ./requestBeauty.py -s https://stormy-escarpment-6340.herokuapp.com/admin -u <USERNAME> -p <PASSWORD> -l 'Welcome'
-import argparse, requests, bs4, re, urlparse
+# example:
+# pipenv run ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u USER -p PIN -l Featured
+import argparse
+import bs4
+import requests
+import urllib.parse
 
 def getSess(url, username, password, useragent, verbose=0):
     if useragent:
@@ -47,7 +49,7 @@ def getSess(url, username, password, useragent, verbose=0):
                     data.append((c['name'],value))
                 except:
                     print('no name exception:{}'.format(c))
-    return(s, action, data)
+    return s, action, data
 
 def postSess(s, url, data, loggedInString, useragent, verbose=0):
     if useragent:
@@ -67,7 +69,7 @@ def postSess(s, url, data, loggedInString, useragent, verbose=0):
     if verbose > 1:
         print(r.content)
     soup = bs4.BeautifulSoup(r.content, 'html5lib')
-    return(soup.find(text=re.compile(loggedInString)) is not None)
+    return loggedInString in soup.get_text()
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
@@ -76,19 +78,23 @@ if '__main__' == __name__:
     parser.add_argument('-p', '--password', required=True)
     parser.add_argument('-l', '--loggedInString', required=True)
     parser.add_argument('-a', '--userAgentString')
-    parser.add_argument('-v', '--verbose', action='count')
+    parser.add_argument('-v', '--verbose', action='count', default=0)
     args = parser.parse_args()
     if args.verbose > 0:
         print(args.site, args.username, args.password)
-    (s, action, data) = getSess(args.site, args.username, args.password, args.userAgentString, verbose=args.verbose)
+    (s, action, data) = getSess(args.site, args.username, args.password,
+                                args.userAgentString, verbose=args.verbose)
     if args.verbose > 0:
         print(action)
         print(data)
-    (scheme, netloc, path, params, query, fragment) = urlparse.urlparse(action)
+    (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(
+        action)
     if '' == scheme:
-        (scheme, netloc, path, params, query, fragment) = urlparse.urlparse(args.site)
+        (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(
+            args.site)
         action = scheme + '://' + netloc + '/' + action
-    if postSess(s, action, data, args.loggedInString, args.userAgentString, verbose=args.verbose):
+    if postSess(s, action, data, args.loggedInString, args.userAgentString,
+                verbose=args.verbose):
         print('logged in')
     else:
         print('not logged in')
