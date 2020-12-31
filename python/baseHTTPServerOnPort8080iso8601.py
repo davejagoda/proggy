@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 # must answer
 # GET, HEAD, POST
@@ -13,7 +13,10 @@
 #Accept-Language: en-US,en;q=0.5
 #Accept-Encoding: gzip, deflate
 
-import BaseHTTPServer, SimpleHTTPServer, time, argparse
+import argparse
+import BaseHTTPServer
+import SimpleHTTPServer
+import time
 
 class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -59,9 +62,11 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--port', required=True, help='listen port')
     parser.add_argument('-s', '--ssl', action='store_true', help='SSL')
-    parser.add_argument('-v', '--verbose', action='store_true', help='be verbose')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='be verbose')
     args = parser.parse_args()
     httpd = BaseHTTPServer.HTTPServer(('',int(args.port)), djHTTPServer)
     if args.ssl:
-        httpd.socket = ssl.wrap_socket(httpd.socket, certfile='localhost.pem', server_side=True)
+        httpd.socket = ssl.wrap_socket(httpd.socket, certfile='localhost.pem',
+                                       server_side=True)
     httpd.serve_forever()

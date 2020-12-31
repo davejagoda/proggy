@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 # must use the Apple provided python to be able to import CoreGraphics
 
