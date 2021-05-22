@@ -7,6 +7,7 @@ def make_table_of_characters():
     characters = {}
     characters['all']                   = 0x00000
     characters['bomb']                  = 0x1f4a3
+    characters['btc']                   = 0x020bf
     characters['businessmanlevitating'] = 0x1f574
     characters['cop']                   = 0x1f46e
     characters['copyright']             = 0x000a9
