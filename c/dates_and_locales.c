@@ -3,12 +3,12 @@
 #include <time.h>
 
 /*
-try these
+try these:
 LANG=ja_JP.UTF-8 ./dates_and_locales
 LC_ALL=zh_CN.UTF-8 ./dates_and_locales
 LC_ALL=zh_TW.UTF-8 ./dates_and_locales
 LC_TIME=en_DK.UTF-8 ./dates_and_locales
- */
+*/
 
 int main()
 {
