@@ -14,8 +14,10 @@ LANG=sv_SE.ISO8859-1 ./dates_and_locales.py
 import datetime
 import locale
 
+print(locale.getdefaultlocale())
 locale.setlocale(locale.LC_ALL, '')
 print(locale.getlocale())
 t = datetime.datetime.now()
 print(t.isoformat(timespec='seconds'))
 print(t.strftime('%x %X'))
+print(locale.currency(1))
