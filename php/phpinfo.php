@@ -1,3 +1,4 @@
-#!/usr/bin/env php -i
-
-print phpinfo();
+#!/usr/bin/env php
+<?php
+phpinfo();
+?>
