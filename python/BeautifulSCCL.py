@@ -33,7 +33,7 @@ def displayCheckedOut(soup, verbose=False):
     # 'script data-iso-key="_0" type="application/json">'
     app_json_script = soup.find('script', {'type': 'application/json'})
     try:
-        j = json.loads(app_json_script.get_text())
+        j = json.loads(app_json_script.contents[0])
     except:
         print('failed to log in')
         sys.exit(1)
