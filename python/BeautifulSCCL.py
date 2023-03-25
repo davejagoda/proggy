@@ -59,18 +59,22 @@ def logout():
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument('usernames', nargs='+', help='username[s]')
-    parser.add_argument('--paloalto', '-p', action='store_true',
-                        help='check Palo Alto library instead of SCCL')
+    location = parser.add_mutually_exclusive_group()
+    location.add_argument('--paloalto', '-p', action='store_true',
+                          help='check Palo Alto library instead of SCCL')
+    location.add_argument('--sjpl', '-s', action='store_true',
+                          help='check San Jose library instead of SCCL')
     parser.add_argument('--verbose', '-v', action='store_true',
                         help='be verbose')
     args = parser.parse_args()
+    loc = 'sccl'
     if args.paloalto:
         loc = 'paloalto'
-    else:
-        loc = 'sccl'
+    if args.sjpl:
+        loc = 'sjpl'
     LOGINURL = 'https://{}.bibliocommons.com/user/login'.format(loc)
     LOGOUTURL = 'https://{}.bibliocommons.com/user/logout'.format(loc)
-    CHECKEDOUTURL = 'http://{}.bibliocommons.com/checkedout?display_quantity=25'.format(loc)
+    CHECKEDOUTURL = 'http://{}.bibliocommons.com/checkedout'.format(loc)
     if os.getenv('SCCLPIN'):
         password = os.getenv('SCCLPIN')
     else:
