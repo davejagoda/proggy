@@ -3,16 +3,14 @@
 import urllib.request
 import re
 
-f = urllib.request.urlopen('http://davejagoda.nfshost.com/dynamic.php')
-pat = r'^\d+\.\d+\.\d+\.\d+'
+f = urllib.request.urlopen('https://davejagoda.nfshost.com/dynamic.php')
+pat = r'REMOTE_ADDR:(\S+)<br>'
 ip = None
 
 for line in f.read().decode('utf-8').split('\n'):
     if 'REMOTE_ADDR' in line:
-        parts = line.split(':')
-        assert(2 == len(parts))
         if None == ip:
-            ip = re.match(pat, parts[1]).group(0)
+            ip = re.search(pat, line).group(1)
         else:
-            assert(re.match(pat, parts[1]).group(0) == ip)
+            assert(re.search(pat, line).group(1) == ip)
 print(ip)
