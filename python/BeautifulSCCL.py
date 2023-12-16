@@ -54,7 +54,24 @@ def fines(soup, verbose=False):
     print('Fine: {}'.format(fine.get_text()))
 
 def logout():
-    r = OPENER.open(LOGOUTURL)
+    try:
+        r = OPENER.open(LOGOUTURL)
+    except urllib.error.HTTPError as e:
+        print('got an exception while logging out')
+        '''
+        print(e.getcode)
+        print(e.geturl)
+        print(e.hdrs)
+        print(e.headers)
+        print(e.info)
+        print(e.msg)
+        print(e.name)
+        print(e.reason)
+        print(e.status)
+        print(e.strerror)
+        print(e.url)
+        print(e.with_traceback)
+        '''
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
