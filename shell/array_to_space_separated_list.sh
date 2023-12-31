@@ -14,5 +14,5 @@ for var in "${vars[@]}"
 do
     echo "${var}"
 done
-echo "here is the comma-separated list"
-echo "${vars[@]}" | tr ' ' ','
+echo "here is the space-separated list"
+echo "${vars[@]}"
