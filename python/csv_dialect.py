@@ -49,3 +49,16 @@ for attr in dialect_attrs:
     for key in corned_beef:
         print(f'{corned_beef[key][attr]:>{max_field}}', end='')
     print()
+
+'''
+./csv_dialect.py | \
+  grep -v "False            False            False" | \
+  grep -v "True             True             True" | \
+  grep -v "None             None             None" | \
+  grep -v '"                "                "'
+                             excel        excel-tab             unix
+        delimiter                ,               \t                ,
+   lineterminator             \r\n             \r\n               \n
+          quoting                0                0                1
+∴ all 3 dialects are the same except for the delimiter, terminator, and quoting
+'''
