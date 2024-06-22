@@ -18,7 +18,7 @@ def print_results(results):
         print(' '.join(result))
 
 def output_region_data(element):
-    (region_name, keyp, resv, vols, neti, elip, secg) = element
+    (region_name, keyp, resv, vols, neti, elip, secg, vpcs) = element
     print(region_name)
     if keyp: print_results(keyp)
     if resv: print_results(resv)
@@ -26,6 +26,7 @@ def output_region_data(element):
     if neti: print_results(neti)
     if elip: print_results(elip)
     if secg: print_results(secg)
+    if vpcs: print_results(vpcs)
 
 def is_API_termination_disabled(ec2, instance_id):
     if (ec2.describe_instance_attribute(InstanceId=instance_id,
@@ -53,14 +54,17 @@ def process_and_parse_resv_response(ec2, response):
     results = []
     resv = aws_lib.extract_response(response, 'Reservations')
     for r in resv:
+        instances = r.get('Instances')
+        assert 1 == len(instances)
+        instance = instances[0]
         results.append((
             'I',
-            is_API_termination_disabled(ec2, r['Instances'][0]['InstanceId']),
-            r['Instances'][0]['InstanceId'],
-            r['Instances'][0]['ImageId'],
-            r['Instances'][0]['InstanceType'],
-            r['Instances'][0]['PublicDnsName'],
-            r['Instances'][0]['KeyName']
+            is_API_termination_disabled(ec2, instance.get('InstanceId')),
+            instance.get('InstanceId'),
+            instance.get('ImageId'),
+            instance.get('InstanceType'),
+            instance.get('PublicDnsName'),
+            instance.get('KeyName')
         ))
     return results
 
@@ -120,6 +124,19 @@ def parse_secg_response(response):
                     results.append((to_port, cidr_ip['CidrIp']))
     return results
 
+def parse_vpcs_response(response):
+    # results is a list of tuples
+    results = []
+    vpcs = aws_lib.extract_response(response, 'Vpcs')
+    for v in vpcs:
+        results.append((
+            'C',
+            v['VpcId'],
+            v['CidrBlock'],
+            v['InstanceTenancy']
+        ))
+    return results
+
 def get_data_from_region(q, region_name):
     session = boto3.session.Session(region_name=region_name)
     ec2 = session.client('ec2')
@@ -130,8 +147,9 @@ def get_data_from_region(q, region_name):
     neti = parse_neti_response(ec2.describe_network_interfaces())
     elip = parse_elip_response(ec2.describe_addresses())
     secg = parse_secg_response(ec2.describe_security_groups())
+    vpcs = parse_vpcs_response(ec2.describe_vpcs())
 
-    q.put((region_name, keyp, resv, vols, neti, elip, secg))
+    q.put((region_name, keyp, resv, vols, neti, elip, secg, vpcs))
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
