@@ -4,7 +4,7 @@
 
 import argparse
 import requests
-from multiprocessing.dummy import Pool as ThreadPool
+from multiprocessing.dummy import Pool
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--threads', required=True, type=int)
@@ -20,15 +20,9 @@ seed_urls = [
 urls = seed_urls * args.amplification
 
 # Make the Pool of workers
-pool = ThreadPool(args.threads)
-
-# Open the URLs in their own threads
-# and return the results
-results = pool.map(requests.get, urls)
-
-# Close the pool and wait for the work to finish
-pool.close()
-pool.join()
+with Pool(args.threads) as p:
+    # Open the URLs in their own threads and return the results
+    results = p.map(requests.get, urls)
 
 for result in results:
     print(f'{result.status_code} {result.text}')
