@@ -6,6 +6,7 @@ verify_ssl = true
 [packages]
 awscli = "*"
 "beautifulsoup4" = "*"
+black = "*"
 "boto3" = "*"
 dateparser = "*"
 django = "*"
