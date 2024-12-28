@@ -45,6 +45,6 @@ if __name__ == "__main__":
     t_prev = times[0][1]
     for d, t in times:
         print("{}:{}".format(d, iso8601(t)))
-        #        print(t - t_prev)
+        # print(t - t_prev)
         assert t - t_prev >= 0
         t_prev = t

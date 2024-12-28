@@ -4,15 +4,15 @@ import unicodedata
 import urllib.parse
 
 # def get_unicode_using_unicode_escape(n):
-#    s = "%x" % n
-#    return ('\U' + s.zfill(8)).decode('unicode-escape')
+#   s = "%x" % n
+#   return ('\U' + s.zfill(8)).decode('unicode-escape')
 
 
 def print_unicode_entry(n):
-    #    if n > 0xffff:
-    #        u = get_unicode_using_unicode_escape(n)
-    #    else:
-    #        u = unichr(n)
+    # if n > 0xffff:
+    #   u = get_unicode_using_unicode_escape(n)
+    # else:
+    #   u = unichr(n)
     u = chr(n)
     category = unicodedata.category(u)
     name = unicodedata.name(u, "unicodedata has no name defined")
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         print_unicode_entry(i)
 
 # if you try this:
-#    print(unicode_entry(0x110000))
+# print(unicode_entry(0x110000))
 # you'll get this:
 # UnicodeDecodeError: 'unicodeescape' codec can't decode bytes in position 0-9: illegal Unicode character
 

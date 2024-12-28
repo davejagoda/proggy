@@ -4,7 +4,7 @@ import os, http.client, time, xml.etree.ElementTree
 
 
 def walk_zips(srvr, userId):
-    #    for i in range(9999,10010):
+    # for i in range(9999,10010):
     for i in range(10**5):
         zip = str(i).zfill(5)
         path = (
@@ -24,8 +24,8 @@ def walk_zips(srvr, userId):
                 resp = conn.getresponse()
                 if 200 == resp.status:
                     root = xml.etree.ElementTree.fromstring(resp.read())
-                    #                    for r in root[0]:
-                    #                        print(r.tag, r.text, flush=True)
+                    # for r in root[0]:
+                    #   print(r.tag, r.text, flush=True)
                     if "Zip5" != root[0][0].tag:
                         print("{} ZZ INVALID".format(zip), flush=True)
                     else:
@@ -35,9 +35,9 @@ def walk_zips(srvr, userId):
                             ),
                             flush=True,
                         )
-                    #                    (<Element 'Zip5' at 0x7f9631e1b6d0>, '10009')
-                    #                    (<Element 'City' at 0x7f9631e1b790>, 'NEW YORK')
-                    #                    (<Element 'State' at 0x7f9631e1b910>, 'NY')
+                    # (<Element 'Zip5' at 0x7f9631e1b6d0>, '10009')
+                    # (<Element 'City' at 0x7f9631e1b790>, 'NEW YORK')
+                    # (<Element 'State' at 0x7f9631e1b910>, 'NY')
                     done = True
                 else:
                     print(
@@ -49,7 +49,7 @@ def walk_zips(srvr, userId):
                 conn.close()
             except Exception as e:
                 print("Exception:{}".format(str(e)), flush=True)
-        #        time.sleep(60) # 70 days!
+        # time.sleep(60)#70 days!
         time.sleep(5)  # 3 days
 
 

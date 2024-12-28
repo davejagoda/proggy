@@ -61,7 +61,7 @@ def printFooter():
 
 def getSundayStartDate(d):
     shiftDays = -((d.weekday() + 1) % 7)
-    #    print(shiftDays)
+    # print(shiftDays)
     return d + shiftDays * datetime.timedelta(1)
 
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         yy = int(sys.argv[1][0:4])
         mm = int(sys.argv[1][4:6])
         dd = int(sys.argv[1][6:8])
-        #        print(yy, mm, dd)
+        # print(yy, mm, dd)
         startDate = datetime.date(yy, mm, dd)
     else:
         startDate = datetime.date.today()

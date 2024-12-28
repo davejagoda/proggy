@@ -45,10 +45,10 @@ def diags_eq_15(i):
 
 for i in range(123456789, 987654321 + 1):
     if valid_number(i):
-        #        print(f'valid: {i}')
+        # print(f'valid: {i}')
         if cols_eq_15(i):
-            #            print(f'cols: {i}')
+            # print(f'cols: {i}')
             if rows_eq_15(i):
-                #                print(f'rows: {i}')
+                # print(f'rows: {i}')
                 if diags_eq_15(i):
                     print(f"diags: {i}")

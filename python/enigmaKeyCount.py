@@ -38,11 +38,11 @@ def plugBoard(n, k):
     assert n >= k
     retValue = 1
     for _ in range(k):
-        #       a, b is the same pair as b, a
+        # a, b is the same pair as b, a
         retValue *= combination(n, 2)
-        #       count by 2's as you pair off
+        # count by 2's as you pair off
         n -= 2
-    #   eliminate permutations of the same pairs
+    # eliminate permutations of the same pairs
     retValue /= factorial(k)
     return retValue
 

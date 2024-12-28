@@ -38,7 +38,7 @@ if "__main__" == __name__:
     numSockets = 0
     maxSockets = 26
     socketNames = [chr(x + 65) for x in range(maxSockets)]
-    #    print(socketNames)
+    # print(socketNames)
     while numSockets <= maxSockets:
         while numWires * 2 <= numSockets:
             setOfPairs = set()

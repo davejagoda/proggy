@@ -37,10 +37,10 @@ def expand_list_of_words(words):
     return words
 
 
-#    integrate this code:
-#    results = []
-#    walk_word(results, word, 0, debug=False)
-#    print(results)
+# integrate this code:
+# results = []
+# walk_word(results, word, 0, debug=False)
+# print(results)
 
 
 def print_permutations(words, r):

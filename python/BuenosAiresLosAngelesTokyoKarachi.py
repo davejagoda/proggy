@@ -28,7 +28,7 @@ def is_dst(t):
 for loc in locs:
     for d in [jan_1, jul_1]:
         u = datetime.datetime.combine(d, t, tzinfo=datetime.timezone.utc)
-        #        print(f'UTC: {u} {is_dst(u)}')
+        # print(f'UTC: {u} {is_dst(u)}')
         l = u.astimezone(zoneinfo.ZoneInfo(loc))
-        #        print(f'{loc} {l} {is_dst(l)}')
+        # print(f'{loc} {l} {is_dst(l)}')
         print(f"{loc} {l.hour}")
