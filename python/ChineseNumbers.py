@@ -2,6 +2,7 @@
 
 import unicodedata
 
+
 def unicode_generator_from_list():
     list_of_chinese_numeral_code_points = [
         0x96F6,
@@ -13,17 +14,24 @@ def unicode_generator_from_list():
         0x516D,
         0x4E03,
         0x516B,
-        0x4E5D
-        ]
+        0x4E5D,
+    ]
     for n in list_of_chinese_numeral_code_points:
-        yield(n)
+        yield (n)
+
 
 def print_unicode_entries():
     i = 0
     for n in unicode_generator_from_list():
         u = chr(n)
-        print('{} {:4d} 0x{:3x}'.format(i, n, n), u, unicodedata.category(u), unicodedata.name(u))
+        print(
+            "{} {:4d} 0x{:3x}".format(i, n, n),
+            u,
+            unicodedata.category(u),
+            unicodedata.name(u),
+        )
         i += 1
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print_unicode_entries()

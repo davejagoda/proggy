@@ -6,12 +6,15 @@ import argparse
 import queue
 import threading
 
+
 def source():
-    with open('/usr/share/dict/words', 'r') as f:
-        return([line.rstrip() for line in f.readlines()])
+    with open("/usr/share/dict/words", "r") as f:
+        return [line.rstrip() for line in f.readlines()]
+
 
 def do_work(item):
-    print('{}:{}'.format(item, len(item)))
+    print("{}:{}".format(item, len(item)))
+
 
 def worker():
     while True:
@@ -19,12 +22,13 @@ def worker():
         do_work(item)
         q.task_done()
 
+
 parser = argparse.ArgumentParser()
-parser.add_argument('-t', '--thread_count', type=int, default=1)
-parser.add_argument('-v', '--verbose')
+parser.add_argument("-t", "--thread_count", type=int, default=1)
+parser.add_argument("-v", "--verbose")
 args = parser.parse_args()
 if args.verbose:
-    print('thread_count:{}'.format(args.thread_count))
+    print("thread_count:{}".format(args.thread_count))
 
 q = queue.Queue()
 for i in range(args.thread_count):
@@ -34,7 +38,7 @@ for i in range(args.thread_count):
 
 for item in source():
     if args.verbose:
-        print('raw item:{}'.format(item))
+        print("raw item:{}".format(item))
     q.put(item)
 
-q.join() # block until all tasks are done
+q.join()  # block until all tasks are done

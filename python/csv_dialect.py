@@ -3,23 +3,26 @@
 import csv
 
 dialect_attrs = [
-    'delimiter',
-    'doublequote',
-    'escapechar',
-    'lineterminator',
-    'quotechar',
-    'quoting',
-    'skipinitialspace',
-    'strict'
+    "delimiter",
+    "doublequote",
+    "escapechar",
+    "lineterminator",
+    "quotechar",
+    "quoting",
+    "skipinitialspace",
+    "strict",
 ]
+
 
 def replace_class(o):
     if isinstance(o, str):
         return o
     return str(o)
 
+
 def replace_chars(s):
-    return s.replace('\t', '\\t').replace('\n', '\\n').replace('\r', '\\r')
+    return s.replace("\t", "\\t").replace("\n", "\\n").replace("\r", "\\r")
+
 
 max_field = 0
 corned_beef = {}
@@ -30,7 +33,7 @@ for dialect in csv.list_dialects():
     found_dialects = []
     for name in dir(d):
         max_field = max(max_field, len(name))
-        if name.startswith('__') and name.endswith('__'):
+        if name.startswith("__") and name.endswith("__"):
             continue
         found_dialects.append(name)
         value = getattr(d, name)
@@ -40,17 +43,17 @@ for dialect in csv.list_dialects():
         corned_beef[dialect][name] = value
     assert set(dialect_attrs) == set(found_dialects)
 
-print(' ' * max_field, end='')
+print(" " * max_field, end="")
 for key in corned_beef:
-    print(f'{key:>{max_field}}', end='')
+    print(f"{key:>{max_field}}", end="")
 print()
 for attr in dialect_attrs:
-    print(f'{attr:>{max_field}}', end='')
+    print(f"{attr:>{max_field}}", end="")
     for key in corned_beef:
-        print(f'{corned_beef[key][attr]:>{max_field}}', end='')
+        print(f"{corned_beef[key][attr]:>{max_field}}", end="")
     print()
 
-'''
+"""
 ./csv_dialect.py | \
   grep -v "False            False            False" | \
   grep -v "True             True             True" | \
@@ -61,4 +64,4 @@ for attr in dialect_attrs:
    lineterminator             \r\n             \r\n               \n
           quoting                0                0                1
 ∴ all 3 dialects are the same except for the delimiter, terminator, and quoting
-'''
+"""

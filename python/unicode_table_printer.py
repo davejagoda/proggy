@@ -3,32 +3,34 @@
 import unicodedata
 import urllib.parse
 
-#def get_unicode_using_unicode_escape(n):
+# def get_unicode_using_unicode_escape(n):
 #    s = "%x" % n
 #    return ('\U' + s.zfill(8)).decode('unicode-escape')
 
+
 def print_unicode_entry(n):
-#    if n > 0xffff:
-#        u = get_unicode_using_unicode_escape(n)
-#    else:
-#        u = unichr(n)
+    #    if n > 0xffff:
+    #        u = get_unicode_using_unicode_escape(n)
+    #    else:
+    #        u = unichr(n)
     u = chr(n)
     category = unicodedata.category(u)
-    name = unicodedata.name(u, 'unicodedata has no name defined')
-    if 'Cs' == category:
-        q = ''
-        u = '<U+{:x}>'.format(n) # surrogate
+    name = unicodedata.name(u, "unicodedata has no name defined")
+    if "Cs" == category:
+        q = ""
+        u = "<U+{:x}>".format(n)  # surrogate
     else:
         q = urllib.parse.quote(u)
-    print('{:7d} {:6x} {:12} {} {} {}'.format(n, n, q, u, category, name))
+    print("{:7d} {:6x} {:12} {} {} {}".format(n, n, q, u, category, name))
+
 
 # you'll get this error if you try to pipe the output to 'more' or to a file
 # without encoding the unicode string (default encoding is 'ASCII'):
 # UnicodeEncodeError: 'ascii' codec can't encode character u'\x80'
 # in position 0: ordinal not in range(128)
 
-if __name__ == '__main__':
-    print('code pt 0x CP  URL encoding')
+if __name__ == "__main__":
+    print("code pt 0x CP  URL encoding")
     for i in range(0x110000):
         print_unicode_entry(i)
 

@@ -15,32 +15,36 @@
 
 import os
 
+
 def isAscii(s):
     for c in s:
-        if (ord(c) > 127):
-            return(False)
-    return(True)
+        if ord(c) > 127:
+            return False
+    return True
+
 
 def Spanish():
-# José vs Jose + combining accent
-    with open('José', 'a') as f:
-        f.write('José')
-        f.write('\n')
-    jose = 'Jose' + chr(0x301)
-    with open(jose, 'a') as f:
+    # José vs Jose + combining accent
+    with open("José", "a") as f:
+        f.write("José")
+        f.write("\n")
+    jose = "Jose" + chr(0x301)
+    with open(jose, "a") as f:
         f.write(jose)
-        f.write('\n')
+        f.write("\n")
+
 
 def catalog(path):
     print(path)
     for root, dirs, files in os.walk(path):
-        print('root', root, 'dirs', dirs, 'files', files)
+        print("root", root, "dirs", dirs, "files", files)
         for entry in files:
-            if (isAscii(entry)):
+            if isAscii(entry):
                 pass
             else:
-                print('notAlpha', entry)
+                print("notAlpha", entry)
 
-if '__main__' == __name__:
+
+if "__main__" == __name__:
     Spanish()
-    catalog('.')
+    catalog(".")

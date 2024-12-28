@@ -7,14 +7,14 @@ import requests
 from multiprocessing.dummy import Pool
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-t', '--threads', required=True, type=int)
-parser.add_argument('-a', '--amplification', required=True, type=int)
+parser.add_argument("-t", "--threads", required=True, type=int)
+parser.add_argument("-a", "--amplification", required=True, type=int)
 args = parser.parse_args()
 
 seed_urls = [
-    'https://davejagoda.nfshost.com/perl.cgi',
-    'https://davejagoda.nfshost.com/php.cgi',
-    'https://davejagoda.nfshost.com/python.cgi',
+    "https://davejagoda.nfshost.com/perl.cgi",
+    "https://davejagoda.nfshost.com/php.cgi",
+    "https://davejagoda.nfshost.com/python.cgi",
 ]
 
 urls = seed_urls * args.amplification
@@ -25,4 +25,4 @@ with Pool(args.threads) as p:
     results = p.map(requests.get, urls)
 
 for result in results:
-    print(f'{result.status_code} {result.text}')
+    print(f"{result.status_code} {result.text}")

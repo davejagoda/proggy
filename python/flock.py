@@ -3,15 +3,15 @@
 import os
 import sys
 
-lockfile = '.flock'
+lockfile = ".flock"
 
 try:
-    f = os.open(lockfile, os.O_CREAT|os.O_EXCL)
+    f = os.open(lockfile, os.O_CREAT | os.O_EXCL)
 except:
-    print('failed to lock')
+    print("failed to lock")
     sys.exit(1)
 
-input('press a key to release lock and exit')
+input("press a key to release lock and exit")
 
 os.close(f)
 os.unlink(lockfile)

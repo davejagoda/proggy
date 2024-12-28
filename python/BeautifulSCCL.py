@@ -13,52 +13,61 @@ import urllib
 
 OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
 
+
 def loginAndReturnSoup(u, p, verbose=False):
-    values = { 'name' : u,
-               'user_pin' : p }
-    data = urllib.parse.urlencode(values).encode('utf-8')
+    values = {"name": u, "user_pin": p}
+    data = urllib.parse.urlencode(values).encode("utf-8")
 
     r = OPENER.open(LOGINURL, data)
     r = OPENER.open(CHECKEDOUTURL)
-    soup = BeautifulSoup(r.read(), 'html.parser')
-    if verbose: print(soup.prettify())
-    return(soup)
+    soup = BeautifulSoup(r.read(), "html.parser")
+    if verbose:
+        print(soup.prettify())
+    return soup
+
 
 def convertDateFromAmericanTo8601(s, verbose=False):
-    if verbose: print(s)
-    return(time.strftime('%Y-%m-%d', time.strptime(s, '%b %d, %Y')))
+    if verbose:
+        print(s)
+    return time.strftime("%Y-%m-%d", time.strptime(s, "%b %d, %Y"))
+
 
 def displayCheckedOut(soup, verbose=False):
     # find this in the soup:
     # 'script data-iso-key="_0" type="application/json">'
-    app_json_script = soup.find('script', {'type': 'application/json'})
+    app_json_script = soup.find("script", {"type": "application/json"})
     try:
         j = json.loads(app_json_script.contents[0])
     except:
-        print('failed to log in')
+        print("failed to log in")
         sys.exit(1)
-    keys_list = list(j['entities']['accounts'])
-    print('Email: {}'.format(
-        j['entities']['accounts'][keys_list[0]]['digitalNotificationEmail']))
+    keys_list = list(j["entities"]["accounts"])
+    print(
+        "Email: {}".format(
+            j["entities"]["accounts"][keys_list[0]]["digitalNotificationEmail"]
+        )
+    )
     results = []
-    for value in j['entities']['checkouts'].values():
-        results.append('{}:{}'.format(value['dueDate'], value['bibTitle']))
+    for value in j["entities"]["checkouts"].values():
+        results.append("{}:{}".format(value["dueDate"], value["bibTitle"]))
     results.sort()
     if results:
         print(os.linesep.join(results))
 
+
 def fines(soup, verbose=False):
     # find this in the soup:
     # <span class="cp-dollar-amount" data-reactid="144">
-    fine = soup.find('span', {'class': 'cp-dollar-amount'})
-    print('Fine: {}'.format(fine.get_text()))
+    fine = soup.find("span", {"class": "cp-dollar-amount"})
+    print("Fine: {}".format(fine.get_text()))
+
 
 def logout():
     try:
         r = OPENER.open(LOGOUTURL)
     except urllib.error.HTTPError as e:
-        print('got an exception while logging out')
-        '''
+        print("got an exception while logging out")
+        """
         print(e.getcode)
         print(e.geturl)
         print(e.hdrs)
@@ -71,33 +80,41 @@ def logout():
         print(e.strerror)
         print(e.url)
         print(e.with_traceback)
-        '''
+        """
 
-if '__main__' == __name__:
+
+if "__main__" == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument('usernames', nargs='+', help='username[s]')
+    parser.add_argument("usernames", nargs="+", help="username[s]")
     location = parser.add_mutually_exclusive_group()
-    location.add_argument('--paloalto', '-p', action='store_true',
-                          help='check Palo Alto library instead of SCCL')
-    location.add_argument('--sjpl', '-s', action='store_true',
-                          help='check San Jose library instead of SCCL')
-    parser.add_argument('--verbose', '-v', action='store_true',
-                        help='be verbose')
+    location.add_argument(
+        "--paloalto",
+        "-p",
+        action="store_true",
+        help="check Palo Alto library instead of SCCL",
+    )
+    location.add_argument(
+        "--sjpl",
+        "-s",
+        action="store_true",
+        help="check San Jose library instead of SCCL",
+    )
+    parser.add_argument("--verbose", "-v", action="store_true", help="be verbose")
     args = parser.parse_args()
-    loc = 'sccl'
+    loc = "sccl"
     if args.paloalto:
-        loc = 'paloalto'
+        loc = "paloalto"
     if args.sjpl:
-        loc = 'sjpl'
-    LOGINURL = 'https://{}.bibliocommons.com/user/login'.format(loc)
-    LOGOUTURL = 'https://{}.bibliocommons.com/user/logout'.format(loc)
-    CHECKEDOUTURL = 'http://{}.bibliocommons.com/checkedout'.format(loc)
-    if os.getenv('SCCLPIN'):
-        password = os.getenv('SCCLPIN')
+        loc = "sjpl"
+    LOGINURL = "https://{}.bibliocommons.com/user/login".format(loc)
+    LOGOUTURL = "https://{}.bibliocommons.com/user/logout".format(loc)
+    CHECKEDOUTURL = "http://{}.bibliocommons.com/checkedout".format(loc)
+    if os.getenv("SCCLPIN"):
+        password = os.getenv("SCCLPIN")
     else:
         password = getpass.getpass()
     for username in args.usernames:
-        print('USER: {}'.format(username))
+        print("USER: {}".format(username))
         soup = loginAndReturnSoup(username, password, args.verbose)
         displayCheckedOut(soup, args.verbose)
         fines(soup, args.verbose)

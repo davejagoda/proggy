@@ -9,10 +9,10 @@
 # for formatting:
 #      45       2d - Pd HYPHEN-MINUS
 
-print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0xa0),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0x202f),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0xfeff),chr(0x2d)))
-print('{}{}{}'.format(chr(0x2d),chr(0x2d),chr(0x2d)))
+print("{}{}{}".format(chr(0x2D), chr(0x2D), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0xA0), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0x2D), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0x202F), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0x2D), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0xFEFF), chr(0x2D)))
+print("{}{}{}".format(chr(0x2D), chr(0x2D), chr(0x2D)))

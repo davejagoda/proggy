@@ -10,7 +10,7 @@ methods = [
     "st_size",
     "st_atime",
     "st_mtime",
-    "st_ctime"
+    "st_ctime",
 ]
 
 import sys, os

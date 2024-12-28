@@ -7,9 +7,11 @@ if 1 == len(sys.argv):
 else:
     try:
         epoch = datetime.datetime.fromtimestamp(
-            float(sys.argv[1]), datetime.timezone.utc)
+            float(sys.argv[1]), datetime.timezone.utc
+        )
     except:
         epoch = datetime.datetime.fromtimestamp(
-            float(sys.argv[1])/1000.0, datetime.timezone.utc)
+            float(sys.argv[1]) / 1000.0, datetime.timezone.utc
+        )
 
 print(epoch.replace(microsecond=0).isoformat())

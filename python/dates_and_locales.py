@@ -25,13 +25,13 @@ import datetime
 import locale
 
 print(locale.getdefaultlocale())
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, "")
 print(locale.getlocale())
 t = datetime.datetime.now()
-print(t.isoformat(timespec='seconds'))
-print(t.strftime('%x %X'))
-print(t.strftime('%EY'))
-print(t.strftime('%a'))
+print(t.isoformat(timespec="seconds"))
+print(t.strftime("%x %X"))
+print(t.strftime("%EY"))
+print(t.strftime("%a"))
 print(locale.currency(1, grouping=True))
 print(locale.currency(1000, grouping=True))
 print(locale.currency(10000, grouping=True))

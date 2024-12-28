@@ -7,11 +7,11 @@ CHUNKSIZE = 4096
 
 for path in sys.argv[1:]:
     print(path)
-#    for entry in sorted(os.listdir(path)):
+    #    for entry in sorted(os.listdir(path)):
     for root, dirs, files in os.walk(sys.argv[1]):
-        print('root', root, 'dirs', dirs, 'files', files)
+        print("root", root, "dirs", dirs, "files", files)
         for entry in files:
-            f = open(join(root, entry), 'rb')
+            f = open(join(root, entry), "rb")
             m = hashlib.md5()
             while True:
                 chunk = f.read(CHUNKSIZE)
@@ -19,5 +19,5 @@ for path in sys.argv[1:]:
                     m.update(chunk)
                 else:
                     break
-            print('MD5 (' + entry + ') = ' +  m.hexdigest())
+            print("MD5 (" + entry + ") = " + m.hexdigest())
             f.close()

@@ -6,22 +6,22 @@
 
 import sys
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     f = open(sys.argv[1])
 
     new_para = True
-    out_line = ''
+    out_line = ""
     for line in f.readlines():
-        if line == '\n':
+        if line == "\n":
             new_para = True
         else:
             if new_para:
                 if len(out_line) > 0:
                     print(out_line)
                 new_para = False
-                out_line = line.rstrip('\n') + ':'
+                out_line = line.rstrip("\n") + ":"
             else:
-                out_line += line.rstrip('\n')
+                out_line += line.rstrip("\n")
 
     f.close()
     if len(out_line) > 0:
