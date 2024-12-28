@@ -15,6 +15,8 @@ def print_domains(r53domains, verbose):
             domain['AutoRenew'],
             domain['TransferLock'],
             domain['Expiry']))
+        if verbose > 0:
+            pprint.pprint(domain)
 
 def print_record_sets(r53record_sets, verbose):
     if verbose > 0:
