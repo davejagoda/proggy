@@ -3,8 +3,9 @@
 # https://stackoverflow.com/questions/2846653/how-do-i-use-threading-in-python
 
 import argparse
-import requests
 from multiprocessing.dummy import Pool
+
+import requests
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--threads", required=True, type=int)

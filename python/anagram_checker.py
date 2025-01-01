@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse, collections
+import argparse
+import collections
 
 
 def arg_to_collection(arg):

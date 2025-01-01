@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import dateparser
 import datetime
+
+import dateparser
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t0", "--t0", required=True)

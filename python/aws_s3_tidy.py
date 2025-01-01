@@ -5,6 +5,7 @@
 # offer to delete .DS_Store files
 
 import argparse
+
 import boto3
 from botocore.exceptions import ClientError
 

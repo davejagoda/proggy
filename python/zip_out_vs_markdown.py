@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse, os
+import argparse
+import os
 
 
 def build_dictionary_of_known_zip_codes():

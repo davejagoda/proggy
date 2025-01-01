@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import os, http.client, time, xml.etree.ElementTree
+import http.client
+import os
+import time
+import xml.etree.ElementTree
 
 
 def walk_zips(srvr, userId):

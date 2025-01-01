@@ -2,12 +2,12 @@
 
 # http://blog.mattcrampton.com/post/88291892461/query-an-ntp-server-from-python
 
-from socket import AF_INET, SOCK_DGRAM
-import sys
+import datetime
 import socket
 import struct
+import sys
 import time
-import datetime
+from socket import AF_INET, SOCK_DGRAM
 
 
 def iso8601(epoch):

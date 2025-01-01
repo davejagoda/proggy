@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import datetime, sys
+import datetime
+import sys
 
 if 1 == len(sys.argv):
     epoch = datetime.datetime.now(datetime.timezone.utc)

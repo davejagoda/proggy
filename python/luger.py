@@ -4,7 +4,8 @@
 # how many ways can you arrange them?
 # numWords is the maximum number of words to be used
 
-import itertools, argparse
+import argparse
+import itertools
 
 trans_table = {"o": ["0"], "i": ["1", "!"], "a": ["@"], "s": ["$"], "e": ["3"]}
 

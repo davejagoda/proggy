@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+
 import bs4
 import requests
 

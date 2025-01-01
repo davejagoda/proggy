@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import argparse, requests, bs4
+import argparse
+
+import bs4
+import requests
 
 URL = "https://www.nationalnanpa.com/enas/geoAreaCodeNumberReport.do"
 

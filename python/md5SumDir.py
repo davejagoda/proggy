@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-import sys, os, hashlib
+import hashlib
+import os
+import sys
 from os.path import join
 
 CHUNKSIZE = 4096

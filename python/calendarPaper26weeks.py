@@ -4,7 +4,8 @@
 # if you want to print this out, redirect stdout to a file
 # then print it without header and footer, it's an 8.5x11 page
 
-import sys, datetime
+import datetime
+import sys
 
 
 def printHeader():

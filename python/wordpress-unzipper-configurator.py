@@ -6,7 +6,9 @@
 # upon unzipping, rename that directory to wordpress-x.y.z
 # in each unzipped directory, create wp-config.php from wp-config-sample.php
 
-import argparse, os, subprocess
+import argparse
+import os
+import subprocess
 
 
 def process_wordpress_directory(new_dir_name, basename, verbose):

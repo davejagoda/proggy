@@ -4,7 +4,9 @@
 # e.g. from wordpress-unzipper-configurator.py
 # create corresponding MySQL databases like this wordpress-x.y.z
 
-import argparse, os, subprocess
+import argparse
+import os
+import subprocess
 
 
 def create_wordpress_database(db_name, verbose):

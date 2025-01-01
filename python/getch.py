@@ -2,7 +2,9 @@
 
 # bibliography: http://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user
 
-import tty, sys, termios
+import sys
+import termios
+import tty
 
 fd = sys.stdin.fileno()
 save = termios.tcgetattr(fd)

@@ -2,7 +2,9 @@
 
 # http://en.wikipedia.org/wiki/List_of_Unicode_characters
 
-import sys, unicodedata, argparse
+import argparse
+import sys
+import unicodedata
 
 
 def number2u(n):

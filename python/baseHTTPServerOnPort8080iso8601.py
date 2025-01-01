@@ -14,9 +14,10 @@
 # Accept-Encoding: gzip, deflate
 
 import argparse
+import time
+
 import BaseHTTPServer
 import SimpleHTTPServer
-import time
 
 
 class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):

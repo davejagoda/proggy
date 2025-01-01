@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import requests
-import bs4
 import string
+
+import bs4
+import requests
 
 BASEURL = "https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_"
 

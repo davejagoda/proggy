@@ -3,9 +3,11 @@
 # http://stackoverflow.com/questions/2846653/how-to-use-threading-in-python
 
 import argparse
-import boto3
 import queue
 import threading
+
+import boto3
+
 import aws_lib
 
 

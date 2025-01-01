@@ -10,7 +10,9 @@
 # expected result:
 # S-1-5-21-1270179133-2928470170-2248674342-4324
 
-import argparse, base64, struct
+import argparse
+import base64
+import struct
 
 
 def convertFromSIDString(s):

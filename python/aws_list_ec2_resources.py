@@ -8,9 +8,11 @@ KEY = chr(0x1F511)
 DISK = chr(0x1F4BE)
 
 import argparse
-import boto3
 import queue
 import threading
+
+import boto3
+
 import aws_lib
 
 

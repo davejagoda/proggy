@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-import subprocess, sys, re
+import re
+import subprocess
+import sys
 
 stdout = subprocess.check_output(["say", "-v", "?"], universal_newlines=True)
 

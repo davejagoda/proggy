@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import unicodedata, argparse
+import argparse
+import unicodedata
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--yo", action="store_true", help="show yo")

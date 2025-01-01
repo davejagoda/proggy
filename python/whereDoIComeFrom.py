@@ -3,7 +3,12 @@
 # trying to do something like this in a less brittle way:
 # last | grep dj | cut -b 23-38 | sort | uniq -c
 
-import subprocess, getpass, json, argparse, os, datetime
+import argparse
+import datetime
+import getpass
+import json
+import os
+import subprocess
 
 
 def process_line(line, places):

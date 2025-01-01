@@ -3,9 +3,10 @@
 # example:
 # pipenv run ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u USER -p PIN -l Featured
 import argparse
+import urllib.parse
+
 import bs4
 import requests
-import urllib.parse
 
 
 def getSess(url, username, password, useragent, verbose=0):

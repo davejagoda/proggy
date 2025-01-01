@@ -2,7 +2,6 @@
 
 # this prints out checked out books from SCCL
 
-from bs4 import BeautifulSoup
 import argparse
 import getpass
 import json
@@ -10,6 +9,8 @@ import os
 import sys
 import time
 import urllib
+
+from bs4 import BeautifulSoup
 
 OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
 

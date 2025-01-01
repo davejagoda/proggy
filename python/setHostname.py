@@ -9,7 +9,8 @@ def doCommands(verb, argument):
         print()
 
 
-import os, sys
+import os
+import sys
 
 if len(sys.argv) != 2:
     print("please provide a new hostname")

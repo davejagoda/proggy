@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse, codecs
+import argparse
+import codecs
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()

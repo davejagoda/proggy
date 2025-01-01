@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import urllib.request
 import re
+import urllib.request
 
 f = urllib.request.urlopen("https://davejagoda.nfshost.com/dynamic.php")
 pat = r"REMOTE_ADDR:(\S+)<br>"

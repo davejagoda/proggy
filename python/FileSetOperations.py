@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse, re
+import argparse
+import re
 
 
 def handleArguments():

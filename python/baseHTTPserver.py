@@ -5,9 +5,10 @@
 # openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
 
 import argparse
+import ssl
+
 import BaseHTTPServer
 import SimpleHTTPServer
-import ssl
 
 
 class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import requests, bs4, hashlib
+import hashlib
+
+import bs4
+import requests
 
 URL = "https://wordpress.org/download/release-archive/"
 

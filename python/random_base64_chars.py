@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
-import hashlib
 import base64
+import hashlib
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()

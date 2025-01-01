@@ -13,7 +13,8 @@ methods = [
     "st_ctime",
 ]
 
-import sys, os
+import os
+import sys
 
 for file in sys.argv[1:]:
     print(file)

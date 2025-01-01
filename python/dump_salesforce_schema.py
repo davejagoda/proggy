@@ -3,8 +3,9 @@
 import argparse
 import json
 import os
-import simple_salesforce
 import sys
+
+import simple_salesforce
 
 
 def query_environment():

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import boto3
 import pprint
 import sys
+
+import boto3
 
 
 def remove_trailing_dot(s):

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
-import PIL.Image
-import PIL.ExifTags
 import os
 import pprint
 import subprocess
+
+import PIL.ExifTags
+import PIL.Image
 
 
 def openImageFile(filename):

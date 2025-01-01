@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse, operator
+import argparse
+import operator
 
 
 def create_list_of_words_from_file(file):

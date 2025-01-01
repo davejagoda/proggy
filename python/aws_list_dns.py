@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import boto3
 import pprint
+
+import boto3
 
 
 def print_domains(r53domains, verbose):

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import sys, re
+import re
+import sys
 
 if 2 != len(sys.argv):
     print("need exactly one argument - a VCS calendar file to fix")

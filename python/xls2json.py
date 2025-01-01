@@ -4,9 +4,10 @@ import argparse
 import collections
 import datetime
 import json
-import openpyxl
 import os
 import sys
+
+import openpyxl
 
 
 def process_tab(tab_name, verbose):

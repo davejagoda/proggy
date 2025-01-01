@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import argparse, requests, bs4
+import argparse
+
+import bs4
+import requests
 
 URL = "https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji"
 
