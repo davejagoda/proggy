@@ -2,9 +2,15 @@
 
 import argparse
 import datetime
+import locale
 import os
 import re
 
+"""
+export LC_ALL=fr_CA.UTF-8
+export LC_ALL=ja_JP.UTF-8
+export LC_ALL=sv_SE.UTF-8
+"""
 
 def process_file(filename, overwrite, verbosity):
     date_pat = r"(\d{4}-\d{2}-\d{2})"
@@ -33,6 +39,7 @@ def process_file(filename, overwrite, verbosity):
 
 
 if "__main__" == __name__:
+    locale.setlocale(locale.LC_ALL, "")
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="+", help="file[s] containing iso8601 dates")
     parser.add_argument(
