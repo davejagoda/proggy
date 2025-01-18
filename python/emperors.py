@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-Ubuntu 21.04:
+Ubuntu 22.04:
+
 sudo apt-get install language-pack-ja
 
 output:
