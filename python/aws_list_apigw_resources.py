@@ -3,31 +3,30 @@
 import boto3
 
 
-def list_api_gateways():
-    client = boto3.client("apigateway")
-
-    response = client.get_rest_apis()
-
-    # Check if there are any APIs
+def get_resources(client, api_id):
+    response = client.get_resources(restApiId=api_id)
     if "items" in response:
-        print("List of API Gateway Instances:")
-        for api in response["items"]:
-            print(
-                f"API ID: {api['id']}, Name: {api['name']}, Description: {api.get('description', 'No Description')}"
-            )
-            resources_response = client.get_resources(restApiId=api["id"])
-            if "items" in resources_response:
-                for resource in resources_response["items"]:
-                    resource_id = resource["id"]
-                    resource_path = resource["path"]
-                    print(f"  Resource ID: {resource_id}, Path: {resource_path}")
-            else:
-                print(f"No resources found for API {api['name']}.")
+        return response.get("items")
+    return []
 
-    else:
-        print("No API Gateway instances found.")
 
+def get_rest_apis(client):
+    response = client.get_rest_apis()
+    if "items" in response:
+        return response.get("items")
+    return []
 
 
 if "__main__" == __name__:
-    list_api_gateways()
+    client = boto3.client("apigateway")
+    apis = get_rest_apis(client)
+    print("List of API Gateway Instances:")
+    for api in apis:
+        print(
+            f"API ID: {api.get('id')}, Name: {api.get('name')}, Description: {api.get('description', 'No Description')}"
+        )
+        resources = get_resources(client, api.get("id"))
+        for resource in resources:
+            resource_id = resource.get("id")
+            resource_path = resource.get("path")
+            print(f"  Resource ID: {resource_id}, Path: {resource_path}")
