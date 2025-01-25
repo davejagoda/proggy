@@ -12,6 +12,7 @@ export LC_ALL=ja_JP.UTF-8
 export LC_ALL=sv_SE.UTF-8
 """
 
+
 def process_file(filename, overwrite, verbosity):
     date_pat = r"(\d{4}-\d{2}-\d{2})"
     with open(filename, "r") as f:
