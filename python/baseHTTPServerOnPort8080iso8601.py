@@ -26,7 +26,7 @@ class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         response = self.path + "\nClientHeaders\n" + str(self.headers)
         print(dir(self.headers))
         self.send_response(200)
-        self.send_header("Content-type", "text")
+        self.send_header("Content-Type", "text")
         self.send_header("Content-Length", len(response))
         self.end_headers()
         self.wfile.write(response)
@@ -34,12 +34,12 @@ class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_HEAD(self):
         print("head")
         self.send_response(200)
-        self.send_header("Content-type", "text")
+        self.send_header("Content-Type", "text")
         self.end_headers()
 
     def send_head(self, length):
         self.send_response(200)
-        self.send_header("Content-type", "text")
+        self.send_header("Content-Type", "text")
         self.send_header("Content-Length", length)
         self.end_headers()
 

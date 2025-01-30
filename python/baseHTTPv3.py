@@ -15,7 +15,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         if self.server.delay > 0:
             time.sleep(self.server.delay)
         self.send_response(200)
-        self.send_header("Content-type", "text/html")
+        self.send_header("Content-Type", "text/html")
         self.end_headers()
 
     def do_GET(self):
