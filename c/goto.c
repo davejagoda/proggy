@@ -4,13 +4,15 @@ int main()
 {
   char i = 0;
 
- loop:
+loop:
   printf("%d\t", i);
-  if (i < 0) { goto end; }
+  if (i < 0) {
+    goto end;
+  }
   i++;
   goto loop;
 
- end:
+end:
   printf("\n");
   return 0;
 }

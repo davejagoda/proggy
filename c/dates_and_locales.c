@@ -18,7 +18,7 @@ int main()
   char outstr[512];
   char *current_locale;
 
-  current_locale = setlocale (LC_ALL, "");
+  current_locale = setlocale(LC_ALL, "");
   printf("current locale is: %s\n", current_locale);
   strftime(outstr, sizeof(outstr), "%x %X", tmp);
   printf("%s\n", outstr);

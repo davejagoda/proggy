@@ -4,7 +4,7 @@
 int print_time(time_t t)
 {
   printf("epoch %11ld time is %s", t, asctime(gmtime(&t)));
-  return(0);
+  return 0;
 }
 
 int main()

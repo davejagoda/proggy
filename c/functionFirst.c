@@ -5,7 +5,7 @@
 int fun()
 {
   printf("inside function fun\n");
-  return(0);
+  return 0;
 }
 
 int main()

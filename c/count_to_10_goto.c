@@ -3,8 +3,9 @@
 int main()
 {
   int i = 0;
- loop:
+loop:
   printf("%d\n", i);
   ++i;
-  if (i < 10) goto loop;
+  if (i < 10)
+    goto loop;
 }
