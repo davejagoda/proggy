@@ -14,6 +14,7 @@ for log_file in args.log_files:
     oldest = None
     newest = None
     apigws = collections.Counter()
+    clf = collections.Counter()
     with open(log_file) as f:
         for line in f.readlines():
             fields = line.split(" ")
@@ -29,5 +30,15 @@ for log_file in args.log_files:
             if args.verbosity > 0:
                 print(apigw_instance)
             apigws[apigw_instance] += 1
+            if "INFO:" == fields[2]:
+                remainder = " ".join(fields[2:])
+                if args.verbosity > 1:
+                    print(remainder)
+                lhs, rhs = remainder.split("-")
+                rhs = rhs.strip()
+                if args.verbosity > 1:
+                    print(rhs)
+                clf[rhs] += 1
         print(f"oldest:{oldest} newest:{newest} elapsed:{newest - oldest}")
         print(json.dumps(apigws, sort_keys=True, indent=2))
+        print(json.dumps(clf, sort_keys=True, indent=2))
