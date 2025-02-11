@@ -8,21 +8,21 @@ LIMIT = 500
 def get_deployments(client, api_id):
     response = client.get_deployments(restApiId=api_id, limit=LIMIT)
     if "items" in response:
-        return response.get("items")
+        return sorted(response.get("items"), key=lambda x: x["createdDate"])
     return []
 
 
 def get_resources(client, api_id):
     response = client.get_resources(restApiId=api_id, limit=LIMIT)
     if "items" in response:
-        return response.get("items")
+        return sorted(response.get("items"), key=lambda x: x["path"])
     return []
 
 
 def get_rest_apis(client):
     response = client.get_rest_apis(limit=LIMIT)
     if "items" in response:
-        return response.get("items")
+        return sorted(response.get("items"), key=lambda x: x["name"])
     return []
 
 
