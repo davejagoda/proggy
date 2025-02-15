@@ -1,0 +1,31 @@
+[project]
+name = "proggy"
+version = "1.0.0"
+dependencies = [
+  "awscli",
+  "beautifulsoup4",
+  "black",
+  "boto3",
+  "dateparser",
+  "django",
+  "flake8",
+  "html5lib",
+  "isort",
+  "mypy",
+  "openpyxl",
+  "paramiko",
+  "pillow",
+  "pylint",
+  "pyopenssl",
+  "pyright",
+  "requests",
+  "ruff",
+  "simple-salesforce",
+  "tweepy",
+]
+
+[tool.uv]
+dev-dependencies = []
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.python.org/simple"
