@@ -5,7 +5,7 @@ export PGUSER=<USERNAME>
 export PGPASSWORD=<PASSWORD>
 export PGHOST=<HOSTNAME>
 export DJANGO_SETTINGS_MODULE=<APPNAME>.settings
-pipenv run ./django_count_all_objects_in_all_models.py
+uv run ./django_count_all_objects_in_all_models.py
 """
 import django
 

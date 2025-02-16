@@ -6,7 +6,16 @@ else . . .
 python
 ------
 
-stop using `python2`, only use `python3`
+Stop using `python2`, only use `python3`.
 
-stop using `requirements.txt` and `virtualenv` (directly), only use
-`Pipfile` and `pipenv`
+Stop using:
+- `requirements.txt`
+- `virtualenv` (directly)
+- `pipenv`
+- `Pipfile`
+- `Pipfile.lock`
+
+Only use:
+- `uv`
+- `uv.lock`
+- `pyproject.toml`

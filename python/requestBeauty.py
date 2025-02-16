@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # example:
-# pipenv run ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u USER -p PIN -l Featured
+# uv run ./requestBeauty.py -s https://sccl.bibliocommons.com/user/login -u USER -p PIN -l Featured
 import argparse
 import urllib.parse
 
