@@ -72,13 +72,16 @@ if "__main__" == __name__:
                     f"  Deployment ID: {deployment_id}, Date: {deployment_date}, {deployment_description}"
                 )
         else:
-            deployment_id = deployments[-1].get("id")
-            deployment_date = deployments[-1].get("createdDate")
-            print(f"Deployment ID: {deployment_id}, Date: {deployment_date}")
-        print(
-            json.dumps(
-                get_last_deployment(client, api.get("id"), deployment_id),
-                indent=2,
-                sort_keys=True,
-            )
-        )
+            if [] == deployments:
+                print(f"No deployments for API ID: {api.get('id')}")
+            else:
+                deployment_id = deployments[-1].get("id")
+                deployment_date = deployments[-1].get("createdDate")
+                print(f"Deployment ID: {deployment_id}, Date: {deployment_date}")
+                print(
+                    json.dumps(
+                        get_last_deployment(client, api.get("id"), deployment_id),
+                        indent=2,
+                        sort_keys=True,
+                    )
+                )
