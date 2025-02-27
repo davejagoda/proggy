@@ -61,6 +61,8 @@ if "__main__" == __name__:
         deployments = get_deployments(client, api.get("id"))
         if len(deployments) >= LIMIT:
             print("deployments limit reached")
+        if [] == deployments:
+            print(f"No deployments for API ID: {api.get('id')}")
         if args.verbose > 0:
             for deployment in deployments:
                 deployment_id = deployment.get("id")
@@ -71,17 +73,20 @@ if "__main__" == __name__:
                 print(
                     f"  Deployment ID: {deployment_id}, Date: {deployment_date}, {deployment_description}"
                 )
-        else:
-            if [] == deployments:
-                print(f"No deployments for API ID: {api.get('id')}")
-            else:
-                deployment_id = deployments[-1].get("id")
-                deployment_date = deployments[-1].get("createdDate")
-                print(f"Deployment ID: {deployment_id}, Date: {deployment_date}")
                 print(
                     json.dumps(
                         get_last_deployment(client, api.get("id"), deployment_id),
                         indent=2,
                         sort_keys=True,
                     )
+                )
+        else:
+            if [] != deployments:
+                deployment_id = deployments[-1].get("id")
+                deployment_date = deployments[-1].get("createdDate")
+                deployment_description = deployments[-1].get("description")
+                if deployment_description is not None:
+                    deployment_description = deployment_description.replace("\n", "\t")
+                print(
+                    f"Deployment ID: {deployment_id}, Date: {deployment_date}, {deployment_description}"
                 )
