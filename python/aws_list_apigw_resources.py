@@ -8,85 +8,128 @@ import boto3
 LIMIT = 500
 
 
+# apigateway v1
 def get_rest_apis(client):
-    response = client.get_rest_apis(limit=LIMIT)
-    if "items" in response:
-        return sorted(response.get("items"), key=lambda x: x["name"])
+    items = []
+    position = None
+    while True:
+        if position:
+            response = client.get_rest_apis(limit=LIMIT, position=position)
+        else:
+            response = client.get_rest_apis(limit=LIMIT)
+        items.extend(response.get("items", []))
+        position = response.get("position", None)
+        if not position:
+            break
+    if items:
+        return sorted(items, key=lambda x: x["name"])
     return []
 
 
 def get_resources(client, api_id):
-    response = client.get_resources(restApiId=api_id, limit=LIMIT)
-    if "items" in response:
-        return sorted(response.get("items"), key=lambda x: x["path"])
+    items = []
+    position = None
+    while True:
+        if position:
+            response = client.get_resources(
+                restApiId=api_id, limit=LIMIT, position=position
+            )
+        else:
+            response = client.get_resources(restApiId=api_id, limit=LIMIT)
+        items.extend(response.get("items", []))
+        position = response.get("position", None)
+        if not position:
+            break
+    if items:
+        return sorted(items, key=lambda x: x["path"])
     return []
 
 
-def get_deployments(client, api_id):
-    response = client.get_deployments(restApiId=api_id, limit=LIMIT)
-    if "items" in response:
-        return sorted(response.get("items"), key=lambda x: x["createdDate"])
-    return []
+def print_last_v1_deployment_date(client, api_id):
+    items = []
+    position = None
+    while True:
+        if position:
+            response = client.get_deployments(
+                restApiId=api_id, limit=LIMIT, position=position
+            )
+        else:
+            response = client.get_deployments(restApiId=api_id, limit=LIMIT)
+        items.extend(response.get("items", []))
+        position = response.get("position", None)
+        if not position:
+            break
+    if items:
+        print(
+            sorted(response.get("items"), key=lambda x: x["createdDate"])[-1].get(
+                "createdDate"
+            )
+        )
+    else:
+        print("Never deployed")
 
 
-def get_last_deployment(client, api_id, deployment_id):
-    response = client.get_deployment(
-        restApiId=api_id, deploymentId=deployment_id, embed=["apisummary"]
-    )
-    if "apiSummary" in response:
-        return response.get("apiSummary")
+# apigateway v2
+def get_apis(client):
+    items = []
+    next_token = None
+    while True:
+        if next_token:
+            response = client.get_apis(NextToken=next_token)
+        else:
+            response = client.get_apis()
+        items.extend(response.get("Items", []))
+        next_token = response.get("NextToken", None)
+        if not next_token:
+            break
+    if items:
+        return sorted(items, key=lambda x: x["Name"])
     return []
 
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose", action="count", default=0)
+    parser.add_argument("-d", "--deployment_details", action="store_true")
+    parser.add_argument("-r", "--resource_details", action="store_true")
+    parser.add_argument("-g", "--generic", action="store_true")
+    parser.add_argument("-v", "--verbosity", action="count", default=0)
     args = parser.parse_args()
+    # aws apigateway get-rest-apis --output table
     client = boto3.client("apigateway")
     apis = get_rest_apis(client)
-    if len(apis) >= LIMIT:
-        print("API limit reached")
     print("List of API Gateway Instances:")
     for api in apis:
-        print(
-            f"API ID: {api.get('id')}, Name: {api.get('name')}, Description: {api.get('description', 'No Description')}"
-        )
-        resources = get_resources(client, api.get("id"))
-        if len(resources) >= LIMIT:
-            print("resources limit reached")
-        for resource in resources:
-            resource_id = resource.get("id")
-            resource_path = resource.get("path")
-            print(f"  Resource ID: {resource_id}, Path: {resource_path}")
-        deployments = get_deployments(client, api.get("id"))
-        if len(deployments) >= LIMIT:
-            print("deployments limit reached")
-        if [] == deployments:
-            print(f"No deployments for API ID: {api.get('id')}")
-        if args.verbose > 0:
-            for deployment in deployments:
-                deployment_id = deployment.get("id")
-                deployment_date = deployment.get("createdDate")
-                deployment_description = deployment.get("description")
-                if deployment_description is not None:
-                    deployment_description = deployment_description.replace("\n", "\t")
-                print(
-                    f"  Deployment ID: {deployment_id}, Date: {deployment_date}, {deployment_description}"
-                )
-                print(
-                    json.dumps(
-                        get_last_deployment(client, api.get("id"), deployment_id),
-                        indent=2,
-                        sort_keys=True,
-                    )
-                )
+        if args.verbosity > 0:
+            print(api)
+        if args.generic:
+            print(f"API Name: {api.get('name')}, ProtocolType: REST")
         else:
-            if [] != deployments:
-                deployment_id = deployments[-1].get("id")
-                deployment_date = deployments[-1].get("createdDate")
-                deployment_description = deployments[-1].get("description")
-                if deployment_description is not None:
-                    deployment_description = deployment_description.replace("\n", "\t")
-                print(
-                    f"Deployment ID: {deployment_id}, Date: {deployment_date}, {deployment_description}"
-                )
+            print(
+                f"API ID: {api.get('id')}, Name: {api.get('name')}, ProtocolType: REST, Description: {api.get('description', 'No Description')}"
+            )
+        if args.resource_details:
+            resources = get_resources(client, api.get("id"))
+            if len(resources) >= LIMIT:
+                print("resources limit reached")
+            for resource in resources:
+                resource_id = resource.get("id")
+                resource_path = resource.get("path")
+                if args.generic:
+                    print(f"  Path: {resource_path}")
+                else:
+                    print(f"  Resource ID: {resource_id}, Path: {resource_path}")
+        if args.deployment_details:
+            print_last_v1_deployment_date(client, api.get("id"))
+    # aws apigatewayv2 get-apis --output table
+    client = boto3.client("apigatewayv2")
+    apis = get_apis(client)
+    print("List of API GatewayV2 Instances:")
+    for api in apis:
+        if args.generic:
+            print(
+                f"API Name: {api.get('Name')}, ProtocolType: {api.get('ProtocolType')}"
+            )
+        else:
+            print(
+                f"API ID: {api.get('ApiId')}, Name: {api.get('Name')}, ProtocolType: {api.get('ProtocolType')}, Description: {api.get('Description', 'No Description')}"
+            )
