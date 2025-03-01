@@ -19,3 +19,9 @@ Only use:
 - `uv`
 - `uv.lock`
 - `pyproject.toml`
+
+Manually invoke formatting:
+
+```
+uv run black . && uv run isort .
+```

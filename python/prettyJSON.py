@@ -13,8 +13,8 @@ def process_file(filename, check):
             json.dumps(
                 json.loads(original_data),
                 indent=2,
-                sort_keys=True,
                 separators=(",", ": "),
+                sort_keys=True,
             )
             + os.linesep
         )

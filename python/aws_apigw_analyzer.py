@@ -40,5 +40,5 @@ for log_file in args.log_files:
                     print(rhs)
                 clf[rhs] += 1
         print(f"oldest:{oldest} newest:{newest} elapsed:{newest - oldest}")
-        print(json.dumps(apigws, sort_keys=True, indent=2))
-        print(json.dumps(clf, sort_keys=True, indent=2))
+        print(json.dumps(apigws, indent=2, sort_keys=True))
+        print(json.dumps(clf, indent=2, sort_keys=True))

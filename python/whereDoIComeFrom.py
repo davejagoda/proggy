@@ -40,7 +40,7 @@ if "__main__" == __name__:
     lines = stdout.splitlines()
     for line in lines:
         process_line(line, places)
-    print(json.dumps(places, indent=2))
+    print(json.dumps(places, indent=2, sort_keys=True))
     new_json_file_path = "{}.{}".format(
         json_file_path,
         datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",

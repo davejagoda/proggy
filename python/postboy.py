@@ -27,4 +27,4 @@ if "__main__" == __name__:
     print(f"HTTP status: {response.status_code}")
     print(f"HTTP response text: {response.text}")
     if args.verbosity > 1:
-        print(json.dumps(response.json(), indent=2))
+        print(json.dumps(response.json(), indent=2, sort_keys=True))

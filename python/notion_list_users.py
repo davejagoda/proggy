@@ -13,7 +13,7 @@ def list_users(headers, verbose):
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         users_data = response.json()
-        print(json.dumps(users_data, indent=2))
+        print(json.dumps(users_data, indent=2, sort_keys=True))
     else:
         print(f"Error fetching users: {response.status_code}, {response.text}")
 
