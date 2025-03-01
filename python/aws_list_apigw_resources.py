@@ -32,10 +32,12 @@ def get_resources(client, api_id):
     while True:
         if position:
             response = client.get_resources(
-                restApiId=api_id, limit=LIMIT, position=position
+                restApiId=api_id, embed=["methods"], limit=LIMIT, position=position
             )
         else:
-            response = client.get_resources(restApiId=api_id, limit=LIMIT)
+            response = client.get_resources(
+                restApiId=api_id, embed=["methods"], limit=LIMIT
+            )
         items.extend(response.get("items", []))
         position = response.get("position", None)
         if not position:
@@ -101,25 +103,28 @@ if "__main__" == __name__:
     for api in apis:
         if args.verbosity > 0:
             print(api)
+        api_id = api.get("id")
         if args.generic:
             print(f"API Name: {api.get('name')}, ProtocolType: REST")
         else:
             print(
-                f"API ID: {api.get('id')}, Name: {api.get('name')}, ProtocolType: REST, Description: {api.get('description', 'No Description')}"
+                f"API ID: {api_id}, Name: {api.get('name')}, ProtocolType: REST, Description: {api.get('description', 'No Description')}"
             )
         if args.resource_details:
-            resources = get_resources(client, api.get("id"))
-            if len(resources) >= LIMIT:
-                print("resources limit reached")
+            resources = get_resources(client, api_id)
             for resource in resources:
                 resource_id = resource.get("id")
                 resource_path = resource.get("path")
                 if args.generic:
+                    resource.pop("id")
+                    resource.pop("parentId", None)  # root node has no parent
                     print(f"  Path: {resource_path}")
+                    print(json.dumps(resource, indent=2, sort_keys=True))
                 else:
                     print(f"  Resource ID: {resource_id}, Path: {resource_path}")
+                    print(json.dumps(resource, indent=2, sort_keys=True))
         if args.deployment_details:
-            print_last_v1_deployment_date(client, api.get("id"))
+            print_last_v1_deployment_date(client, api_id)
     # aws apigatewayv2 get-apis --output table
     client = boto3.client("apigatewayv2")
     apis = get_apis(client)
