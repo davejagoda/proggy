@@ -8,12 +8,28 @@ import sys
 import requests
 
 
-def list_users(headers, verbose):
+def get_users(headers, verbose):
     url = "https://api.notion.com/v1/users"
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        users_data = response.json()
-        print(json.dumps(users_data, indent=2, sort_keys=True))
+        users = response.json()
+        assert set(users.keys()) == set(
+            [
+                "object",
+                "results",
+                "next_cursor",
+                "has_more",
+                "type",
+                "user",
+                "request_id",
+            ]
+        )
+        assert False == users.get("has_more")
+        assert None == users.get("next_cursor")
+        assert "list" == users.get("object")
+        if verbose > 0:
+            print(json.dumps(users, indent=2, sort_keys=True))
+        return users.get("results")
     else:
         print(f"Error fetching users: {response.status_code}, {response.text}")
 
@@ -31,4 +47,23 @@ if "__main__" == __name__:
         "Content-Type": "application/json",
         "Notion-Version": "2022-06-28",
     }
-    list_users(HEADERS, args.verbose)
+    users = get_users(HEADERS, args.verbose)
+    bots = []
+    persons = []
+    for user in users:
+        if user.get("type") == "bot":
+            bots.append(user)
+            continue
+        if user.get("type") == "person":
+            persons.append(user)
+            continue
+        print("unexpected user type")
+        sys.exit(1)
+    print("bots")
+    print("----")
+    for bot in bots:
+        print(bot.get("name"))
+    print("persons")
+    print("-------")
+    for person in persons:
+        print(person.get("person").get("email"))
