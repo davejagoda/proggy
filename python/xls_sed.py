@@ -38,7 +38,7 @@ for ws in wb.worksheets:
         for cell in row:
             if args.verbose:
                 print(cell.value)
-            if search_str in cell.value:
+            if cell.value and search_str in cell.value:
                 modified = True
                 cell.value = cell.value.replace(search_str, replace_str)
 if modified:
