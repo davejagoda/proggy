@@ -23,6 +23,7 @@ dependencies = [
   "ruff",
   "simple-salesforce",
   "tweepy",
+  "uvicorn>=0.34.0",
 ]
 
 [tool.uv]
