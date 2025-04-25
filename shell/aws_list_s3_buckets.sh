@@ -7,4 +7,5 @@ do
     echo $bucket
     aws s3api get-bucket-versioning --bucket $bucket --output text || true
     aws s3api get-public-access-block --bucket $bucket --output text || true
+    aws s3api get-bucket-policy --bucket $bucket --output text || true
 done
