@@ -19,13 +19,15 @@ def do_work(item):
 def worker():
     while True:
         item = q.get()
+        if args.verbose:
+            print(f'{threading.get_ident()} {threading.get_native_id()} got {item}')
         do_work(item)
         q.task_done()
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--thread_count", type=int, default=1)
-parser.add_argument("-v", "--verbose")
+parser.add_argument("-v", "--verbose", default=False, action="store_true")
 args = parser.parse_args()
 if args.verbose:
     print("thread_count:{}".format(args.thread_count))
