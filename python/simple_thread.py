@@ -12,24 +12,25 @@ def source():
         return [line.rstrip() for line in f.readlines()]
 
 
-def do_work(item):
-    print("{}:{}".format(item, len(item)))
+def do_work(word):
+    if args.verbosity > 1:
+        print("{}:{}".format(word, len(word)))
 
 
 def worker():
     while True:
-        item = q.get()
-        if args.verbose:
-            print(f'{threading.get_ident()} {threading.get_native_id()} got {item}')
-        do_work(item)
+        word = q.get()
+        if args.verbosity > 1:
+            print(f"{threading.get_ident()} {threading.get_native_id()} got {word}")
+        do_work(word)
         q.task_done()
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--thread_count", type=int, default=1)
-parser.add_argument("-v", "--verbose", default=False, action="store_true")
+parser.add_argument("-v", "--verbosity", action="count", default=0)
 args = parser.parse_args()
-if args.verbose:
+if args.verbosity:
     print("thread_count:{}".format(args.thread_count))
 
 q = queue.Queue()
@@ -38,9 +39,9 @@ for i in range(args.thread_count):
     t.daemon = True
     t.start()
 
-for item in source():
-    if args.verbose:
-        print("raw item:{}".format(item))
-    q.put(item)
+for word in source():
+    if args.verbosity > 1:
+        print("raw word:{}".format(word))
+    q.put(word)
 
 q.join()  # block until all tasks are done
