@@ -16,7 +16,7 @@ jul_1 = datetime.datetime.combine(
     datetime.date(2024, 7, 1), t, tzinfo=datetime.timezone.utc
 )
 
-locs = ["America/Buenos_Aires", "America/Los_Angeles", "Asia/Tokyo", "Asia/Karachi"]
+locs = ["America/Chicago", "America/Los_Angeles", "Asia/Tokyo", "Asia/Calcutta"]
 
 
 def is_dst(t):
@@ -31,4 +31,4 @@ for loc in locs:
         # print(f'UTC: {u} {is_dst(u)}')
         l = u.astimezone(zoneinfo.ZoneInfo(loc))
         # print(f'{loc} {l} {is_dst(l)}')
-        print(f"{loc} {l.hour}")
+        print(f"{loc} {l.hour} {l.minute}")
