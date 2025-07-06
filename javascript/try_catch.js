@@ -10,7 +10,7 @@ function main() {
     JSON.parse(bad_json);
     console.log("parsed bad_json");
   } catch (error) {
-    console.log("got an exception while parsing JSON");
+    console.log(`got an exception while parsing JSON: ${error}`);
   }
 }
 
