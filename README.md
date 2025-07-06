@@ -30,5 +30,5 @@ javascript
 Manually invoke formatting:
 
 ```
-npx prettier . --write
+npx prettier . --write && npx eslint .
 ```

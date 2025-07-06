@@ -1,38 +1,23 @@
-const {
-    defineConfig,
-} = require("eslint/config");
+import { defineConfig } from "eslint/config";
+import js from "@eslint/js";
+import globals from "globals";
 
-const globals = require("globals");
-const js = require("@eslint/js");
-
-const {
-    FlatCompat,
-} = require("@eslint/eslintrc");
-
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-module.exports = defineConfig([{
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
+export default defineConfig([
+  {
+    files: ["**/*.js"],
+    plugins: {
+      js,
     },
-
-    extends: "eslint:recommended",
-
+    extends: ["js/recommended"],
     rules: {
-        indent: ["error", 2, {
-            ObjectExpression: "first",
-        }],
-
-        "linebreak-style": ["error", "unix"],
-        "no-console": "off",
-        quotes: ["error", "single"],
-        semi: ["error", "always"],
+      "no-unused-vars": "warn",
+      "no-undef": "warn",
     },
-}]);
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+]);
