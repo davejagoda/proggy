@@ -5,7 +5,6 @@ else . . .
 
 python
 ------
-
 Stop using `python2`, only use `python3`.
 
 Stop using:
@@ -24,4 +23,12 @@ Manually invoke formatting:
 
 ```
 uv run black . && uv run isort .
+```
+
+javascript
+----------
+Manually invoke formatting:
+
+```
+npx prettier . --write
 ```

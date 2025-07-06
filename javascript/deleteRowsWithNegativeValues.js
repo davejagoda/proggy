@@ -10,7 +10,7 @@ function deleteRows() {
   for (var i = 0; i <= numRows - 1; i++) {
     var row = values[i];
     if (parseInt(row[columnToCheck]) < 0) {
-      sheet.deleteRow((parseInt(i)+1) - rowsDeleted);
+      sheet.deleteRow(parseInt(i) + 1 - rowsDeleted);
       rowsDeleted++;
     }
   }
@@ -26,9 +26,11 @@ function deleteRows() {
  */
 function onOpen() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
-  var entries = [{
-    name : 'Delete Data',
-    functionName : 'deleteRows'
-  }];
-  sheet.addMenu('Script Center Menu', entries);
+  var entries = [
+    {
+      name: "Delete Data",
+      functionName: "deleteRows",
+    },
+  ];
+  sheet.addMenu("Script Center Menu", entries);
 }
