@@ -29,7 +29,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
                 + "</title>\n"
                 + "  </head>\n"
                 + "  <body>"
-                + datetime.datetime.utcnow().isoformat()
+                + datetime.datetime.now(datetime.UTC).isoformat()
                 + "</body>\n"
                 + "</html>\n",
                 "utf-8",
