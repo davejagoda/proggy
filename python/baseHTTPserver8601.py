@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # must answer
 # GET, HEAD, POST
@@ -14,22 +14,20 @@
 # Accept-Encoding: gzip, deflate
 
 import argparse
+import ssl
 import time
-
-import BaseHTTPServer
-import SimpleHTTPServer
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 
-class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class djHTTPServer(SimpleHTTPRequestHandler):
     def do_GET(self):
         print("get")
         response = self.path + "\nClientHeaders\n" + str(self.headers)
-        print(dir(self.headers))
         self.send_response(200)
         self.send_header("Content-Type", "text")
         self.send_header("Content-Length", len(response))
         self.end_headers()
-        self.wfile.write(response)
+        self.wfile.write(response.encode())
 
     def do_HEAD(self):
         print("head")
@@ -52,7 +50,6 @@ class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
     def log_request(self, code):
         print(code)
-        print(dir(self))
         print(self.raw_requestline)
         print(self.headers)
         return code
@@ -60,13 +57,14 @@ class djHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--port", required=True, help="listen port")
+    parser.add_argument("-p", "--port", required=True, type=int, help="listen port")
     parser.add_argument("-s", "--ssl", action="store_true", help="SSL")
     parser.add_argument("-v", "--verbose", action="store_true", help="be verbose")
     args = parser.parse_args()
-    httpd = BaseHTTPServer.HTTPServer(("", int(args.port)), djHTTPServer)
-    if args.ssl:
-        httpd.socket = ssl.wrap_socket(
-            httpd.socket, certfile="localhost.pem", server_side=True
-        )
-    httpd.serve_forever()
+    with HTTPServer(("", args.port), djHTTPServer) as httpd:
+        if args.ssl:
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            context.load_cert_chain(certfile="localhost.pem")
+            context.check_hostname = False
+            httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+        httpd.serve_forever()
