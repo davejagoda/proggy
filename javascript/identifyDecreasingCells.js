@@ -1,4 +1,7 @@
 /**
+ * Identifies cells in a selected column that are smaller than the cell above.
+ * Highlights the "out of order" cells in light red.
+ *
  * Gemini prompt: Write a Google sheets macro that will identify all
  * cells in a column that are not greater than or equal to the cell
  * directly above.
@@ -12,13 +15,15 @@ function identifyDecreasingCells() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const range = sheet.getActiveRange();
   const values = range.getValues();
+  // Get existing colors to reset them if needed.
   const backgrounds = range.getBackgrounds();
 
+  // Start from index 1 (the second cell in the selection)
+  // because the first cell has nothing above it to compare.
   for (let i = 1; i < values.length; i++) {
     let curr = values[i][0];
     let prev = values[i-1][0];
-
-    // Helper to convert dates to numbers, or keep numbers as they are
+    // Helper to convert dates to numbers, or keep numbers as they are.
     let currVal = (curr instanceof Date) ? curr.getTime() : curr;
     let prevVal = (prev instanceof Date) ? prev.getTime() : prev;
 
@@ -33,4 +38,11 @@ function identifyDecreasingCells() {
   }
 
   range.setBackgrounds(backgrounds);
+}
+
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Data Tools')
+    .addItem('identifyDecreasingCells', 'identifyDecreasingCells')
+    .addToUi();
 }
