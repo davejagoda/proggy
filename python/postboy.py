@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-
 """
 Remember back when Postman was a boy?
+uv run postboy.py
 """
 
 import argparse
