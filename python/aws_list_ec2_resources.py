@@ -22,7 +22,7 @@ def print_results(results):
 
 
 def output_region_data(element):
-    (region_name, keyp, resv, vols, neti, elip, secg, vpcs) = element
+    region_name, keyp, resv, vols, neti, elip, secg, vpcs = element
     print(region_name)
     if keyp:
         print_results(keyp)

@@ -18,7 +18,7 @@ def make_list(lo, hi):
             and "LETTER" in name
             and "SMALL" not in name
         ):
-            (syllabary, letter, romaji) = name.split(" ")
+            syllabary, letter, romaji = name.split(" ")
             if 1 == len(romaji):
                 romaji += " "  # hack, do this with format
             risuto.append((romaji, kana))

@@ -85,7 +85,7 @@ def parse_dburl(dburl, verbose):
 
 
 def get_data_from_dburl(dburl, verbose):
-    (dbname, dbhost, dbport, dbuser, dbpass) = parse_dburl(dburl, verbose)
+    dbname, dbhost, dbport, dbuser, dbpass = parse_dburl(dburl, verbose)
     if verbose > 0:
         print("getting data from dburl")
     env = os.environ
@@ -164,9 +164,9 @@ if "__main__" == __name__:
         d1 = get_data_from_dburl(u1, args.verbose)
         d2 = get_data_from_dburl(u2, args.verbose)
     if not args.no_owner_xform:
-        (_, _, _, o1, _) = parse_dburl(u1, args.verbose)
+        _, _, _, o1, _ = parse_dburl(u1, args.verbose)
         d1 = transform_owner(d1, o1, args.verbose)
-        (_, _, _, o2, _) = parse_dburl(u2, args.verbose)
+        _, _, _, o2, _ = parse_dburl(u2, args.verbose)
         d2 = transform_owner(d2, o2, args.verbose)
     if not args.no_fk_xform:
         d1 = transform_fk_constraints(d1)

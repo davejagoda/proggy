@@ -44,13 +44,11 @@ def displayCheckedOut(soup, verbose=False):
         sys.exit(1)
     keys_list = list(j["entities"]["accounts"])
     print(
-        "Email: {}".format(
-            j["entities"]["accounts"][keys_list[0]]["digitalNotificationEmail"]
-        )
+        f"Email: {j['entities']['accounts'][keys_list[0]]['digitalNotificationEmail']}"
     )
     results = []
     for value in j["entities"]["checkouts"].values():
-        results.append("{}:{}".format(value["dueDate"], value["bibTitle"]))
+        results.append(f"{value['dueDate']}:{value['bibTitle']}")
     results.sort()
     if results:
         print(os.linesep.join(results))
@@ -60,7 +58,7 @@ def fines(soup, verbose=False):
     # find this in the soup:
     # <span class="cp-dollar-amount" data-reactid="144">
     fine = soup.find("span", {"class": "cp-dollar-amount"})
-    print("Fine: {}".format(fine.get_text()))
+    print(f"Fine: {fine.get_text()}")
 
 
 def logout():
@@ -87,35 +85,41 @@ def logout():
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument("usernames", nargs="+", help="username[s]")
-    location = parser.add_mutually_exclusive_group()
+    location = parser.add_mutually_exclusive_group(required=True)
     location.add_argument(
         "--paloalto",
-        "-p",
         action="store_true",
-        help="check Palo Alto library instead of SCCL",
+        help="check Palo Alto library",
+    )
+    location.add_argument(
+        "--sccl",
+        action="store_true",
+        help="check Santa Clara County library",
     )
     location.add_argument(
         "--sjpl",
-        "-s",
         action="store_true",
-        help="check San Jose library instead of SCCL",
+        help="check San Jose library",
+    )
+    location.add_argument(
+        "--sunnyvale",
+        action="store_true",
+        help="check Sunnyvale library",
     )
     parser.add_argument("--verbose", "-v", action="store_true", help="be verbose")
     args = parser.parse_args()
-    loc = "sccl"
-    if args.paloalto:
-        loc = "paloalto"
-    if args.sjpl:
-        loc = "sjpl"
-    LOGINURL = "https://{}.bibliocommons.com/user/login".format(loc)
-    LOGOUTURL = "https://{}.bibliocommons.com/user/logout".format(loc)
-    CHECKEDOUTURL = "http://{}.bibliocommons.com/checkedout".format(loc)
+    for k, v in vars(args).items():
+        if v is True:
+            loc = k
+    LOGINURL = f"https://{loc}.bibliocommons.com/user/login"
+    LOGOUTURL = f"https://{loc}.bibliocommons.com/user/logout"
+    CHECKEDOUTURL = f"http://{loc}.bibliocommons.com/checkedout"
     if os.getenv("SCCLPIN"):
         password = os.getenv("SCCLPIN")
     else:
         password = getpass.getpass()
     for username in args.usernames:
-        print("USER: {}".format(username))
+        print(f"USER: {username} LOC: {loc}")
         soup = loginAndReturnSoup(username, password, args.verbose)
         displayCheckedOut(soup, args.verbose)
         fines(soup, args.verbose)

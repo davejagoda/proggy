@@ -9,8 +9,7 @@ import sys
 
 
 def printHeader():
-    print(
-        """<!DOCTYPE html>
+    print("""<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -46,18 +45,15 @@ def printHeader():
   </tr>
 </thead>
 <tbody>
-"""
-    )
+""")
 
 
 def printFooter():
-    print(
-        """</tbody>
+    print("""</tbody>
 </table>
 </body>
 </html>
-"""
-    )
+""")
 
 
 def getSundayStartDate(d):

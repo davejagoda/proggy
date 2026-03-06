@@ -61,7 +61,7 @@ def get_app_info(app, my_email_address, verbose):
         results = []
         for line in output.splitlines():
             if line.startswith("Stack"):
-                (_, stack) = line.split(":")
+                _, stack = line.split(":")
                 stack.strip()
             for word in line.split():
                 if "@" in word and my_email_address != word:

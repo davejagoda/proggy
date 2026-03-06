@@ -48,7 +48,7 @@ output = json.dumps(
 )
 
 if args.outfile:
-    (root, ext) = os.path.splitext(args.xlsfile)
+    root, ext = os.path.splitext(args.xlsfile)
     jsonfile = "{}.json".format(root)
     if os.path.exists(jsonfile):
         print("file {} already exists, refusing to overwrite".format(jsonfile))

@@ -11,7 +11,7 @@ def build_dictionary_of_known_zip_codes():
     with open(zip_file, "r") as f:
         for line in f.readlines():
             if 5 == len(line.split("|")):
-                (bol, zip5, state, city, eol) = line.split("|")
+                bol, zip5, state, city, eol = line.split("|")
                 assert zip5 not in zip_dict
                 zip_dict[zip5] = (state, city.strip())
     return zip_dict

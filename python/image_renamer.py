@@ -25,7 +25,7 @@ def generateNameFromExif(filename, verbose):
     }
     if verbose > 1:
         pprint.pprint(exif)
-    (date_str, time_str) = exif["DateTime"].replace(":", "-").split()
+    date_str, time_str = exif["DateTime"].replace(":", "-").split()
     try:
         subsec = exif["SubsecTimeOriginal"]
     except KeyError:

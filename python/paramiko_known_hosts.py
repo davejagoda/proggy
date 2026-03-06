@@ -25,7 +25,7 @@ if "__main__" == __name__:
 
     for remote in args.remote:
         if "@" in remote:
-            (user, host) = remote.split("@")
+            user, host = remote.split("@")
         else:
             user = None
             host = remote

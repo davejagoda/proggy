@@ -12,7 +12,7 @@ import aws_lib
 
 
 def output_region_data(element):
-    (region_name, secg, vpc) = element
+    region_name, secg, vpc = element
     print(region_name)
     if secg:
         print(secg)

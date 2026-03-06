@@ -86,7 +86,7 @@ if "__main__" == __name__:
     args = parser.parse_args()
     if args.verbose > 0:
         print(args.site, args.username, args.password)
-    (s, action, data) = getSess(
+    s, action, data = getSess(
         args.site,
         args.username,
         args.password,
@@ -96,11 +96,9 @@ if "__main__" == __name__:
     if args.verbose > 0:
         print(action)
         print(data)
-    (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(action)
+    scheme, netloc, path, params, query, fragment = urllib.parse.urlparse(action)
     if "" == scheme:
-        (scheme, netloc, path, params, query, fragment) = urllib.parse.urlparse(
-            args.site
-        )
+        scheme, netloc, path, params, query, fragment = urllib.parse.urlparse(args.site)
         action = scheme + "://" + netloc + "/" + action
     if postSess(
         s, action, data, args.loggedInString, args.userAgentString, verbose=args.verbose

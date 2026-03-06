@@ -57,7 +57,7 @@ def printed_nicely(label, s):
 
 
 if "__main__" == __name__:
-    (f1, f2, diff, inter, union, verbose) = handleArguments()
+    f1, f2, diff, inter, union, verbose = handleArguments()
     s1 = fileToSet(f1)
     s2 = fileToSet(f2)
     if verbose:

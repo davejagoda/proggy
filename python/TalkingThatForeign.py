@@ -13,7 +13,7 @@ else:
 
 for line in stdout.splitlines():
     if len(line) > 0:
-        (left, right) = line.split("#")
+        left, right = line.split("#")
         if None == re.search(pattern, left):
             leftsplit = left.split(" ")
             print(leftsplit[0], right)

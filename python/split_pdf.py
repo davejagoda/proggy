@@ -43,7 +43,7 @@ def process_pdf(file, verbose=False):
                 height = int(round(media_box.getHeight(), 1))
                 validate_size([width, height], verbose)
                 page_rect = CoreGraphics.CGRectMake(0, 0, width, height)
-                (prefix, suffix) = os.path.splitext(os.path.basename(file))
+                prefix, suffix = os.path.splitext(os.path.basename(file))
                 new_file = "{}.page{}{}".format(
                     prefix, str(page_num).zfill(page_number_width), suffix
                 )
