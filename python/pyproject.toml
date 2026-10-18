@@ -24,7 +24,7 @@ dependencies = [
   "ruff",
   "simple-salesforce",
   "tweepy",
-  "uvicorn>=0.34.0",
+  "uvicorn",
 ]
 
 [[tool.uv.index]]

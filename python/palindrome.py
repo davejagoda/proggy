@@ -1,4 +1,4 @@
-!/usr/bin/env python3
+#!/usr/bin/env python3
 
 """Gemini prompt:
 python reads stdin or argument and determines if input is a palindrome
